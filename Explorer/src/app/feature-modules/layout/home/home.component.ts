@@ -42,7 +42,9 @@ export class HomeComponent implements OnInit{
       name: this.courseForm.value.name || "",
     };
     this.service.addCourse(course).subscribe({
-      next: () => {}
+      next: () => {
+        this.getCourses();
+      }
     });
   }
 
