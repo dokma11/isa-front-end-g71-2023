@@ -10,7 +10,8 @@ import { AdministrationModule } from './feature-modules/administration/administr
 import { AuthModule } from './infrastructure/auth/auth.module';
 import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { JwtInterceptor } from './infrastructure/auth/jwt/jwt.interceptor';
-import { CompanySearchComponent } from './feature-modules/company-search/company-search.component';
+import { CompanySearchComponent } from './feature-modules/company/company-search/company-search.component';
+import { FormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -25,7 +26,8 @@ import { CompanySearchComponent } from './feature-modules/company-search/company
     MaterialModule,
     AdministrationModule,
     AuthModule,
-    HttpClientModule
+    HttpClientModule,
+    FormsModule
   ],
   providers: [
     {
