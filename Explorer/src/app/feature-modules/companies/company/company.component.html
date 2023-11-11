@@ -1,0 +1,37 @@
+<div id="companies">
+  <div id="companies-details">
+    <div>
+      <table>
+        <thead>
+          <tr>
+            <th>Name</th>
+            <th>Address</th>
+            <th>Description</th>
+            <th>Average grade</th>
+            <th></th>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let c of companies" [class.selected-row]="selectedCompany === c">
+            <td>{{ c.name }}</td>
+            <td>{{ c.address }}</td>
+            <td>{{ c.description }}</td>
+            <td>{{ c.averageGrade }}</td>
+            <td>
+              <button (click)="onDeleteClicked(c)" color="accent" mat-icon-button>Delete</button>
+            </td>
+            <td>
+              <button (click)="onEditClicked(c)" color="primary" mat-icon-button>Edit</button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <xp-company-form *ngIf="shouldRenderCompaniesForm" 
+                     (facilitesUpdated)="getCompanies()" 
+                     [company]="selectedCompany" 
+                     [shouldEdit]="shouldEdit">
+    </xp-company-form>
+  </div>
+</div>
