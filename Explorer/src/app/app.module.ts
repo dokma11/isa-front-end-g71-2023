@@ -10,10 +10,12 @@ import { AdministrationModule } from './feature-modules/administration/administr
 import { AuthModule } from './infrastructure/auth/auth.module';
 import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { JwtInterceptor } from './infrastructure/auth/jwt/jwt.interceptor';
+import { CompanySearchComponent } from './feature-modules/company-search/company-search.component';
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    CompanySearchComponent
   ],
   imports: [
     BrowserModule,
