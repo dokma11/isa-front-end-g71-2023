@@ -12,12 +12,10 @@ import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { JwtInterceptor } from './infrastructure/auth/jwt/jwt.interceptor';
 import { CompanySearchComponent } from './feature-modules/company/company-search/company-search.component';
 import { FormsModule } from '@angular/forms';
+import { UsersModule } from './feature-modules/users/users.module';
 
 @NgModule({
-  declarations: [
-    AppComponent,
-    CompanySearchComponent
-  ],
+  declarations: [AppComponent, CompanySearchComponent],
   imports: [
     BrowserModule,
     AppRoutingModule,
@@ -27,7 +25,8 @@ import { FormsModule } from '@angular/forms';
     AdministrationModule,
     AuthModule,
     HttpClientModule,
-    FormsModule
+    FormsModule,
+    UsersModule,
   ],
   providers: [
     {
@@ -36,6 +35,6 @@ import { FormsModule } from '@angular/forms';
       multi: true,
     },
   ],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
 })
-export class AppModule { }
+export class AppModule {}
