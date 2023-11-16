@@ -6,6 +6,7 @@
             <button *ngIf="user && user.username !== ''" color="accent" mat-raised-button (click)="onLogout()">Logout</button>
             <button color="primary" mat-raised-button [routerLink]="['home']">Home</button>
             <button color="primary" mat-raised-button [routerLink]="['companies']">Manage companies</button>
+            <button color="primary" mat-raised-button [routerLink]="['company-administrators']">Manage company admin profile</button>
         </div>
     </div>
 </mat-toolbar>

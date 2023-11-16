@@ -1,0 +1,41 @@
+<div id="company-admin">
+  <div id="company-admin-details">
+    <div>
+      <table>
+        <thead>
+          <tr>
+            <th>Name</th>
+            <th>Surname</th>
+            <th>Email</th>
+            <th>Company Information</th>
+            <th>Phone Number</th>
+            <th>City</th>
+            <th>State</th>
+            <th>Profession</th>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>{{ companyAdmin.name }}</td>
+            <td>{{ companyAdmin.surname }}</td>
+            <td>{{ companyAdmin.email }}</td>
+            <td>{{ companyAdmin.companyInformation }}</td>
+            <td>{{ companyAdmin.telephoneNumber }}</td>
+            <td>{{ companyAdmin.city }}</td>
+            <td>{{ companyAdmin.state }}</td>
+            <td>{{ companyAdmin.profession }}</td>
+            <td>
+              <button (click)="onEditClicked(companyAdmin)" color="primary" mat-icon-button>Edit</button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <xp-company-admin-form *ngIf="shouldRenderCompanyAdminForm" 
+                     (companyAdminUpdated)="getAdmin()" 
+                     [companyAdmin]="selectedCompanyAdmin" 
+                     [shouldEdit]="shouldEdit">
+    </xp-company-admin-form>
+  </div>
+</div>
