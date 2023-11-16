@@ -57,36 +57,67 @@ export class UserRegistrationComponent {
       role: '',
       points: 0,
     };
-    this.service.register(user).subscribe({
-      next(result) {
-        console.log(result);
-      },
-    });
+    if (
+      this.registrationFrom.value.name == '' ||
+      this.registrationFrom.value.surname == '' ||
+      this.registrationFrom.value.city == '' ||
+      this.registrationFrom.value.state == '' ||
+      this.registrationFrom.value.telephoneNumber == '' ||
+      this.registrationFrom.value.profession == '' ||
+      this.registrationFrom.value.companyInformation == '' ||
+      this.registrationFrom.value.password == '' ||
+      this.registrationFrom.value.renteredPassword == '' ||
+      this.registrationFrom.value.password !=
+        this.registrationFrom.value.renteredPassword
+    ) {
+      alert('Fileds are not filled validly');
+    } else {
+      this.service.register(user).subscribe({
+        next(result) {
+          alert(
+            'You have successfully registered! Check your email for notifications.'
+          );
+          console.log(result);
+        },
+      });
+    }
   }
 
   updateUser() {
     const user: RegisteredUser = {
-      name: this.registrationFrom.value.name || "",
-      surname: this.registrationFrom.value.surname || "",
-      city : this.registrationFrom.value.city || "",
-      state : this.registrationFrom.value.state || "",
-      telephoneNumber : this.registrationFrom.value.telephoneNumber || "",
-      profession : this.registrationFrom.value.profession || "",
-      companyInformation : this.registrationFrom.value.companyInformation || "",
-      password : this.registrationFrom.value.password || "",
-      email : this.registrationFrom.value.email || "",
+      name: this.registrationFrom.value.name || '',
+      surname: this.registrationFrom.value.surname || '',
+      city: this.registrationFrom.value.city || '',
+      state: this.registrationFrom.value.state || '',
+      telephoneNumber: this.registrationFrom.value.telephoneNumber || '',
+      profession: this.registrationFrom.value.profession || '',
+      companyInformation: this.registrationFrom.value.companyInformation || '',
+      password: this.registrationFrom.value.password || '',
+      email: this.registrationFrom.value.email || '',
       role: '',
       points: 0,
     };
     user.id = this.user.id;
 
-    if(this.registrationFrom.value.name == "" || this.registrationFrom.value.surname == "" || this.registrationFrom.value.city == "" ||
-    this.registrationFrom.value.state == "" || this.registrationFrom.value.telephoneNumber == "" || this.registrationFrom.value.profession == ""||
-    this.registrationFrom.value.companyInformation == "" || this.registrationFrom.value.password == "" || this.registrationFrom.value.renteredPassword == "" || (this.registrationFrom.value.password != this.registrationFrom.value.renteredPassword)){
-      alert("Fileds are not filled validly");
-    }else{
+    if (
+      this.registrationFrom.value.name == '' ||
+      this.registrationFrom.value.surname == '' ||
+      this.registrationFrom.value.city == '' ||
+      this.registrationFrom.value.state == '' ||
+      this.registrationFrom.value.telephoneNumber == '' ||
+      this.registrationFrom.value.profession == '' ||
+      this.registrationFrom.value.companyInformation == '' ||
+      this.registrationFrom.value.password == '' ||
+      this.registrationFrom.value.renteredPassword == '' ||
+      this.registrationFrom.value.password !=
+        this.registrationFrom.value.renteredPassword
+    ) {
+      alert('Fileds are not filled validly');
+    } else {
       this.service.update(user).subscribe({
-        next: () => { this.userUpdated.emit();}
+        next: () => {
+          this.userUpdated.emit();
+        },
       });
     }
   }
