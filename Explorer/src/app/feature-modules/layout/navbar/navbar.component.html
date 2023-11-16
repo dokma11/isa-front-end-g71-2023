@@ -1,12 +1,74 @@
 <mat-toolbar color="primary">
-    <div>
-        <p>Explorer</p>
-        <div id="buttons">
-            <button *ngIf="user && user.username === ''" color="accent" mat-raised-button [routerLink]="['login']">Login</button>
-            <button *ngIf="user && user.username !== ''" color="accent" mat-raised-button (click)="onLogout()">Logout</button>
-            <button color="primary" mat-raised-button [routerLink]="['home']">Home</button>
-            <button color="primary" mat-raised-button [routerLink]="['companies']">Manage companies</button>
-            <button color="primary" mat-raised-button [routerLink]="['company-administrators']">Manage company admin profile</button>
-        </div>
+  <div>
+    <p>Explorer</p>
+    <div id="buttons">
+      <button
+        *ngIf="user && user.username === ''"
+        color="accent"
+        mat-raised-button
+        [routerLink]="['login']"
+      >
+        Login
+      </button>
+      
+      <button
+        *ngIf="user && user.username !== ''"
+        color="accent"
+        mat-raised-button
+        (click)="onLogout()"
+      >
+        Logout
+      </button>
+      
+      <button color="primary" mat-raised-button [routerLink]="['home']">
+        Home
+      </button>
+      
+      <button
+        *ngIf="user && user.role === 'administrator'"
+        color="primary"
+        mat-raised-button
+        [routerLink]="['equipment']"
+      >
+        Manage equipment
+      </button>
+      
+      <button
+        color="primary"
+        mat-raised-button
+        [routerLink]="['searchCompanies']"
+      >
+        Search companies
+      </button>
+      
+      <button color="primary" mat-raised-button [routerLink]="['register']">
+        Register
+      </button>
+      
+      <button
+        color="primary"
+        mat-raised-button
+        [routerLink]="['userProfile']"
+      >
+        My profile
+      </button>
+      
+      <button 
+        color="primary" 
+        mat-raised-button 
+        [routerLink]="['companies']"
+      >
+        Manage companies
+      </button>
+      
+      <button 
+        color="primary" 
+        mat-raised-button 
+        [routerLink]="['company-administrators']"
+      >
+        Manage company admin profile
+      </button>
+
     </div>
+  </div>
 </mat-toolbar>

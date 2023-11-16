@@ -1,0 +1,54 @@
+<div id="profile">
+    <p>Your profile</p>
+    <hr>
+    <div id="profile-details">
+    <div>
+        <table>
+            <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Surname</th>
+                    <th>city</th>
+                    <th>state</th>
+                    <th>    
+                    </th>
+                    <th>    
+                    </th>
+
+                    <th>    
+                    </th>
+                    <th>    
+                    </th>
+                    <th>    
+                    </th>
+
+                    <th>    
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr >
+                    <td>{{user.name}}</td>
+                    <td>{{user.surname}}</td>
+                    <td>{{user.city}}</td>
+                    <td>{{user.state}}</td>
+
+                    <td>{{user.companyInformation}}</td>
+                    <td>{{user.telephoneNumber}}</td>
+                    <td>{{user.profession}}</td>
+                    <td>{{user.password}}</td>
+                    <td>0</td>
+                    <td>Regular</td>
+                    <td><button color="primary" (click)="onEditClicked(user)" mat-icon-button>
+                        <mat-icon>edit</mat-icon>
+                    </button></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <div>
+        <xp-user-registration *ngIf="shouldRenderUserForm" [shouldEdit]="shouldEdit" [user]="selectedUser" (userUpdated)="getUser()"></xp-user-registration>
+    </div>
+    </div>
+</div>
+

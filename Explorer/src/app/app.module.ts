@@ -19,6 +19,12 @@ import { CompaniesModule } from './feature-modules/companies/companies.module';
   declarations: [
     AppComponent,
   ],
+import { CompanySearchComponent } from './feature-modules/company/company-search/company-search.component';
+import { FormsModule } from '@angular/forms';
+import { UsersModule } from './feature-modules/users/users.module';
+
+@NgModule({
+  declarations: [AppComponent, CompanySearchComponent],
   imports: [
     BrowserModule,
     AppRoutingModule,
@@ -30,9 +36,10 @@ import { CompaniesModule } from './feature-modules/companies/companies.module';
     HttpClientModule,
     ReactiveFormsModule,
     CommonModule,
-    FormsModule,
     MatIconModule,
     CompaniesModule
+    FormsModule,
+    UsersModule,
   ],
   providers: [
     {
@@ -41,6 +48,6 @@ import { CompaniesModule } from './feature-modules/companies/companies.module';
       multi: true,
     },
   ],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
 })
-export class AppModule { }
+export class AppModule {}
