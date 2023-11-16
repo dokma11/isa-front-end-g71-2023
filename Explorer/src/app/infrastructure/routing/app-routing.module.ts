@@ -9,7 +9,6 @@ import { EquipmentComponent } from 'src/app/feature-modules/administration/equip
 import { AuthGuard } from '../auth/auth.guard';
 //import { RegistrationComponent } from '../auth/registration/registration.component';
 import { CompanySearchComponent } from 'src/app/feature-modules/company/company-search/company-search.component';
-import { RegistrationComponent } from 'src/app/feature-modules/users/registration/registration.component';
 import { UserUpdateComponent } from 'src/app/feature-modules/users/user-update/user-update.component';
 
 const routes: Routes = [

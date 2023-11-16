@@ -14,13 +14,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { MatIconModule } from '@angular/material/icon';
 import { CompaniesModule } from './feature-modules/companies/companies.module';
-
-@NgModule({
-  declarations: [
-    AppComponent,
-  ],
 import { CompanySearchComponent } from './feature-modules/company/company-search/company-search.component';
-import { FormsModule } from '@angular/forms';
 import { UsersModule } from './feature-modules/users/users.module';
 
 @NgModule({
@@ -37,7 +31,7 @@ import { UsersModule } from './feature-modules/users/users.module';
     ReactiveFormsModule,
     CommonModule,
     MatIconModule,
-    CompaniesModule
+    CompaniesModule,
     FormsModule,
     UsersModule,
   ],
