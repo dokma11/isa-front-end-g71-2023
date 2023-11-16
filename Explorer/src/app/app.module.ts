@@ -10,6 +10,15 @@ import { AdministrationModule } from './feature-modules/administration/administr
 import { AuthModule } from './infrastructure/auth/auth.module';
 import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { JwtInterceptor } from './infrastructure/auth/jwt/jwt.interceptor';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { CommonModule } from '@angular/common';
+import { MatIconModule } from '@angular/material/icon';
+import { CompaniesModule } from './feature-modules/companies/companies.module';
+
+@NgModule({
+  declarations: [
+    AppComponent,
+  ],
 import { CompanySearchComponent } from './feature-modules/company/company-search/company-search.component';
 import { FormsModule } from '@angular/forms';
 import { UsersModule } from './feature-modules/users/users.module';
@@ -25,6 +34,10 @@ import { UsersModule } from './feature-modules/users/users.module';
     AdministrationModule,
     AuthModule,
     HttpClientModule,
+    ReactiveFormsModule,
+    CommonModule,
+    MatIconModule,
+    CompaniesModule
     FormsModule,
     UsersModule,
   ],

@@ -1,18 +1,1 @@
 <p><b>Home component</b></p>
-<table border="1">
-  <tr *ngFor="let c of courses">
-    <td>{{ c.id }}</td>
-    <td>{{ c.name }}</td>
-  </tr>
-</table>
-
-<form [formGroup]="courseForm">
-  <div>
-      <mat-form-field>
-          <mat-label>Name</mat-label>
-          <input matInput formControlName="name" type="text"/>
-      </mat-form-field>
-      <button color="primary" type="submit" (click)="addCourse()" mat-raised-button>Done</button>
-    <!--  <button color="primary" type="submit" (click)="updateCourse()" mat-raised-button>Done</button> -->
-  </div>
-</form>

@@ -10,6 +10,7 @@
       >
         Login
       </button>
+      
       <button
         *ngIf="user && user.username !== ''"
         color="accent"
@@ -18,9 +19,11 @@
       >
         Logout
       </button>
+      
       <button color="primary" mat-raised-button [routerLink]="['home']">
         Home
       </button>
+      
       <button
         *ngIf="user && user.role === 'administrator'"
         color="primary"
@@ -29,6 +32,7 @@
       >
         Manage equipment
       </button>
+      
       <button
         color="primary"
         mat-raised-button
@@ -36,9 +40,11 @@
       >
         Search companies
       </button>
+      
       <button color="primary" mat-raised-button [routerLink]="['register']">
         Register
       </button>
+      
       <button
         color="primary"
         mat-raised-button
@@ -46,6 +52,23 @@
       >
         My profile
       </button>
+      
+      <button 
+        color="primary" 
+        mat-raised-button 
+        [routerLink]="['companies']"
+      >
+        Manage companies
+      </button>
+      
+      <button 
+        color="primary" 
+        mat-raised-button 
+        [routerLink]="['company-administrators']"
+      >
+        Manage company admin profile
+      </button>
+
     </div>
   </div>
 </mat-toolbar>

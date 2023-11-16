@@ -1,23 +1,17 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { EquipmentFormComponent } from './equipment-form/equipment-form.component';
-import { EquipmentComponent } from './equipment/equipment.component';
 import { MaterialModule } from 'src/app/infrastructure/material/material.module';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { CompanyAdminComponent } from './company-admin/company-admin/company-admin.component';
-import { CompanyAdminFormComponent } from './company-admin-form/company-admin-form.component';
+import { CompanyComponent } from './company/company.component';
 import { MatIconModule } from '@angular/material/icon';
+import { CompanyFormComponent } from './company-form/company-form/company-form.component';
 import { RouterModule } from '@angular/router';
 import { SharedModule } from 'src/app/shared/shared.module';
 
-
-
 @NgModule({
   declarations: [
-    EquipmentFormComponent,
-    EquipmentComponent,
-    CompanyAdminComponent,
-    CompanyAdminFormComponent
+    CompanyComponent,
+    CompanyFormComponent
   ],
   imports: [
     CommonModule,
@@ -29,10 +23,8 @@ import { SharedModule } from 'src/app/shared/shared.module';
     SharedModule
   ],
   exports: [
-    EquipmentComponent,
-    EquipmentFormComponent,
-    CompanyAdminComponent,
-    CompanyAdminFormComponent
+    CompanyComponent,
+    CompanyFormComponent
   ]
 })
-export class AdministrationModule { }
+export class CompaniesModule { }
