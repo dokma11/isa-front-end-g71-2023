@@ -1,7 +1,7 @@
 <div>
   <form [formGroup]="registrationFrom">
     <div>
-      <mat-form-field>
+      <mat-form-field *ngIf="!shouldEdit">
         <mat-label>Email</mat-label>
         <input matInput formControlName="email" type="text" />
       </mat-form-field>

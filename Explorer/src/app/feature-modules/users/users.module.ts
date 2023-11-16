@@ -6,9 +6,10 @@ import { RouterModule } from '@angular/router';
 import { MaterialModule } from 'src/app/infrastructure/material/material.module';
 import { SharedModule } from 'src/app/shared/shared.module';
 import { RegistrationComponent } from './registration/registration.component';
+import { UserUpdateComponent } from './user-update/user-update.component';
 
 @NgModule({
-  declarations: [RegistrationComponent, UserRegistrationComponent],
+  declarations: [RegistrationComponent, UserRegistrationComponent, UserUpdateComponent],
   imports: [
     CommonModule,
     MaterialModule,
