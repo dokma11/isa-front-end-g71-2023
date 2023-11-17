@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { CompanyAdmin } from '../../model/company-admin.model';
+import { CompanyAdmin, UserRole } from '../../model/company-admin.model';
 import { AdministrationService } from '../../administration.service';
 
 @Component({
@@ -9,7 +9,18 @@ import { AdministrationService } from '../../administration.service';
 })
 export class CompanyAdminComponent implements OnInit{
 
-  companyAdmin: CompanyAdmin;
+  companyAdmin: CompanyAdmin = {
+    name : "",
+    surname: "",
+    password: "",
+    email: "",
+    companyInformation: "",
+    telephoneNumber: "",
+    city: "",
+    state: "",
+    role: UserRole.COMPANY_ADMINISTRATOR,
+    profession: ""
+  };
   selectedCompanyAdmin: CompanyAdmin;
   shouldEdit: boolean = false;
   shouldRenderCompanyAdminForm: boolean = false;
