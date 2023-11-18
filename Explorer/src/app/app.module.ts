@@ -16,9 +16,10 @@ import { MatIconModule } from '@angular/material/icon';
 import { CompaniesModule } from './feature-modules/companies/companies.module';
 import { CompanySearchComponent } from './feature-modules/company/company-search/company-search.component';
 import { UsersModule } from './feature-modules/users/users.module';
+import { CompanyModule } from './feature-modules/company/company.module';
 
 @NgModule({
-  declarations: [AppComponent, CompanySearchComponent],
+  declarations: [AppComponent],
   imports: [
     BrowserModule,
     AppRoutingModule,
@@ -34,6 +35,7 @@ import { UsersModule } from './feature-modules/users/users.module';
     CompaniesModule,
     FormsModule,
     UsersModule,
+    CompanyModule
   ],
   providers: [
     {

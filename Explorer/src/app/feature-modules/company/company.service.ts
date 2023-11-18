@@ -12,8 +12,8 @@ export class CompaniesService {
 
   constructor(private http: HttpClient) { }
 
-  searchCompanies(searchTerm: string, searchType: string): Observable<Company>{
-    const params = new HttpParams().set('searchTerm', searchTerm).set('searchType', searchType);
+  searchCompanies(searchName: string, searchCity: string): Observable<Company>{
+    const params = new HttpParams().set('name', searchName).set('city', searchCity);
     return this.http.get<Company>(environment.apiHost + 'companies/search', {params})
   }
 
