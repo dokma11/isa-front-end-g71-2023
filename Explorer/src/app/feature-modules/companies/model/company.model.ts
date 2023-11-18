@@ -6,5 +6,6 @@ export interface Company {
   latitude: number;
   description: string;
   averageGrade: number;
+  equipment?: string;
   // There is no user so i can't use this: administrators: User[];
 }

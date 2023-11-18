@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Company } from '../model/company.model';
 import { CompaniesService } from '../companies.service';
+import { Equipment } from '../../administration/model/equipment.model';
 
 @Component({
   selector: 'xp-company',
@@ -13,6 +14,7 @@ export class CompanyComponent implements OnInit{
   selectedCompany: Company;
   shouldEdit: boolean = false;
   shouldRenderCompaniesForm: boolean = false;
+  companiesEquipment: Equipment[] = [];
 
   constructor(private service: CompaniesService) { }
 
@@ -25,6 +27,28 @@ export class CompanyComponent implements OnInit{
       next: (result: Company | Company[]) => {
         if (Array.isArray(result)) {
           this.companies = result;
+          let i=0;
+          for(let c of this.companies){
+            this.service.getCompaniesEquipment(c).subscribe({
+              next: (result: Equipment | Equipment[]) =>{
+                if (Array.isArray(result)) {
+                  this.companiesEquipment = result;
+                  c.equipment = "";
+                  for(let ce of this.companiesEquipment){
+                    if(c.equipment == ""){
+                      c.equipment += ce.name;
+                    }
+                    else{
+                      c.equipment += ", " + ce.name;
+                    }
+                  }
+                }
+                else{
+                  this.companiesEquipment = [result];
+                }
+              }
+            });
+          }
         } else {
           this.companies = [result];
         }

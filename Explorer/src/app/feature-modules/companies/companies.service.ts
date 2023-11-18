@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { environment } from 'src/env/environment';
 import { Observable } from 'rxjs';
 import { Company } from './model/company.model';
+import { Equipment } from '../administration/model/equipment.model';
 
 @Injectable({
   providedIn: 'root'
@@ -26,4 +27,9 @@ export class CompaniesService {
   updateCompany(company: Company): Observable<Company> {
     return this.http.put<Company>(environment.apiHost + 'companies/' + company.id, company);
   }
+
+  getCompaniesEquipment(company: Company): Observable<Equipment> {
+    return this.http.get<Equipment>(environment.apiHost + 'companies/' + company.id + '/equipment');
+  }
+  
 }

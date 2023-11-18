@@ -27,12 +27,16 @@ export class EquipmentFormComponent implements OnChanges {
   equipmentForm = new FormGroup({
     name: new FormControl('', [Validators.required]),
     description: new FormControl('', [Validators.required]),
+    type: new FormControl('', [Validators.required]),
+    grade: new FormControl(0, [Validators.required]),
   });
 
   addEquipment(): void {
     const equipment: Equipment = {
       name: this.equipmentForm.value.name || "",
       description: this.equipmentForm.value.description || "",
+      type: this.equipmentForm.value.type || "",
+      grade: this.equipmentForm.value.grade || 0
     };
     this.service.addEquipment(equipment).subscribe({
       next: () => { this.equimpentUpdated.emit() }
@@ -43,6 +47,8 @@ export class EquipmentFormComponent implements OnChanges {
     const equipment: Equipment = {
       name: this.equipmentForm.value.name || "",
       description: this.equipmentForm.value.description || "",
+      type: this.equipmentForm.value.type || "",
+      grade: this.equipmentForm.value.grade || 0
     };
     equipment.id = this.equipment.id;
     this.service.updateEquipment(equipment).subscribe({
