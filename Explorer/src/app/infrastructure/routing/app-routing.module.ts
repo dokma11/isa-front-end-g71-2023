@@ -10,11 +10,12 @@ import { AuthGuard } from '../auth/auth.guard';
 //import { RegistrationComponent } from '../auth/registration/registration.component';
 import { CompanySearchComponent } from 'src/app/feature-modules/company/company-search/company-search.component';
 import { UserUpdateComponent } from 'src/app/feature-modules/users/user-update/user-update.component';
+import { UserRegistrationComponent } from 'src/app/feature-modules/users/user-registration/user-registration.component';
 
 const routes: Routes = [
   { path: 'home', component: HomeComponent },
   { path: 'login', component: LoginComponent },
-  { path: 'register', component: RegistrationComponent },
+  { path: 'register', component: UserRegistrationComponent },
   {
     path: 'equipment',
     component: EquipmentComponent,

@@ -1,24 +1,24 @@
-<div class="search-container">
-    <label for="searchTerm">Search Term:</label>
-    <input type="text" id="searchTerm" [(ngModel)]="searchTerm">
 
-    <label for="searchType">Search By:</label>
-    <select id="searchType" [(ngModel)]="searchType">
-        <option value="name">Name</option>
-        <option value="city">City</option>
-    </select>
+<div class="search-container">
+<form [formGroup]="searchForm">
+    <label for="searchName">Search name:</label>
+    <input type="text" id="searchName" formControlName="searchName">
+
+    <label for="searchCity">Search city:</label>
+    <input type="text" id="searchCity" formControlName="searchCity">
 
     <button (click)="search()">Search</button>
     <div class="rating-filter">
         <label for="minRating">Min Rating:</label>
-        <input type="number" id="minRating" min="1" max="5" [(ngModel)]="minRating">
+        <input type="number" id="minRating" min="1" max="5" formControlName="minRating">
       
         <label for="maxRating">Max Rating:</label>
-        <input type="number" id="maxRating" min="1" max="5" [(ngModel)]="maxRating">
+        <input type="number" id="maxRating" min="1" max="5" formControlName="maxRating">
       
         <button (click)="filterByRating()">Filter by Rating</button>
         <button (click)="reset()">Reset</button>
-      </div>
+    </div>
+</form>
     <div *ngIf="searchResults && searchResults.length > 0" class="results">
         <ul>
             <li *ngFor="let result of searchResults" class="result-item">
