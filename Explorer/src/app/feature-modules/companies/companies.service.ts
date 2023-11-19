@@ -32,4 +32,7 @@ export class CompaniesService {
     return this.http.get<Equipment>(environment.apiHost + 'companies/' + company.id + '/equipment');
   }
   
+  getCompanyById(id: number): Observable<Company> {
+    return this.http.get<Company>(environment.apiHost + 'companies/' + id);
+  }
 }

@@ -64,12 +64,24 @@ export class CompanyAdminFormComponent implements OnChanges{
 
     companyAdmin.id = this.companyAdmin.id;
 
-    if(this.companyAdminForm.value.repeatPassword == companyAdmin.password){
+    if(this.companyAdminForm.value.repeatPassword == companyAdmin.password &&
+      this.companyAdminForm.value.name != "" &&
+      this.companyAdminForm.value.surname != "" &&
+      this.companyAdminForm.value.email != "" &&
+      this.companyAdminForm.value.password != "" &&
+      this.companyAdminForm.value.companyInformation != "" &&
+      this.companyAdminForm.value.telephoneNumber != "" &&
+      this.companyAdminForm.value.city != "" &&
+      this.companyAdminForm.value.state != "" &&
+      this.companyAdminForm.value.profession != ""){
       this.service.updateCompanyAdministrator(companyAdmin).subscribe({
         next: _ => {
             this.companyAdminUpdated.emit();
         },
       });
+    }
+    else{
+      alert("The fields are not filled correctly!")
     }
   }
 }

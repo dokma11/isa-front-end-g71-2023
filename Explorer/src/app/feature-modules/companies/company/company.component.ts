@@ -10,7 +10,14 @@ import { Equipment } from '../../administration/model/equipment.model';
 })
 export class CompanyComponent implements OnInit{
   
-  companies: Company[] = [];
+  company: Company = {
+    name: "",
+    address: "",
+    longitude: 0.0,
+    latitude: 0.0,
+    description: "",
+    averageGrade: 0.0,
+  };
   selectedCompany: Company;
   shouldEdit: boolean = false;
   shouldRenderCompaniesForm: boolean = false;
@@ -23,23 +30,20 @@ export class CompanyComponent implements OnInit{
   }
 
   getCompanies(): void{
-    this.service.getCompanies().subscribe({
-      next: (result: Company | Company[]) => {
-        if (Array.isArray(result)) {
-          this.companies = result;
-          let i=0;
-          for(let c of this.companies){
-            this.service.getCompaniesEquipment(c).subscribe({
+    this.service.getCompanyById(1).subscribe({
+      next: (result: Company) => {
+          this.company = result;
+          this.service.getCompaniesEquipment(this.company).subscribe({
               next: (result: Equipment | Equipment[]) =>{
                 if (Array.isArray(result)) {
                   this.companiesEquipment = result;
-                  c.equipment = "";
+                  this.company.equipment = "";
                   for(let ce of this.companiesEquipment){
-                    if(c.equipment == ""){
-                      c.equipment += ce.name;
+                    if(this.company.equipment == ""){
+                      this.company.equipment += ce.name;
                     }
                     else{
-                      c.equipment += ", " + ce.name;
+                      this.company.equipment += ", " + ce.name;
                     }
                   }
                 }
@@ -48,10 +52,6 @@ export class CompanyComponent implements OnInit{
                 }
               }
             });
-          }
-        } else {
-          this.companies = [result];
-        }
       },
       error: (err) => {
         console.error('Error fetching companies:', err);

@@ -82,8 +82,8 @@ export class CompanySearchComponent {
       const maxRating = formValue.maxRating;
 
       if(maxRating && minRating){
-        const intMaxRating = parseInt(maxRating, 10);
-        const intMinRating = parseInt(minRating, 10);
+        const intMaxRating = parseFloat(maxRating);
+        const intMinRating = parseFloat(minRating);
       
       if (minRating !== undefined && maxRating !== undefined) {
         this.searchResults = this.searchResults.filter(company => {

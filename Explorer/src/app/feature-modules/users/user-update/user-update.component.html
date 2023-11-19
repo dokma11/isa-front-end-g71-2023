@@ -8,22 +8,14 @@
                 <tr>
                     <th>Name</th>
                     <th>Surname</th>
-                    <th>city</th>
-                    <th>state</th>
-                    <th>    
-                    </th>
-                    <th>    
-                    </th>
-
-                    <th>    
-                    </th>
-                    <th>    
-                    </th>
-                    <th>    
-                    </th>
-
-                    <th>    
-                    </th>
+                    <th>City</th>
+                    <th>State</th>
+                    <th>Company Information</th>
+                    <th>Telephone Number</th>
+                    <th>Profession</th>
+                    <th>Penalty Points</th>
+                    <th>Loyalty Programme Category</th>
+                    <th></th>
                 </tr>
             </thead>
             <tbody>
@@ -36,7 +28,6 @@
                     <td>{{user.companyInformation}}</td>
                     <td>{{user.telephoneNumber}}</td>
                     <td>{{user.profession}}</td>
-                    <td>{{user.password}}</td>
                     <td>0</td>
                     <td>Regular</td>
                     <td><button color="primary" (click)="onEditClicked(user)" mat-icon-button>

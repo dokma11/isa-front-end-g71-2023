@@ -8,23 +8,23 @@
             <th>Address</th>
             <th>Description</th>
             <th>Average grade</th>
-            <th>Equipment</th>
+            <th>List of available Equipment</th>
             <th></th>
             <th></th>
           </tr>
         </thead>
         <tbody>
-          <tr *ngFor="let c of companies" [class.selected-row]="selectedCompany === c">
-            <td>{{ c.name }}</td>
-            <td>{{ c.address }}</td>
-            <td>{{ c.description }}</td>
-            <td>{{ c.averageGrade }}</td>
-            <td>{{ c.equipment }}</td>
+          <tr [class.selected-row]="selectedCompany === company">
+            <td>{{ company.name }}</td>
+            <td>{{ company.address }}</td>
+            <td>{{ company.description }}</td>
+            <td>{{ company.averageGrade }}</td>
+            <td>{{ company.equipment }}</td>
             <td>
-              <button (click)="onDeleteClicked(c)" color="accent" mat-icon-button>Delete</button>
+              <button (click)="onDeleteClicked(company)" color="accent" mat-icon-button>Delete</button>
             </td>
             <td>
-              <button (click)="onEditClicked(c)" color="primary" mat-icon-button>Edit</button>
+              <button (click)="onEditClicked(company)" color="primary" mat-icon-button>Edit</button>
             </td>
           </tr>
         </tbody>
