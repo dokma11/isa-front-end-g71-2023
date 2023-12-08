@@ -35,5 +35,78 @@
                      [company]="selectedCompany" 
                      [shouldEdit]="shouldEdit">
     </xp-company-form>
+    
+    
+  </div>
+  <h1>Company's equipment</h1>
+  <div class="container">
+    
+    <li *ngFor="let eq of companiesEquipment" class="result-item">
+      <div class="result-row">
+          <label>Name:</label>
+          <span>{{ eq.name }}</span>
+      </div>
+      <div class="result-row">
+          <label>Address:</label>
+          <span>{{ eq.description }}</span>
+      </div>
+      <div class="result-row">
+          <label>Average Grade:</label>
+          <span>{{ eq.grade }}</span>
+      </div>
+      <div class="result-row">
+        <label>Type:</label>
+        <span>{{ eq.type }}</span>
+      </div>
+      <button (click)="addEquipment(eq)">Add to appointment</button>
+    </li>
+  </div>
+  <div>
+    <h1>Equipment wanted for appointment</h1>
+    <li *ngFor="let e of selectedEquipment; let i = index" class="result-item">
+      <div class="result-row">
+        <label>Name:</label>
+        <span>{{ e.name }}</span>
+      </div>
+      <div class="result-row">
+          <label>Address:</label>
+          <span>{{ e.description }}</span>
+      </div>
+      <div class="result-row">
+          <label>Average Grade:</label>
+          <span>{{ e.grade }}</span>
+      </div>
+      <div class="result-row">
+        <label>Type:</label>
+        <span>{{ e.type }}</span>
+      </div>
+      <button class="form-button-remove" (click)="removeEquipmnet(i)">Remove</button>
+    </li>
+    <button (click)="getPredefidedAppointments(1)">Finish with choosing</button> <!--ISPRAVITI DA BUDE UZET ID OD KOMPANIJE SAD NECE JER JE POBRKAN PRIKAZ-->
+    <!--NEMAMO KOMPANIJU U OBJEKTU VEC SE SAMO UCITANA SA 1-->
+    <div>
+      <table>
+        <thead>
+          <tr>
+            <th>PickUp time</th>
+            <th>Duration</th>
+            <th>Administartor ID</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let p of predefinedAppointments">
+            <td>{{ p.pickupTime }}</td>
+            <td>{{ p.duration }}</td>
+            <td>OVDE DA BUDE IME I PRZ ADMINA TERMINA</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <button class="button-neki" (click)="changeExc()">Schedule an exceptional appointment</button>
+    <mat-form-field *ngIf="exceptional" class="datum">
+      <input matInput [matDatepicker]="picker" placeholder="Choose a date" [(ngModel)]="selectedDate">
+      <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+      <mat-datepicker #picker></mat-datepicker>
+    </mat-form-field>    
   </div>
 </div>

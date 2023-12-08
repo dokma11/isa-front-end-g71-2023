@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Company } from '../model/company.model';
 import { CompaniesService } from '../companies.service';
 import { Equipment } from '../../administration/model/equipment.model';
+import { Appointment } from '../model/appointment.model';
 
 @Component({
   selector: 'xp-company',
@@ -22,11 +23,16 @@ export class CompanyComponent implements OnInit{
   shouldEdit: boolean = false;
   shouldRenderCompaniesForm: boolean = false;
   companiesEquipment: Equipment[] = [];
+  selectedEquipment: Equipment[] = [];
+  predefinedAppointments: Appointment[] = [];
+  exceptional: boolean = false;
+  selectedDate: Date;
 
   constructor(private service: CompaniesService) { }
 
   ngOnInit(): void {
     this.getCompanies();
+    this.selectedEquipment = [];
   }
 
   getCompanies(): void{
@@ -73,5 +79,36 @@ export class CompanyComponent implements OnInit{
         }
       })
     }
+  }
+
+  addEquipment(eq: Equipment):void{
+      if(!this.selectedEquipment.includes(eq)){
+        this.selectedEquipment.push(eq);
+      }
+      
+  }
+
+  removeEquipmnet(index: number): void {
+      this.selectedEquipment.splice(index, 1);
+  }
+
+  getPredefidedAppointments(id: number):void{
+    if (id !== undefined) {
+    this.service.getCompanysPredefinedAppointments(id).subscribe({
+      next: (result: Appointment | Appointment[]) => {
+        if (Array.isArray(result)) {
+          this.predefinedAppointments = result;
+        }
+        else{
+          this.predefinedAppointments = [result];
+        }
+      }
+    })
+  }
+  }
+
+
+  changeExc():void{
+    this.exceptional = true;
   }
 }

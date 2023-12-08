@@ -7,6 +7,9 @@ import { MatIconModule } from '@angular/material/icon';
 import { CompanyFormComponent } from './company-form/company-form/company-form.component';
 import { RouterModule } from '@angular/router';
 import { SharedModule } from 'src/app/shared/shared.module';
+import { MatDatepickerModule } from '@angular/material/datepicker';
+import { MatInputModule } from '@angular/material/input';
+import { MatNativeDateModule } from '@angular/material/core';
 
 @NgModule({
   declarations: [
@@ -20,7 +23,10 @@ import { SharedModule } from 'src/app/shared/shared.module';
     MatIconModule,
     MaterialModule,
     RouterModule,
-    SharedModule
+    SharedModule,
+    MatDatepickerModule,
+    MatInputModule,
+    MatNativeDateModule
   ],
   exports: [
     CompanyComponent,
