@@ -3,7 +3,7 @@ export interface RegisteredUser {
   name: string;
   surname: string;
   password: string;
-  email: string;
+  username: string;
   companyInformation: string;
   telephoneNumber: string;
   city: string;
