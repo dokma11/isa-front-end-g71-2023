@@ -9,6 +9,7 @@ import { AppointmentsComponent } from '../appointments/appointments.component';
 import { MatDialog } from "@angular/material/dialog";
 import { EquipmentComponent } from '../../administration/equipment/equipment.component';
 import { CompanyAdmin } from '../../administration/model/company-admin.model';
+import { DatePipe } from '@angular/common'; 
 
 @Component({
   selector: 'xp-company',
@@ -42,7 +43,8 @@ export class CompanyComponent implements OnInit{
   shouldEdit: boolean = false;
   shouldRenderCompaniesForm: boolean = false;
 
-  selectedEquipment: Equipment;
+  sEquipment: Equipment;
+  selectedEquipment: Equipment[] = [];
   equipment: Equipment;
   companiesEquipment: Equipment[] = [];
   shouldRenderEquipmentForm: boolean = false;
@@ -57,9 +59,14 @@ export class CompanyComponent implements OnInit{
   administrators: CompanyAdmin[] = [];
 
   //public map!: Map;
+  predefinedAppointments: Appointment[] = [];
+  exceptional: boolean = false;
+  selectedDate: Date;
+  timeSlots: any;
 
   constructor(private service: CompaniesService, 
-              public dialogRef: MatDialog) { }
+              public dialogRef: MatDialog,
+              private datePipe: DatePipe) { } 
 
   ngOnInit(): void {
     this.getCompanies();
@@ -76,7 +83,7 @@ export class CompanyComponent implements OnInit{
         zoom: 2,maxZoom: 18, 
       }),
     });
-  */
+  */ 
   }
 
   getCompanies(): void{
@@ -156,7 +163,7 @@ export class CompanyComponent implements OnInit{
         }
       })
     }
-  }
+  }  
 
   onAddClicked(): void{
     this.dialogRef.open(AppointmentsComponent, {
@@ -182,11 +189,23 @@ export class CompanyComponent implements OnInit{
 
   onEditEquipmentClicked(equipment: Equipment): void{
     this.shouldEdit = true;
-    this.selectedEquipment = equipment;
+    this.sEquipment = equipment;
     this.shouldRenderEquipmentForm = true;
-  }
+  } 
 
   getEquipment(): void{
 
   }
+
+
+  addEquipment(eq: Equipment):void{
+      if(!this.selectedEquipment.includes(eq)){
+        this.selectedEquipment.push(eq);
+      }
+      
+  }
+
+  removeEquipmnet(index: number): void {
+      this.selectedEquipment.splice(index, 1);
+  }  
 }

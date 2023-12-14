@@ -9,12 +9,17 @@ import { RouterModule } from '@angular/router';
 import { SharedModule } from 'src/app/shared/shared.module';
 import { AppointmentsComponent } from './appointments/appointments.component';
 import { AdministrationModule } from '../administration/administration.module';
-
+import { MatDatepickerModule } from '@angular/material/datepicker';
+import { MatInputModule } from '@angular/material/input';
+import { MatNativeDateModule } from '@angular/material/core';
+import { DatePipe } from '@angular/common';
+import { CompanyUserViewComponent } from './company-user-view/company-user-view.component';
 @NgModule({
   declarations: [
     CompanyComponent,
     CompanyFormComponent,
-    AppointmentsComponent
+    AppointmentsComponent,
+    CompanyUserViewComponent
   ],
   imports: [
     CommonModule,
@@ -24,11 +29,18 @@ import { AdministrationModule } from '../administration/administration.module';
     MaterialModule,
     RouterModule,
     SharedModule,
-    AdministrationModule
+    AdministrationModule,
+    MatDatepickerModule,
+    MatInputModule,
+    MatNativeDateModule
   ],
   exports: [
     CompanyComponent,
-    CompanyFormComponent
+    CompanyFormComponent,
+    CompanyUserViewComponent
+  ],
+  providers: [
+    DatePipe
   ]
 })
 export class CompaniesModule { }

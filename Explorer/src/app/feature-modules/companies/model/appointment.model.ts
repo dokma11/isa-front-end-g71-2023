@@ -1,6 +1,5 @@
 import { CompanyAdmin } from "../../administration/model/company-admin.model";
 import { RegisteredUser } from "../../users/model/registered-user.model";
-import { Company } from "./company.model";
 
 export interface Appointment {
   id?: number;

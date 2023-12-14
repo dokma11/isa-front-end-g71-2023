@@ -37,7 +37,11 @@
                      [company]="selectedCompany" 
                      [shouldEdit]="shouldEdit">
     </xp-company-form>
+    
+    
   </div>
+ 
+  
 </div>
 
 <br>
@@ -139,7 +143,7 @@
     <xp-equipment-form 
                 *ngIf="shouldRenderEquipmentForm"
                 (equimpentUpdated)="getEquipment()" 
-                [equipment]="selectedEquipment" 
+                [equipment]="sEquipment" 
                 [shouldEdit]="shouldEdit">
     >
     </xp-equipment-form>

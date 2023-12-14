@@ -34,6 +34,9 @@
                     <label>Average Grade:</label>
                     <span>{{ result.averageGrade }}</span>
                 </div>
+                <button  color="primary" mat-raised-button [routerLink]="['company',result.id]">
+                    See details
+                </button>
             </li>
         </ul>
     </div>

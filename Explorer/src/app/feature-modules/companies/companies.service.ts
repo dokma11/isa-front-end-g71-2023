@@ -4,8 +4,9 @@ import { environment } from 'src/env/environment';
 import { Observable } from 'rxjs';
 import { Company } from './model/company.model';
 import { Equipment } from '../administration/model/equipment.model';
-import { Appointment } from './model/appointment.model';
+import { Appointment } from './model/appointment.model'; 
 import { CompanyAdmin } from '../administration/model/company-admin.model';
+ 
 
 @Injectable({
   providedIn: 'root'
@@ -66,4 +67,19 @@ export class CompaniesService {
     return this.http.get<CompanyAdmin>(environment.apiHost + 'companies/' + company.id + '/administrator');
   }
 
+  getCompanysPredefinedAppointments(id:number) : Observable<Appointment>{
+    return this.http.get<Appointment>(environment.apiHost + 'appointments/predefined/' + id);
+  }
+
+  getFreeTimeSlots(companyId: number, date: string, startTime: string, endTime: string): Observable<any> {
+    
+    const params = {
+      companyId: companyId.toString(),
+      date: date,
+      startTime: startTime,
+      endTime: endTime
+    };
+
+    return this.http.get<any>(environment.apiHost + 'appointments/freeTimeSlots', { params: params });
+  }
 }
