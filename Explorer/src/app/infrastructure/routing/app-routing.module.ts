@@ -11,6 +11,7 @@ import { AuthGuard } from '../auth/auth.guard';
 import { CompanySearchComponent } from 'src/app/feature-modules/company/company-search/company-search.component';
 import { UserUpdateComponent } from 'src/app/feature-modules/users/user-update/user-update.component';
 import { UserRegistrationComponent } from 'src/app/feature-modules/users/user-registration/user-registration.component';
+import { CompanyUserViewComponent } from 'src/app/feature-modules/companies/company-user-view/company-user-view.component';
 
 const routes: Routes = [
   { path: 'home', component: HomeComponent },
@@ -25,6 +26,11 @@ const routes: Routes = [
   { path: 'userProfile', component: UserUpdateComponent },
   { path: 'companies', component: CompanyComponent},
   { path: 'company-administrators', component: CompanyAdminComponent},
+  {
+    path: "searchCompanies/company/:id",
+    component: CompanyUserViewComponent,
+    canActivate: [AuthGuard],
+}
 
 ];
 

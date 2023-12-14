@@ -6,6 +6,7 @@ import { Company } from './model/company.model';
 import { Equipment } from '../administration/model/equipment.model';
 import { Appointment } from './model/appointment.model';
 
+
 @Injectable({
   providedIn: 'root'
 })
@@ -40,4 +41,19 @@ export class CompaniesService {
   getCompanysPredefinedAppointments(id:number) : Observable<Appointment>{
     return this.http.get<Appointment>(environment.apiHost + 'appointments/predefined/' + id);
   }
+
+
+  getFreeTimeSlots(companyId: number, date: string, startTime: string, endTime: string): Observable<any> {
+    
+    const params = {
+      companyId: companyId.toString(),
+      date: date,
+      startTime: startTime,
+      endTime: endTime
+    };
+
+    return this.http.get<any>(environment.apiHost + 'appointments/freeTimeSlots', { params: params });
+  }
+
+
 }

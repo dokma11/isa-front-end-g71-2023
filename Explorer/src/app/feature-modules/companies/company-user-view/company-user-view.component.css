@@ -1,0 +1,150 @@
+#companies {
+    margin-top: 20px;
+    margin-left: 20px;
+  }
+  
+  #companies-details {
+    display: flex;
+    flex-direction: row;
+    gap: 50px;
+    align-items: flex-start;
+  }
+  
+  p {
+    font-size: 20px;
+  }
+  
+  table {
+    border-collapse: collapse;
+    font-size: 0.9em;
+    font-family: sans-serif;
+    min-width: 300px;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.15); 
+  }
+  
+  thead tr {
+    background-color: #3f51b5;
+    color: #ffffff;
+    text-align: left;
+  }
+  
+  th, td {
+    padding: 12px 15px;
+  }
+  
+  tbody tr {
+    border-bottom: 1px solid #dddddd;
+  }
+  
+  tbody tr:last-of-type {
+    border-bottom: 2px solid #3f51b5;
+  }
+  
+  tbody tr.active-row {
+    font-weight: bold;
+    color: #3f51b5;
+  }
+  
+  xp-map {
+    height: 500px;
+    width: 650px;
+  }
+  
+  #closeButton {
+    width: 320px;
+    display: flex;
+    gap: 20px;
+    flex-direction: column;
+  }
+  
+  .selected-row {
+    background-color: #45b058;
+  }
+  
+  
+  .search-container {
+    max-width: 1000px;
+    margin: 20px auto;
+    padding: 20px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+  }
+  
+  label {
+    display: block;
+    margin-bottom: 5px;
+  }
+  
+  input, select, button {
+    margin-bottom: 10px;
+    padding: 8px;
+  }
+  
+  
+  
+  .rating-filter {
+    display: flex;
+    gap: 10px;
+  }
+  
+  .results {
+    margin-top: 20px;
+  }
+  
+  ul {
+    list-style: none;
+    padding: 0;
+  }
+  
+  li {
+    margin-bottom: 10px;
+    padding: 15px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    transition: background-color 0.3s ease;
+  }
+  
+  li:hover {
+    background-color: #f0f0f0;
+  }
+  
+  .result-item {
+    display: flex;
+    flex-direction: column; /* Change flex-direction to column */
+    justify-content: space-between;
+  }
+  
+  .result-row {
+    display: flex;
+    align-items: baseline;
+    margin-bottom: 10px;
+  }
+  
+  .result-row label {
+    font-weight: bold;
+    margin-right: 10px;
+  }
+  
+  .result-row span {
+    color: #555;
+  }
+  
+  .container {
+    display: flex; /* or inline-flex */
+    flex-direction: row;
+    margin: 1%;
+    
+  }
+  
+  .datum{
+    margin: 1%;
+  }
+  
+  .button-neki {
+    background-color: #3f51b5;
+    color: #fff;
+    cursor: pointer;
+    border: none;
+    border-radius: 4px;
+    margin-top: 1%;
+  }

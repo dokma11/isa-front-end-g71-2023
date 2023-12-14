@@ -10,11 +10,13 @@ import { SharedModule } from 'src/app/shared/shared.module';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatInputModule } from '@angular/material/input';
 import { MatNativeDateModule } from '@angular/material/core';
-
+import { DatePipe } from '@angular/common';
+import { CompanyUserViewComponent } from './company-user-view/company-user-view.component';
 @NgModule({
   declarations: [
     CompanyComponent,
-    CompanyFormComponent
+    CompanyFormComponent,
+    CompanyUserViewComponent
   ],
   imports: [
     CommonModule,
@@ -30,7 +32,11 @@ import { MatNativeDateModule } from '@angular/material/core';
   ],
   exports: [
     CompanyComponent,
-    CompanyFormComponent
+    CompanyFormComponent,
+    CompanyUserViewComponent
+  ],
+  providers: [
+    DatePipe
   ]
 })
 export class CompaniesModule { }
