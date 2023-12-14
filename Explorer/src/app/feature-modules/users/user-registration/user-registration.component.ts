@@ -47,7 +47,7 @@ export class UserRegistrationComponent {
     const user: RegisteredUser = {
       name: this.registrationFrom.value.name || '',
       surname: this.registrationFrom.value.surname || '',
-      username: this.registrationFrom.value.email || '',
+      email: this.registrationFrom.value.email || '',
       password: this.registrationFrom.value.password || '',
       telephoneNumber: this.registrationFrom.value.telephoneNumber || '',
       city: this.registrationFrom.value.city || '',
@@ -93,7 +93,7 @@ export class UserRegistrationComponent {
       profession: this.registrationFrom.value.profession || '',
       companyInformation: this.registrationFrom.value.companyInformation || '',
       password: this.registrationFrom.value.password || '',
-      username: this.registrationFrom.value.email || '',
+      email: this.registrationFrom.value.email || '',
       role: '',
       points: 0,
     };

@@ -19,7 +19,7 @@ export class UserUpdateComponent implements OnInit {
     name: '',
     surname: '',
     password: '',
-    username: '',
+    email: '',
     companyInformation: '',
     telephoneNumber: '',
     city: '',
