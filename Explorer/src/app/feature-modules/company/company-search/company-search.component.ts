@@ -97,4 +97,7 @@ export class CompanySearchComponent {
       this.getCompanies();
     }
 
+    seeDetails() : void{
+      
+    }
 }

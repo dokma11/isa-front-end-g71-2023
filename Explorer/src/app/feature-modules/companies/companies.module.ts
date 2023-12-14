@@ -7,11 +7,16 @@ import { MatIconModule } from '@angular/material/icon';
 import { CompanyFormComponent } from './company-form/company-form/company-form.component';
 import { RouterModule } from '@angular/router';
 import { SharedModule } from 'src/app/shared/shared.module';
-
+import { MatDatepickerModule } from '@angular/material/datepicker';
+import { MatInputModule } from '@angular/material/input';
+import { MatNativeDateModule } from '@angular/material/core';
+import { DatePipe } from '@angular/common';
+import { CompanyUserViewComponent } from './company-user-view/company-user-view.component';
 @NgModule({
   declarations: [
     CompanyComponent,
-    CompanyFormComponent
+    CompanyFormComponent,
+    CompanyUserViewComponent
   ],
   imports: [
     CommonModule,
@@ -20,11 +25,18 @@ import { SharedModule } from 'src/app/shared/shared.module';
     MatIconModule,
     MaterialModule,
     RouterModule,
-    SharedModule
+    SharedModule,
+    MatDatepickerModule,
+    MatInputModule,
+    MatNativeDateModule
   ],
   exports: [
     CompanyComponent,
-    CompanyFormComponent
+    CompanyFormComponent,
+    CompanyUserViewComponent
+  ],
+  providers: [
+    DatePipe
   ]
 })
 export class CompaniesModule { }
