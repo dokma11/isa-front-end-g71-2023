@@ -2,6 +2,8 @@ import { Component, EventEmitter, Inject, Input, OnChanges, OnInit, Output } fro
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Equipment } from '../model/equipment.model';
 import { AdministrationService } from '../administration.service';
+import { CompaniesService } from '../../companies/companies.service';
+import { Company } from '../../companies/model/company.model';
 
 @Component({
   selector: 'xp-equipment-form',
@@ -14,7 +16,8 @@ export class EquipmentFormComponent implements OnChanges {
   @Input() equipment: Equipment;
   @Input() shouldEdit: boolean = false;
 
-  constructor(private service: AdministrationService) {
+  constructor(private service: AdministrationService,
+              private companiesService: CompaniesService) {
   }
 
   ngOnChanges(): void {
@@ -29,6 +32,7 @@ export class EquipmentFormComponent implements OnChanges {
     description: new FormControl('', [Validators.required]),
     type: new FormControl('', [Validators.required]),
     grade: new FormControl(0, [Validators.required]),
+    quantity: new FormControl(0, [Validators.required]),
   });
 
   addEquipment(): void {
@@ -36,10 +40,19 @@ export class EquipmentFormComponent implements OnChanges {
       name: this.equipmentForm.value.name || "",
       description: this.equipmentForm.value.description || "",
       type: this.equipmentForm.value.type || "",
-      grade: this.equipmentForm.value.grade || 0
+      grade: this.equipmentForm.value.grade || 0,
+      quantity: this.equipmentForm.value.quantity || 0
     };
-    this.service.addEquipment(equipment).subscribe({
-      next: () => { this.equimpentUpdated.emit() }
+
+    //dodaj samo za kompaniju jej ;<
+    this.companiesService.getCompanyById(-1).subscribe({
+      next: (result: Company) => {
+          equipment.company = result;
+
+          this.service.addEquipment(equipment).subscribe({
+            next: () => { this.equimpentUpdated.emit() }
+          });
+      }
     });
   }
 
@@ -48,11 +61,15 @@ export class EquipmentFormComponent implements OnChanges {
       name: this.equipmentForm.value.name || "",
       description: this.equipmentForm.value.description || "",
       type: this.equipmentForm.value.type || "",
-      grade: this.equipmentForm.value.grade || 0
+      grade: this.equipmentForm.value.grade || 0,
+      quantity: this.equipmentForm.value.quantity || 0
     };
     equipment.id = this.equipment.id;
     this.service.updateEquipment(equipment).subscribe({
-      next: () => { this.equimpentUpdated.emit();}
+      next: () => { 
+        this.equimpentUpdated.emit();
+        location.reload();
+      }
     });
   }
 }

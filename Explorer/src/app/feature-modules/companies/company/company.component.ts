@@ -2,6 +2,13 @@ import { Component, OnInit } from '@angular/core';
 import { Company } from '../model/company.model';
 import { CompaniesService } from '../companies.service';
 import { Equipment } from '../../administration/model/equipment.model';
+import { Appointment } from '../model/appointment.model';
+import { View } from 'ol';
+import TileLayer from 'ol/layer/Tile';
+import { AppointmentsComponent } from '../appointments/appointments.component';
+import { MatDialog } from "@angular/material/dialog";
+import { EquipmentComponent } from '../../administration/equipment/equipment.component';
+import { CompanyAdmin } from '../../administration/model/company-admin.model';
 
 @Component({
   selector: 'xp-company',
@@ -10,6 +17,19 @@ import { Equipment } from '../../administration/model/equipment.model';
 })
 export class CompanyComponent implements OnInit{
   
+
+
+
+
+
+  // DODAJ LISTU ADMINA KOMPANIJE DA SE ISPISE
+
+
+
+
+
+
+
   company: Company = {
     name: "",
     address: "",
@@ -21,37 +41,89 @@ export class CompanyComponent implements OnInit{
   selectedCompany: Company;
   shouldEdit: boolean = false;
   shouldRenderCompaniesForm: boolean = false;
-  companiesEquipment: Equipment[] = [];
 
-  constructor(private service: CompaniesService) { }
+  selectedEquipment: Equipment;
+  equipment: Equipment;
+  companiesEquipment: Equipment[] = [];
+  shouldRenderEquipmentForm: boolean = false;
+
+  appointment: Appointment;
+  appointments: Appointment[] = [];
+  selectedAppointment: Appointment;
+  shouldRenderAppointmentsForm: boolean = false;
+  timeString: string = "";
+  dateString: string = "";
+
+  administrators: CompanyAdmin[] = [];
+
+  //public map!: Map;
+
+  constructor(private service: CompaniesService, 
+              public dialogRef: MatDialog) { }
 
   ngOnInit(): void {
     this.getCompanies();
+/*
+    this.map = new Map({
+      layers: [
+        new TileLayer({
+          source: new OSM(),
+        }),
+      ],
+      target: 'map',
+      view: new View({ 
+        center: [0, 0],
+        zoom: 2,maxZoom: 18, 
+      }),
+    });
+  */
   }
 
   getCompanies(): void{
-    this.service.getCompanyById(1).subscribe({
+    this.service.getCompanyById(-1).subscribe({
       next: (result: Company) => {
           this.company = result;
           this.service.getCompaniesEquipment(this.company).subscribe({
               next: (result: Equipment | Equipment[]) =>{
                 if (Array.isArray(result)) {
                   this.companiesEquipment = result;
-                  this.company.equipment = "";
-                  for(let ce of this.companiesEquipment){
-                    if(this.company.equipment == ""){
-                      this.company.equipment += ce.name;
-                    }
-                    else{
-                      this.company.equipment += ", " + ce.name;
-                    }
-                  }
+                  
+                  // ovde namestam listu equipmenta i sta sa njom
+
                 }
                 else{
                   this.companiesEquipment = [result];
                 }
               }
             });
+
+          this.service.getCompaniesAppointments(this.company).subscribe({
+            next: (result: Appointment | Appointment[]) =>{
+              if (Array.isArray(result)) {
+                this.appointments = result;
+                for (let appointment of this.appointments) {
+                  appointment.companyId = this.company.id || 0;
+                
+                  //[appointment.dateString, appointment.timeString] = appointment.pickupTime.toString().split('T');
+                
+                }
+              }
+              else{
+                this.appointments = [result];
+              }
+            }
+          });
+
+          this.service.getCompaniesAdministrators(this.company).subscribe({
+            next: (result: CompanyAdmin | CompanyAdmin[]) =>{
+              if (Array.isArray(result)) {
+                this.administrators = result;
+              }
+              else{
+                this.administrators = [result];
+              }
+            }
+          });
       },
       error: (err) => {
         console.error('Error fetching companies:', err);
@@ -73,5 +145,48 @@ export class CompanyComponent implements OnInit{
         }
       })
     }
+  }
+
+  onDeleteAppointmentClicked(appointment: Appointment): void{
+    if(appointment.id){  
+      // menjaj
+      this.service.deleteCompany(appointment.id).subscribe({
+        next: () => {
+          this.getCompanies();
+        }
+      })
+    }
+  }
+
+  onAddClicked(): void{
+    this.dialogRef.open(AppointmentsComponent, {
+      data: this.appointment,
+    });
+  }
+
+  onDeleteEquipmentClicked(equipment: Equipment): void{
+    if(equipment.id){  
+      this.service.deleteEquipment(equipment.id).subscribe({
+        next: () => {
+          this.getCompanies();
+        }
+      })
+    }
+  }
+
+  onAddEquipmentClicked(): void{
+    this.dialogRef.open(EquipmentComponent, {
+      data: this.equipment,
+    });
+  }
+
+  onEditEquipmentClicked(equipment: Equipment): void{
+    this.shouldEdit = true;
+    this.selectedEquipment = equipment;
+    this.shouldRenderEquipmentForm = true;
+  }
+
+  getEquipment(): void{
+
   }
 }

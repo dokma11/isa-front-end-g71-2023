@@ -7,11 +7,14 @@ import { MatIconModule } from '@angular/material/icon';
 import { CompanyFormComponent } from './company-form/company-form/company-form.component';
 import { RouterModule } from '@angular/router';
 import { SharedModule } from 'src/app/shared/shared.module';
+import { AppointmentsComponent } from './appointments/appointments.component';
+import { AdministrationModule } from '../administration/administration.module';
 
 @NgModule({
   declarations: [
     CompanyComponent,
-    CompanyFormComponent
+    CompanyFormComponent,
+    AppointmentsComponent
   ],
   imports: [
     CommonModule,
@@ -20,7 +23,8 @@ import { SharedModule } from 'src/app/shared/shared.module';
     MatIconModule,
     MaterialModule,
     RouterModule,
-    SharedModule
+    SharedModule,
+    AdministrationModule
   ],
   exports: [
     CompanyComponent,

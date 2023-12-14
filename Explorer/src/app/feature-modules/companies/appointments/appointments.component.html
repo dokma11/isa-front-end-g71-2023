@@ -1,0 +1,23 @@
+<form [formGroup]="appointmentForm">
+  <div>
+    <div>
+      <mat-form-field>
+        <mat-label >Administrator email</mat-label>
+        <input matInput formControlName="administratorEmail" type="text"/>
+      </mat-form-field>
+    </div>
+    <div>
+      <mat-form-field>
+        <mat-label >Pick up date</mat-label>
+        <input matInput formControlName="pickupTime" type="datetime-local">
+      </mat-form-field>  
+    </div>
+    <div>
+      <mat-form-field>
+        <mat-label >Duration</mat-label>
+        <input matInput type="number" min="1" max="5" formControlName="duration" >
+      </mat-form-field>
+    </div>      
+    <button *ngIf="!shouldEdit" type="submit" (click)="addAppointment()" mat-raised-button>Done</button>
+  </div>
+</form>

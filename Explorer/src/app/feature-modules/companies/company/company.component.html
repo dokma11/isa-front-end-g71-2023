@@ -8,7 +8,6 @@
             <th>Address</th>
             <th>Description</th>
             <th>Average grade</th>
-            <th>List of available Equipment</th>
             <th></th>
             <th></th>
           </tr>
@@ -19,12 +18,15 @@
             <td>{{ company.address }}</td>
             <td>{{ company.description }}</td>
             <td>{{ company.averageGrade }}</td>
-            <td>{{ company.equipment }}</td>
             <td>
-              <button (click)="onDeleteClicked(company)" color="accent" mat-icon-button>Delete</button>
+              <button (click)="onDeleteClicked(company)" color="accent" mat-icon-button>
+                <mat-icon class="faIcon">delete</mat-icon>
+              </button>
             </td>
             <td>
-              <button (click)="onEditClicked(company)" color="primary" mat-icon-button>Edit</button>
+              <button (click)="onEditClicked(company)" color="primary" mat-icon-button>
+                <mat-icon class="faIcon">edit</mat-icon>
+              </button>
             </td>
           </tr>
         </tbody>
@@ -35,5 +37,140 @@
                      [company]="selectedCompany" 
                      [shouldEdit]="shouldEdit">
     </xp-company-form>
+  </div>
+</div>
+
+<br>
+
+<div id="map" class="map"></div>
+
+<br>
+<h3>List of company's appointments</h3>
+
+<div id="appointments">
+  <div id="appointment-details">
+    <table>
+      <thead>
+        <tr>
+          <th>Responsible Admin</th>
+          <th>Date</th>
+          <th>Time</th>
+          <th></th>
+          <th></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let app of appointments">
+          <td>{{ app.administrator?.name + " " + app.administrator?.surname }}</td>
+          <td>{{ app.pickupTime }}</td>
+          <td>{{ app.pickupTime }}</td>
+          <td>
+            <button (click)="onDeleteAppointmentClicked(app)" color="accent" mat-icon-button>
+              <mat-icon class="faIcon">delete</mat-icon>
+            </button>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <button color="primary" (click)="onAddClicked()" mat-icon-button>
+              <mat-icon>add</mat-icon>
+            </button>        
+          </td>
+        </tr>
+      </tbody>
+    </table>
+
+    <div class="right-column">
+      <xp-appointments *ngIf="shouldRenderAppointmentsForm" 
+                  [shouldEdit]="shouldEdit" 
+                  [appointment]="selectedAppointment" 
+                  (appointmentUpdated)="getCompanies()">
+      </xp-appointments>
+    </div>
+
+    </div>  
+</div>
+
+<br>
+<h3>List of company's equipment</h3>
+
+<div id="equipment">
+  <div id="equipment-details">
+    <table>
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Description</th>
+          <th>Type</th>
+          <th>Grade</th>
+          <th>Quantity</th>
+          <th></th>
+          <th></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let eq of companiesEquipment">
+          <td>{{ eq.name }}</td>
+          <td>{{ eq.description }}</td>
+          <td>{{ eq.type }}</td>
+          <td>{{ eq.grade }}</td>
+          <td>{{ eq.quantity }}</td>
+          <td>
+            <button (click)="onDeleteEquipmentClicked(eq)" color="accent" mat-icon-button>
+              <mat-icon class="faIcon">delete</mat-icon>
+            </button>          
+          </td>
+          <td>
+            <button (click)="onEditEquipmentClicked(eq)" color="primary" mat-icon-button>
+              <mat-icon class="faIcon">edit</mat-icon>
+            </button>          
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <button color="primary" (click)="onAddEquipmentClicked()" mat-icon-button>
+              <mat-icon>add</mat-icon>
+            </button>        
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    
+    <xp-equipment-form 
+                *ngIf="shouldRenderEquipmentForm"
+                (equimpentUpdated)="getEquipment()" 
+                [equipment]="selectedEquipment" 
+                [shouldEdit]="shouldEdit">
+    >
+    </xp-equipment-form>
+
+  </div>
+</div>
+
+
+<br>
+<h3>List of company's administrators</h3>
+
+<div id="equipment">
+  <div id="equipment-details">
+    <table>
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Surname</th>
+          <th>Email</th>
+          <th>Profession</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let a of administrators">
+          <td>{{ a.name }}</td>
+          <td>{{ a.surname }}</td>
+          <td>{{ a.email }}</td>
+          <td>{{ a.profession }}</td>
+        </tr>
+        <tr>
+      </tbody>
+    </table>
   </div>
 </div>

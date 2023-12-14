@@ -4,6 +4,8 @@ import { environment } from 'src/env/environment';
 import { Observable } from 'rxjs';
 import { Company } from './model/company.model';
 import { Equipment } from '../administration/model/equipment.model';
+import { Appointment } from './model/appointment.model';
+import { CompanyAdmin } from '../administration/model/company-admin.model';
 
 @Injectable({
   providedIn: 'root'
@@ -35,4 +37,33 @@ export class CompaniesService {
   getCompanyById(id: number): Observable<Company> {
     return this.http.get<Company>(environment.apiHost + 'companies/' + id);
   }
+
+  getCompaniesAppointments(company: Company): Observable<Appointment> {
+    return this.http.get<Appointment>(environment.apiHost + 'companies/' + company.id + '/appointment');
+  }
+
+  addAppointment(appointment: Appointment): Observable<Appointment> {
+    return this.http.post<Appointment>(environment.apiHost + 'appointments', appointment);
+  }
+
+  getAdminByEmail(email: string): Observable<CompanyAdmin> {
+    return this.http.get<CompanyAdmin>(environment.apiHost + 'companyAdministrator/email/' + email);
+  }
+
+  addEquipment(equipment: Equipment): Observable<Equipment> {
+    return this.http.post<Equipment>(environment.apiHost + 'equipment', equipment);
+  }
+
+  updateEquipment(equipment: Equipment): Observable<Equipment> {
+    return this.http.put<Equipment>(environment.apiHost + 'equipment/' + equipment.id, equipment);
+  }
+
+  deleteEquipment(id: number): Observable<Equipment> {
+    return this.http.delete<Equipment>(environment.apiHost + 'equipment/' + id);
+  }
+
+  getCompaniesAdministrators(company: Company): Observable<CompanyAdmin> {
+    return this.http.get<CompanyAdmin>(environment.apiHost + 'companies/' + company.id + '/administrator');
+  }
+
 }
