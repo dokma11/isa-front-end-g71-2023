@@ -82,7 +82,7 @@
         </div>
         <button class="form-button-remove" (click)="removeEquipmnet(i)">Remove</button>
       </li>
-      <button (click)="getPredefidedAppointments(1)">Finish with choosing</button> <!--ISPRAVITI DA BUDE UZET ID OD KOMPANIJE SAD NECE JER JE POBRKAN PRIKAZ-->
+      <button (click)="getPredefidedAppointments(company.id || 0)">Finish with choosing</button> <!--ISPRAVITI DA BUDE UZET ID OD KOMPANIJE SAD NECE JER JE POBRKAN PRIKAZ-->
       <!--NEMAMO KOMPANIJU U OBJEKTU VEC SE SAMO UCITANA SA 1-->
       <div>
         <table>
