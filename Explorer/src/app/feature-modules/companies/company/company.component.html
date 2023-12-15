@@ -67,7 +67,7 @@
       </thead>
       <tbody>
         <tr *ngFor="let app of appointments">
-          <td>{{ getAdminsName(app) + " " + getAdminsSurname(app) }}</td>
+          <td>{{ app.administrator?.name + " " + app.administrator?.surname }}</td>
           <td>{{ app.dateString }}</td>
           <td>{{ app.timeString }}</td>
  <!--
@@ -174,7 +174,7 @@
         <tr *ngFor="let a of administrators">
           <td>{{ a.name }}</td>
           <td>{{ a.surname }}</td>
-          <td>{{ a.email }}</td>
+          <td>{{ a.username }}</td>
           <td>{{ a.profession }}</td>
         </tr>
         <tr>

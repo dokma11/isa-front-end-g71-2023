@@ -13,7 +13,7 @@ export class CompanyAdminComponent implements OnInit{
     name : "",
     surname: "",
     password: "",
-    email: "",
+    username: "",
     companyInformation: "",
     telephoneNumber: "",
     city: "",

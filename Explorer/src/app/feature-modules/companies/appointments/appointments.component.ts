@@ -87,7 +87,7 @@ export class AppointmentsComponent implements OnChanges{
                         const endDate: Date = new Date(startDate);
                         endDate.setMinutes(startDate.getMinutes() + 30); 
 
-                        if(a.administratorId === appointment.administratorId &&
+                        if(a.administrator?.id === appointment.administratorId &&
                           this.isDateInRange(d, startDate, endDate)){
                             invalid = true;
                           }

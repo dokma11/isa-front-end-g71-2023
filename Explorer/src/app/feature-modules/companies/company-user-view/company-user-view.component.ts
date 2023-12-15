@@ -200,8 +200,11 @@ export class CompanyUserViewComponent {
       const localDate = new Date(this.selectedDate.getTime() - this.selectedDate.getTimezoneOffset() * 60000);
       const formattedDate = localDate.toISOString().slice(0, 19).replace('T', ' '); // Implement formatDate as needed
       const dateForWorkingHours =  localDate.toISOString().slice(0, 10).replace('T', ' ');
-      const startTime = dateForWorkingHours + ' 08:00:00'; // Set the start time PROMENTII KAD SE IMPLEMENTIRA RADNO VREME KOMPANIEJ
-      const endTime = dateForWorkingHours + ' 16:00:00'; // Set the end time PROMENTII KAD SE IMPLEMENTIRA RADNO VREME KOMPANIEJ
+      //const startTime = dateForWorkingHours + ' 08:00:00'; // Set the start time PROMENTII KAD SE IMPLEMENTIRA RADNO VREME KOMPANIEJ
+      const startTime = dateForWorkingHours + ' ' + this.company.workingHoursStart; 
+      const endTime = dateForWorkingHours + ' ' + this.company.workingHoursEnd;
+
+      
 
       this.service.getFreeTimeSlots(companyId, formattedDate, startTime, endTime).subscribe({
         next: (freeTimeSlots: any) => {

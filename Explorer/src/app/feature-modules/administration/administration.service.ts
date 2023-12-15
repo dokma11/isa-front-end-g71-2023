@@ -5,6 +5,7 @@ import { environment } from 'src/env/environment';
 import { Observable } from 'rxjs';
 import { PagedResults } from 'src/app/shared/model/paged-results.model';
 import { CompanyAdmin } from './model/company-admin.model';
+import { EquipmentQuantity } from '../companies/model/equipmentQuantity.model';
 
 @Injectable({
   providedIn: 'root'
@@ -35,5 +36,13 @@ export class AdministrationService {
 
   updateCompanyAdministrator(companyAdmin: CompanyAdmin): Observable<CompanyAdmin> {
     return this.http.put<CompanyAdmin>(environment.apiHost + 'companyAdministrator/' + companyAdmin.id, companyAdmin);
+  }
+
+  getEquipmentQuantities(id: number): Observable<EquipmentQuantity>{
+    return this.http.get<EquipmentQuantity>(environment.apiHost + 'equipmentQuantity/equipment/' + id);
+  }
+
+  getBookedQuantities(id: number): Observable<number>{
+    return this.http.get<number>(environment.apiHost + 'equipmentQuantity/quantity/' + id);
   }
 }

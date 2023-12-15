@@ -67,11 +67,21 @@ export class EquipmentFormComponent implements OnChanges {
       quantity: this.equipmentForm.value.quantity || 0 
     };
     equipment.id = this.equipment.id;
-    this.service.updateEquipment(equipment).subscribe({
-      next: () => { 
-        this.equimpentUpdated.emit();
-        location.reload();
-      }
-    });
+
+    if(equipment.id){
+      this.service.getBookedQuantities(equipment.id).subscribe({
+        next: (result: number) => {
+          if(equipment.quantity >= result){
+            this.service.updateEquipment(equipment).subscribe({
+              next: () => { 
+                this.equimpentUpdated.emit();
+                location.reload();
+              
+              }
+            });  
+          }
+        }  
+      });  
+    }
   }
 }

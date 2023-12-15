@@ -69,7 +69,7 @@ export class CompaniesService {
   }
 
   getCompaniesAdministrators(company: Company): Observable<CompanyAdmin> {
-    return this.http.get<CompanyAdmin>(environment.apiHost + 'companies/' + company.id + '/administrator');
+    return this.http.get<CompanyAdmin>(environment.apiHost + 'companies/' + company.id + '/administrators');
   }
 
   getCompanysPredefinedAppointments(id:number) : Observable<Appointment>{
@@ -104,5 +104,12 @@ export class CompaniesService {
   getCompaniesAdministratorIds(company: Company): Observable<number> {
     return this.http.get<number>(environment.apiHost + 'companies/' + company.id + '/administrator');
   }
+  
+  getEquipmentQuantities(id: number): Observable<EquipmentQuantity>{
+    return this.http.get<EquipmentQuantity>(environment.apiHost + 'equipmentQuantity/equipment/' + id);
+  }
 
+  getIfRemovable(id: number): Observable<EquipmentQuantity>{
+    return this.http.get<EquipmentQuantity>(environment.apiHost + 'equipmentQuantity/removable/' + id);
+  }
 }

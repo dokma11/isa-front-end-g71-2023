@@ -9,7 +9,6 @@ import { EquipmentComponent } from '../../administration/equipment/equipment.com
 import { CompanyAdmin } from '../../administration/model/company-admin.model';
 import { DatePipe } from '@angular/common'; 
 import { EquipmentFormComponent } from '../../administration/equipment-form/equipment-form.component';
-
 import Map from 'ol/Map';
 import View from 'ol/View';
 import VectorLayer from 'ol/layer/Vector';
@@ -22,6 +21,7 @@ import { Feature } from 'ol';
 import { Point } from 'ol/geom';
 import VectorSource from 'ol/source/Vector';
 import { fromLonLat } from 'ol/proj';
+import { EquipmentQuantity } from '../model/equipmentQuantity.model';
 
 @Component({
   selector: 'xp-company',
@@ -56,14 +56,15 @@ export class CompanyComponent implements OnInit{
   dateString: string = "";
 
   administrators: CompanyAdmin[] = [];
-  appointmentAdminName: string;
-  appointmentAdminSurname: string;
 
   public map!: Map;
   predefinedAppointments: Appointment[] = [];
   exceptional: boolean = false;
   selectedDate: Date;
   timeSlots: any;
+
+  quantites: EquipmentQuantity[] = [];
+  removableQuantites: EquipmentQuantity[] = [];
 
   constructor(private service: CompaniesService, 
               public dialogRef: MatDialog,
@@ -96,7 +97,6 @@ export class CompanyComponent implements OnInit{
                   appointment.companyId = this.company.id || 0;
                 
                   [appointment.dateString, appointment.timeString] = appointment.pickupTime.toString().split('T');
-                
                 }
               }
               else{
@@ -191,13 +191,30 @@ export class CompanyComponent implements OnInit{
   }
 
   onDeleteEquipmentClicked(equipment: Equipment): void{
-    if(equipment.id){  
-      this.service.deleteEquipment(equipment.id).subscribe({
-        next: () => {
-          this.getCompanies();
-          location.reload();
-        }
-      })
+    if(equipment.id){
+      this.service.getIfRemovable(equipment.id).subscribe({
+        next: (result: EquipmentQuantity[] | EquipmentQuantity) => {
+          if (Array.isArray(result)) {
+            this.removableQuantites = result;
+
+            if(this.removableQuantites.length == 0 && equipment.id){
+              this.service.deleteEquipment(equipment.id).subscribe({
+                next: () => {
+                  this.getCompanies();
+                  location.reload();
+                }
+              });
+            }
+            else{
+              alert("Can not remove cause there are appointments that need the selected equipment!")
+            }
+          }
+          else{
+            this.quantites = [result];
+          }
+        }          
+      });
+      
     }
   }
 
@@ -229,19 +246,4 @@ export class CompanyComponent implements OnInit{
       this.selectedEquipment.splice(index, 1);
   }  
 
-  getAdminsName(app: Appointment): void{
-    this.service.getAdminById(app.administratorId!).subscribe({
-      next: (result: CompanyAdmin) => {
-        this.appointmentAdminName = result.name;
-      }
-    });
-  }
-
-  getAdminsSurname(app: Appointment): void{
-    this.service.getAdminById(app.administratorId!).subscribe({
-      next: (result: CompanyAdmin) => {
-        this.appointmentAdminSurname = result.name;
-      }
-    });
-  }
 }

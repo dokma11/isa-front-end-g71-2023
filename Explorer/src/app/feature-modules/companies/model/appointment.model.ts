@@ -5,13 +5,15 @@ export interface Appointment {
   id?: number;
   administratorId?: number;
   pickupTime: Date;
-  dateString?: string;
-  timeString?: string;
   companyId?: number;
   status: AppointmentStatus;
   type: AppointmentType;
   duration: number; 
   userId?: number;
+  // Ovo mi sluzi za prikaz, ne bi trebalo da smeta u izradi iako je sustinski visak
+  dateString?: string;
+  timeString?: string;
+  administrator?: CompanyAdmin;
 }
 
 export enum AppointmentStatus {
