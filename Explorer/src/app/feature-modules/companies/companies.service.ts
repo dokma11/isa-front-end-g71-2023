@@ -4,8 +4,9 @@ import { environment } from 'src/env/environment';
 import { Observable } from 'rxjs';
 import { Company } from './model/company.model';
 import { Equipment } from '../administration/model/equipment.model';
-import { Appointment } from './model/appointment.model';
-import { EquipmentQuantity } from './model/equipmentQuantity.model';
+import { Appointment } from './model/appointment.model'; 
+import { CompanyAdmin } from '../administration/model/company-admin.model';
+import { EquipmentQuantity } from './model/equipmentQuantity.model'; 
 
 
 @Injectable({
@@ -39,10 +40,41 @@ export class CompaniesService {
     return this.http.get<Company>(environment.apiHost + 'companies/' + id);
   }
 
+  getCompaniesAppointments(company: Company): Observable<Appointment> {
+    return this.http.get<Appointment>(environment.apiHost + 'companies/' + company.id + '/appointment');
+  }
+
+  addAppointment(appointment: Appointment): Observable<Appointment> {
+    return this.http.post<Appointment>(environment.apiHost + 'appointments', appointment);
+  }
+
+  getAdminByEmail(email: string): Observable<CompanyAdmin> {
+    return this.http.get<CompanyAdmin>(environment.apiHost + 'companyAdministrator/email/' + email);
+  }
+
+  getAdminById(id: number): Observable<CompanyAdmin> {
+    return this.http.get<CompanyAdmin>(environment.apiHost + 'companyAdministrator/' + id);
+  }
+
+  addEquipment(equipment: Equipment): Observable<Equipment> {
+    return this.http.post<Equipment>(environment.apiHost + 'equipment', equipment);
+  }
+
+  updateEquipment(equipment: Equipment): Observable<Equipment> {
+    return this.http.put<Equipment>(environment.apiHost + 'equipment/' + equipment.id, equipment);
+  }
+
+  deleteEquipment(id: number): Observable<Equipment> {
+    return this.http.delete<Equipment>(environment.apiHost + 'equipment/' + id);
+  }
+
+  getCompaniesAdministrators(company: Company): Observable<CompanyAdmin> {
+    return this.http.get<CompanyAdmin>(environment.apiHost + 'companies/' + company.id + '/administrators');
+  }
+
   getCompanysPredefinedAppointments(id:number) : Observable<Appointment>{
     return this.http.get<Appointment>(environment.apiHost + 'appointments/predefined/' + id);
   }
-
 
   getFreeTimeSlots(companyId: number, date: string, startTime: string, endTime: string): Observable<any> {
     
@@ -56,28 +88,28 @@ export class CompaniesService {
     return this.http.get<any>(environment.apiHost + 'appointments/freeTimeSlots', { params: params });
   }
 
-  addAppointment(appointment: Appointment){
-    return this.http.post<Appointment>(environment.apiHost + 'appointments', appointment);
-  }
-
   addAppointmentEquipment(equipmentQuantities: EquipmentQuantity[]){
     return this.http.post<any>(environment.apiHost + 'equipmentQuantity', equipmentQuantities);
   }
 
   findAdminIdsForAppointmentsAtPickupTime(companyId: number, pickupTime: string): Observable<number[]> {
     const params = new HttpParams()
-      .set('pickupTime', pickupTime)
+      .set('pickupTime', pickupTime) 
       .set('companyId', companyId.toString());
 
 
     return this.http.get<number[]>(environment.apiHost + 'appointments/admins', { params: params });
   }
 
-
-  getCompaniesAdministrators(company: Company): Observable<number> {
+  getCompaniesAdministratorIds(company: Company): Observable<number> {
     return this.http.get<number>(environment.apiHost + 'companies/' + company.id + '/administrator');
   }
-
   
+  getEquipmentQuantities(id: number): Observable<EquipmentQuantity>{
+    return this.http.get<EquipmentQuantity>(environment.apiHost + 'equipmentQuantity/equipment/' + id);
+  }
 
+  getIfRemovable(id: number): Observable<EquipmentQuantity>{
+    return this.http.get<EquipmentQuantity>(environment.apiHost + 'equipmentQuantity/removable/' + id);
+  }
 }

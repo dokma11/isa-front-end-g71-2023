@@ -1,27 +1,29 @@
-import { User } from "src/app/infrastructure/auth/model/user.model";
-import { Equipment } from "../../administration/model/equipment.model";
-import { Company } from "./company.model";
+import { CompanyAdmin } from "../../administration/model/company-admin.model";
 import { RegisteredUser } from "../../users/model/registered-user.model";
 
 export interface Appointment {
-    id?: number;
-    pickupTime: Date;
-    duration: number;
-    status: Status;
-    type: Type;
-    companyId: number;
-    userId?: number;
-    administratorId?: number;
+  id?: number;
+  administratorId?: number;
+  pickupTime: Date;
+  companyId?: number;
+  status: AppointmentStatus;
+  type: AppointmentType;
+  duration: number; 
+  userId?: number;
+  // Ovo mi sluzi za prikaz, ne bi trebalo da smeta u izradi iako je sustinski visak
+  dateString?: string;
+  timeString?: string;
+  administrator?: CompanyAdmin;
 }
 
-export enum Status {
-    ON_HOLD = 0,
-    IN_PROGRESS = 1,
-    DONE = 2,
-    CANCELED = 3
+export enum AppointmentStatus {
+  ON_HOLD = 0, 
+  IN_PROGRESS = 1, 
+  DONE = 2, 
+  CANCELED = 3
 }
 
-export enum Type {
-    PREDEFINED = 0,
-    EXCEPTIONAL = 1
+export enum AppointmentType {
+  PREDEFINED = 0, 
+  EXCEPTIONAL = 1
 }

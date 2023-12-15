@@ -21,7 +21,7 @@ export class CompanyAdminFormComponent implements OnChanges{
           const companyAdminToPatch = {
             name: this.companyAdmin.name || null,
             surname: this.companyAdmin.surname || null,
-            email: this.companyAdmin.email || null,
+            username: this.companyAdmin.username || null,
             password:  this.companyAdmin.password || null,
             companyInformation:  this.companyAdmin.companyInformation || null,
             telephoneNumber:  this.companyAdmin.telephoneNumber || null,
@@ -37,7 +37,7 @@ export class CompanyAdminFormComponent implements OnChanges{
   companyAdminForm = new FormGroup({
     name: new FormControl("", [Validators.required]),
     surname: new FormControl("", [Validators.required]),
-    email: new FormControl("", [Validators.required]),
+    username: new FormControl("", [Validators.required]),
     password: new FormControl("", [Validators.required]),
     repeatPassword: new FormControl("", [Validators.required]),
     companyInformation: new FormControl("", [Validators.required]),
@@ -52,7 +52,7 @@ export class CompanyAdminFormComponent implements OnChanges{
     const companyAdmin: CompanyAdmin = {
       name: this.companyAdminForm.value.name || "",
       surname: this.companyAdminForm.value.surname || "",
-      email: this.companyAdminForm.value.email || "",
+      username: this.companyAdminForm.value.username || "",
       password:  this.companyAdminForm.value.password || "",
       companyInformation:  this.companyAdminForm.value.companyInformation || "",
       telephoneNumber:  this.companyAdminForm.value.telephoneNumber || "",
@@ -67,7 +67,7 @@ export class CompanyAdminFormComponent implements OnChanges{
     if(this.companyAdminForm.value.repeatPassword == companyAdmin.password &&
       this.companyAdminForm.value.name != "" &&
       this.companyAdminForm.value.surname != "" &&
-      this.companyAdminForm.value.email != "" &&
+      this.companyAdminForm.value.username != "" &&
       this.companyAdminForm.value.password != "" &&
       this.companyAdminForm.value.companyInformation != "" &&
       this.companyAdminForm.value.telephoneNumber != "" &&

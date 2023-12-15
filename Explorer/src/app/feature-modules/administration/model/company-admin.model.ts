@@ -4,7 +4,7 @@ export interface CompanyAdmin {
   id?: number;
   name: string;
   surname: string;
-  email: string;
+  username: string;
   password: string;
   companyInformation: string;
   telephoneNumber: string;

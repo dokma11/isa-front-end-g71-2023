@@ -7,5 +7,6 @@ export interface Company {
   description: string;
   averageGrade: number;
   equipment?: string;
-  // There is no user so i can't use this: administrators: User[];
+  workingHoursStart?: string;
+  workingHoursEnd?: string;
 }
