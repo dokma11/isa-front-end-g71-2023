@@ -1,10 +1,11 @@
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { environment } from 'src/env/environment';
 import { Observable } from 'rxjs';
 import { Company } from './model/company.model';
 import { Equipment } from '../administration/model/equipment.model';
 import { Appointment } from './model/appointment.model';
+import { EquipmentQuantity } from './model/equipmentQuantity.model';
 
 
 @Injectable({
@@ -55,5 +56,28 @@ export class CompaniesService {
     return this.http.get<any>(environment.apiHost + 'appointments/freeTimeSlots', { params: params });
   }
 
+  addAppointment(appointment: Appointment){
+    return this.http.post<Appointment>(environment.apiHost + 'appointments', appointment);
+  }
+
+  addAppointmentEquipment(equipmentQuantities: EquipmentQuantity[]){
+    return this.http.post<any>(environment.apiHost + 'equipmentQuantity', equipmentQuantities);
+  }
+
+  findAdminIdsForAppointmentsAtPickupTime(companyId: number, pickupTime: string): Observable<number[]> {
+    const params = new HttpParams()
+      .set('pickupTime', pickupTime)
+      .set('companyId', companyId.toString());
+
+
+    return this.http.get<number[]>(environment.apiHost + 'appointments/admins', { params: params });
+  }
+
+
+  getCompaniesAdministrators(company: Company): Observable<number> {
+    return this.http.get<number>(environment.apiHost + 'companies/' + company.id + '/administrator');
+  }
+
+  
 
 }

@@ -1,5 +1,7 @@
+import { User } from "src/app/infrastructure/auth/model/user.model";
 import { Equipment } from "../../administration/model/equipment.model";
 import { Company } from "./company.model";
+import { RegisteredUser } from "../../users/model/registered-user.model";
 
 export interface Appointment {
     id?: number;
@@ -7,8 +9,9 @@ export interface Appointment {
     duration: number;
     status: Status;
     type: Type;
-    company: Company;
-    // There is no user so i can't use this: administrators: User[];
+    companyId: number;
+    userId?: number;
+    administratorId?: number;
 }
 
 export enum Status {

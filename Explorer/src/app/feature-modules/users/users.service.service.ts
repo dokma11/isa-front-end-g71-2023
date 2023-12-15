@@ -17,9 +17,9 @@ export class UsersServiceService {
     );
   }
 
-  getOne() : Observable<RegisteredUser>{
+  getOne(id: number) : Observable<RegisteredUser>{
     return this.http.get<RegisteredUser>(
-        environment.apiHost + 'registeredUsers/' + 1
+        environment.apiHost + 'registeredUsers/' + id
     )
   }
 
