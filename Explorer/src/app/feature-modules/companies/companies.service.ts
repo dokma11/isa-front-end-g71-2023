@@ -1,4 +1,4 @@
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { environment } from 'src/env/environment';
 import { Observable } from 'rxjs';
@@ -6,7 +6,8 @@ import { Company } from './model/company.model';
 import { Equipment } from '../administration/model/equipment.model';
 import { Appointment } from './model/appointment.model'; 
 import { CompanyAdmin } from '../administration/model/company-admin.model';
- 
+import { EquipmentQuantity } from './model/equipmentQuantity.model'; 
+
 
 @Injectable({
   providedIn: 'root'
@@ -51,6 +52,10 @@ export class CompaniesService {
     return this.http.get<CompanyAdmin>(environment.apiHost + 'companyAdministrator/email/' + email);
   }
 
+  getAdminById(id: number): Observable<CompanyAdmin> {
+    return this.http.get<CompanyAdmin>(environment.apiHost + 'companyAdministrator/' + id);
+  }
+
   addEquipment(equipment: Equipment): Observable<Equipment> {
     return this.http.post<Equipment>(environment.apiHost + 'equipment', equipment);
   }
@@ -82,4 +87,22 @@ export class CompaniesService {
 
     return this.http.get<any>(environment.apiHost + 'appointments/freeTimeSlots', { params: params });
   }
+
+  addAppointmentEquipment(equipmentQuantities: EquipmentQuantity[]){
+    return this.http.post<any>(environment.apiHost + 'equipmentQuantity', equipmentQuantities);
+  }
+
+  findAdminIdsForAppointmentsAtPickupTime(companyId: number, pickupTime: string): Observable<number[]> {
+    const params = new HttpParams()
+      .set('pickupTime', pickupTime) 
+      .set('companyId', companyId.toString());
+
+
+    return this.http.get<number[]>(environment.apiHost + 'appointments/admins', { params: params });
+  }
+
+  getCompaniesAdministratorIds(company: Company): Observable<number> {
+    return this.http.get<number>(environment.apiHost + 'companies/' + company.id + '/administrator');
+  }
+
 }

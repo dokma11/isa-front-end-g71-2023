@@ -54,8 +54,8 @@ export class AppointmentsComponent implements OnChanges{
     
     this.service.getAdminByEmail(this.appointmentForm.value.administratorEmail || "").subscribe({
         next: (result: CompanyAdmin) => {
-          appointment.administrator = result;
-          appointment.companyId = appointment.administrator.company?.id || 0;
+          appointment.administratorId = result.id;
+          appointment.companyId = result.company?.id || 0;
 
           this.service.getCompanyById(appointment.companyId).subscribe({
             next: (result: Company) => {
@@ -87,7 +87,7 @@ export class AppointmentsComponent implements OnChanges{
                         const endDate: Date = new Date(startDate);
                         endDate.setMinutes(startDate.getMinutes() + 30); 
 
-                        if(a.administrator?.id === appointment.administrator?.id &&
+                        if(a.administratorId === appointment.administratorId &&
                           this.isDateInRange(d, startDate, endDate)){
                             invalid = true;
                           }

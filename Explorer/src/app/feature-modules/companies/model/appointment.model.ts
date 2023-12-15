@@ -3,15 +3,15 @@ import { RegisteredUser } from "../../users/model/registered-user.model";
 
 export interface Appointment {
   id?: number;
-  administrator?: CompanyAdmin;
+  administratorId?: number;
   pickupTime: Date;
   dateString?: string;
   timeString?: string;
   companyId?: number;
   status: AppointmentStatus;
   type: AppointmentType;
-  duration: number;
-  user?: RegisteredUser;
+  duration: number; 
+  userId?: number;
 }
 
 export enum AppointmentStatus {

@@ -34,6 +34,7 @@
       </button>
       
       <button
+      *ngIf="user && user.role !== 'ROLE_COMPANY_ADMINISTRATOR'"
         color="primary"
         mat-raised-button
         [routerLink]="['searchCompanies']"
@@ -46,6 +47,7 @@
       </button>
       
       <button
+        *ngIf="user && user.role === 'ROLE_REGISTERED_USER'"
         color="primary"
         mat-raised-button
         [routerLink]="['userProfile']"

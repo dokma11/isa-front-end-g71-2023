@@ -41,7 +41,7 @@ export class EquipmentFormComponent implements OnChanges {
       description: this.equipmentForm.value.description || "",
       type: this.equipmentForm.value.type || "",
       grade: this.equipmentForm.value.grade || 0,
-      quantity: this.equipmentForm.value.quantity || 0
+      quantity: this.equipmentForm.value.quantity || 0 
     };
 
     this.companiesService.getCompanyById(-1).subscribe({
@@ -64,7 +64,7 @@ export class EquipmentFormComponent implements OnChanges {
       description: this.equipmentForm.value.description || "",
       type: this.equipmentForm.value.type || "",
       grade: this.equipmentForm.value.grade || 0,
-      quantity: this.equipmentForm.value.quantity || 0
+      quantity: this.equipmentForm.value.quantity || 0 
     };
     equipment.id = this.equipment.id;
     this.service.updateEquipment(equipment).subscribe({

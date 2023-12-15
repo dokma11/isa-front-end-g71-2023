@@ -56,6 +56,8 @@ export class CompanyComponent implements OnInit{
   dateString: string = "";
 
   administrators: CompanyAdmin[] = [];
+  appointmentAdminName: string;
+  appointmentAdminSurname: string;
 
   public map!: Map;
   predefinedAppointments: Appointment[] = [];
@@ -227,4 +229,19 @@ export class CompanyComponent implements OnInit{
       this.selectedEquipment.splice(index, 1);
   }  
 
+  getAdminsName(app: Appointment): void{
+    this.service.getAdminById(app.administratorId!).subscribe({
+      next: (result: CompanyAdmin) => {
+        this.appointmentAdminName = result.name;
+      }
+    });
+  }
+
+  getAdminsSurname(app: Appointment): void{
+    this.service.getAdminById(app.administratorId!).subscribe({
+      next: (result: CompanyAdmin) => {
+        this.appointmentAdminSurname = result.name;
+      }
+    });
+  }
 }

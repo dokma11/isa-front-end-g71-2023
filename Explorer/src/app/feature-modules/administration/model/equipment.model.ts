@@ -7,5 +7,5 @@ export interface Equipment {
     type: string;
     grade: number;
     quantity: number;
-    company?: Company;
+    company?: Company; 
 }
