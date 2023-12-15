@@ -1,45 +1,55 @@
 <div id="profile">
-    <p>Your profile</p>
-    <hr>
-    <div id="profile-details">
+  <p>Your profile</p>
+  <hr />
+  <div id="profile-details">
     <div>
-        <table>
-            <thead>
-                <tr>
-                    <th>Name</th>
-                    <th>Surname</th>
-                    <th>City</th>
-                    <th>State</th>
-                    <th>Company Information</th>
-                    <th>Telephone Number</th>
-                    <th>Profession</th>
-                    <th>Penalty Points</th>
-                    <th>Loyalty Programme Category</th>
-                    <th></th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr >
-                    <td>{{regiteredUser.name}}</td>
-                    <td>{{regiteredUser.surname}}</td>
-                    <td>{{regiteredUser.city}}</td>
-                    <td>{{regiteredUser.state}}</td>
+      <table>
+        <thead>
+          <tr>
+            <th>Name</th>
+            <th>Surname</th>
+            <th>City</th>
+            <th>State</th>
+            <th>Company Information</th>
+            <th>Telephone Number</th>
+            <th>Profession</th>
+            <th>Penalty Points</th>
+            <th>Loyalty Programme Category</th>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>{{ regiteredUser.name }}</td>
+            <td>{{ regiteredUser.surname }}</td>
+            <td>{{ regiteredUser.city }}</td>
+            <td>{{ regiteredUser.state }}</td>
 
-                    <td>{{regiteredUser.companyInformation}}</td>
-                    <td>{{regiteredUser.telephoneNumber}}</td>
-                    <td>{{regiteredUser.profession}}</td>
-                    <td>0</td>
-                    <td>Regular</td>
-                    <td><button color="primary" (click)="onEditClicked(regiteredUser)" mat-icon-button>
-                        <mat-icon>edit</mat-icon>
-                    </button></td>
-                </tr>
-            </tbody>
-        </table>
+            <td>{{ regiteredUser.companyInformation }}</td>
+            <td>{{ regiteredUser.telephoneNumber }}</td>
+            <td>{{ regiteredUser.profession }}</td>
+            <td>0</td>
+            <td>Regular</td>
+            <td>
+              <button
+                color="primary"
+                (click)="onEditClicked(regiteredUser)"
+                mat-icon-button
+              >
+                <mat-icon>edit</mat-icon>
+              </button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
     </div>
     <div>
-        <xp-user-registration *ngIf="shouldRenderUserForm" [shouldEdit]="shouldEdit" [user]="selectedUser" (userUpdated)="getUser(regiteredUser.id || 0)"></xp-user-registration>
+      <xp-user-registration
+        *ngIf="shouldRenderUserForm"
+        [shouldEdit]="shouldEdit"
+        [user]="selectedUser"
+        (userUpdated)="getUser()"
+      ></xp-user-registration>
     </div>
-    </div>
+  </div>
 </div>
-
