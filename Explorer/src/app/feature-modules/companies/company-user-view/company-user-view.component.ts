@@ -1,10 +1,15 @@
 import { Component, inject } from '@angular/core';
 import { Company } from '../model/company.model';
 import { Equipment } from '../../administration/model/equipment.model';
-import { Appointment } from '../model/appointment.model';
+import { Appointment, Status, Type } from '../model/appointment.model';
 import { CompaniesService } from '../companies.service';
 import { DatePipe } from '@angular/common';
 import { ActivatedRoute } from '@angular/router';
+import { EquipmentQuantity } from '../model/equipmentQuantity.model';
+import { RegisteredUser } from '../../users/model/registered-user.model';
+import { User } from 'src/app/infrastructure/auth/model/user.model';
+import { NavbarComponent } from '../../layout/navbar/navbar.component';
+import { AuthService } from 'src/app/infrastructure/auth/auth.service';
 
 @Component({
   selector: 'xp-company-user-view',
@@ -32,13 +37,19 @@ export class CompanyUserViewComponent {
   timeSlots: any;
   id:number
   route = inject(ActivatedRoute);
+  user: User | undefined;
+  administratorIds: number[] = [];
 
-  constructor(private service: CompaniesService,private datePipe: DatePipe) { }
+  constructor(private service: CompaniesService,private datePipe: DatePipe, private authService: AuthService) { }
 
   ngOnInit(): void {
     this.id = Number(this.route.snapshot.paramMap.get('id'))
     this.getCompanies();
     this.selectedEquipment = [];
+    this.authService.user$.subscribe(user => {
+      this.user = user;
+    });
+    
   }
 
   getCompanies(): void{
@@ -62,6 +73,16 @@ export class CompanyUserViewComponent {
                 else{
                   this.companiesEquipment = [result];
                 }
+                this.service.getCompaniesAdministrators(this.company).subscribe({
+                  next: (result: number | number[]) =>{
+                    if (Array.isArray(result)) {
+                      this.administratorIds = result;
+                    }
+                    else{
+                      this.administratorIds = [result];
+                    }
+                  }
+                });
               }
             });
       },
@@ -87,16 +108,62 @@ export class CompanyUserViewComponent {
     }
   }
 
-  addEquipment(eq: Equipment):void{
-      if(!this.selectedEquipment.includes(eq)){
+  selectedQuantities: number[] = []; // Array to track selected quantities
+
+  addEquipmentToAppointment(eq: Equipment, quantity: number): void {
+    if (quantity > 0) {
+      if (!this.selectedEquipment.includes(eq)) {
         this.selectedEquipment.push(eq);
+
+        if(eq.id !== undefined){
+          const equipmentQuantity: EquipmentQuantity = {
+            equipmentId: eq.id,
+            quantity: quantity
+          };
+          // Add to the list of EquipmentQuantity
+          this.addEquipmentQuantity(equipmentQuantity);
+        }
+        
       }
-      
+    }
   }
 
   removeEquipmnet(index: number): void {
-      this.selectedEquipment.splice(index, 1);
+    const removedEquipment = this.selectedEquipment.splice(index, 1)[0];
+    // Remove from the list of EquipmentQuantity
+    if (removedEquipment.id !== undefined) {
+      // Remove from the list of EquipmentQuantity
+      this.removeEquipmentQuantity(removedEquipment.id);
+    }
   }
+
+  equipmentQuantities: EquipmentQuantity[] = [];
+
+  private addEquipmentQuantity(equipmentQuantity: EquipmentQuantity): void {
+    const existingIndex = this.equipmentQuantities.findIndex(
+      (eq) => eq.equipmentId === equipmentQuantity.equipmentId
+    );
+
+    if (existingIndex !== -1) {
+      // Update existing quantity
+      this.equipmentQuantities[existingIndex].quantity = equipmentQuantity.quantity;
+    } else {
+      // Add new equipment quantity
+      this.equipmentQuantities.push(equipmentQuantity);
+    }
+  }
+
+  private removeEquipmentQuantity(equipmentId: number): void {
+    const indexToRemove = this.equipmentQuantities.findIndex(
+      (eq) => eq.equipmentId === equipmentId
+    );
+
+    if (indexToRemove !== -1) {
+      // Remove equipment quantity
+      this.equipmentQuantities.splice(indexToRemove, 1);
+    }
+  }
+
 
   getPredefidedAppointments(id: number):void{
     if (id !== undefined) {
@@ -132,8 +199,9 @@ export class CompanyUserViewComponent {
       const companyId = this.company.id;
       const localDate = new Date(this.selectedDate.getTime() - this.selectedDate.getTimezoneOffset() * 60000);
       const formattedDate = localDate.toISOString().slice(0, 19).replace('T', ' '); // Implement formatDate as needed
-      const startTime = '2023-12-06 08:00:00'; // Set the start time PROMENTII KAD SE IMPLEMENTIRA RADNO VREME KOMPANIEJ
-      const endTime = '2023-12-06 16:00:00'; // Set the end time PROMENTII KAD SE IMPLEMENTIRA RADNO VREME KOMPANIEJ
+      const dateForWorkingHours =  localDate.toISOString().slice(0, 10).replace('T', ' ');
+      const startTime = dateForWorkingHours + ' 08:00:00'; // Set the start time PROMENTII KAD SE IMPLEMENTIRA RADNO VREME KOMPANIEJ
+      const endTime = dateForWorkingHours + ' 16:00:00'; // Set the end time PROMENTII KAD SE IMPLEMENTIRA RADNO VREME KOMPANIEJ
 
       this.service.getFreeTimeSlots(companyId, formattedDate, startTime, endTime).subscribe({
         next: (freeTimeSlots: any) => {
@@ -146,4 +214,84 @@ export class CompanyUserViewComponent {
       });
     }
   }
+
+  scheduleAppointment(timeSlot: any): void{
+    //sad zovemo metode za cuvanje appointmenta
+    //kad se sacuva appointment
+    
+
+
+
+    if(this.company.id !== undefined){
+
+      this.service.findAdminIdsForAppointmentsAtPickupTime(this.company.id,timeSlot).subscribe({
+        next: (result: any) => {
+          // Handle the freeTimeSlots data and update your UI as needed
+          const adminIdsWithAppointments = result; // Assuming result is an array of admin IDs with appointments
+          const adminIdsWithoutAppointments = this.administratorIds.filter(adminId => !adminIdsWithAppointments.includes(adminId));
+
+          if (adminIdsWithoutAppointments.length > 0) {
+            const firstAdminIdWithoutAppointment = adminIdsWithoutAppointments[0];
+            if(this.company.id !== undefined){
+              const localDate = new Date(this.selectedDate.getTime() - this.selectedDate.getTimezoneOffset() * 60000);
+              
+              const appointment: Appointment = {
+                pickupTime: timeSlot, //URADI KONVERZIJU SA VREMENSKI ZONU
+                duration: 30,
+                status: Status.IN_PROGRESS,
+                type: Type.EXCEPTIONAL,
+                companyId: this.company.id,
+                userId: this.user?.id,
+                administratorId: firstAdminIdWithoutAppointment
+              };
+
+              console.log(appointment);
+
+              this.service.addAppointment(appointment).subscribe({
+                next: (result: Appointment) => {
+                  // Handle the freeTimeSlots data and update your UI as needed
+                  for (let eq of this.equipmentQuantities) {
+                    // Set the appointmentId for each object in the list
+                    eq.appointmentId = result.id;
+                  }
+
+                  this.service.addAppointmentEquipment(this.equipmentQuantities).subscribe({
+                    next: (result) => {
+                      // Handle the freeTimeSlots data and update your UI as needed
+                      console.log("RADIiiiiiiii"); //POSALJI QR KOD
+                      alert("You have made an appointment");
+                    },
+                    error: (error) => {
+                      console.error('Error fetching free time slots:', error);
+                    }
+                  });
+
+                },
+                error: (error) => {
+                  console.error('Error fetching free time slots:', error);
+                }
+              });
+
+
+
+            }
+            
+
+      
+          }
+        },
+        error: (error) => {
+          console.error('Error available admin ids for free time slots:', error);
+        }
+      });
+
+
+
+      
+    }
+    
+   
+  }
+
+
 }

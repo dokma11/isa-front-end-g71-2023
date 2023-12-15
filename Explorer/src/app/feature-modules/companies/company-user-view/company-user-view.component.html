@@ -41,7 +41,7 @@
     <h1>Company's equipment</h1>
     <div class="container">
       
-      <li *ngFor="let eq of companiesEquipment" class="result-item">
+      <li *ngFor="let eq of companiesEquipment; let i = index" class="result-item">
         <div class="result-row">
             <label>Name:</label>
             <span>{{ eq.name }}</span>
@@ -58,7 +58,11 @@
           <label>Type:</label>
           <span>{{ eq.type }}</span>
         </div>
-        <button (click)="addEquipment(eq)">Add to appointment</button>
+        <div class="result-row">
+          <label>Quantity:</label>
+          <input type="number" [(ngModel)]="selectedQuantities[i]" min="0" [max]="eq.quantity">
+        </div>
+        <button (click)="addEquipmentToAppointment(eq, selectedQuantities[i])">Add to appointment</button>
       </li>
     </div>
     <div>
@@ -119,6 +123,9 @@
           <tbody>
             <tr *ngFor="let timeSlot of timeSlots">
               <td>{{ timeSlot | date: 'HH:mm:ss' }}</td>
+              <td>
+                <button (click)="scheduleAppointment(timeSlot)">Schedule</button>
+              </td>
             </tr>
           </tbody>
         </table>

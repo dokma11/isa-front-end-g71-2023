@@ -4,4 +4,5 @@ export interface Equipment {
     description: string;
     type: string;
     grade: number;
+    quantity: number;
 }
