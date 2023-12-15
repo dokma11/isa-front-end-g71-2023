@@ -17,7 +17,7 @@ import { PagedResults } from 'src/app/shared/model/paged-results.model';
   styleUrls: ['./user-update.component.css'],
 })
 export class UserUpdateComponent implements OnInit {
-  user: RegisteredUser = {
+  regiteredUser: RegisteredUser = {
     name: '',
     surname: '',
     password: '',
@@ -56,7 +56,7 @@ export class UserUpdateComponent implements OnInit {
     this.service.getOne(this.loggedInUser?.id || 0).subscribe({
       next: (result: RegisteredUser) => {
         if (result) {
-          this.user = result;
+          this.regiteredUser = result;
         }
       },
       error: () => {

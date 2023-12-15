@@ -36,7 +36,8 @@ export class EquipmentFormComponent implements OnChanges {
       name: this.equipmentForm.value.name || "",
       description: this.equipmentForm.value.description || "",
       type: this.equipmentForm.value.type || "",
-      grade: this.equipmentForm.value.grade || 0
+      grade: this.equipmentForm.value.grade || 0,
+      quantity: 0 //PROMENI OVO VUKASINE NA ONO STA TI TREBA
     };
     this.service.addEquipment(equipment).subscribe({
       next: () => { this.equimpentUpdated.emit() }
@@ -48,7 +49,8 @@ export class EquipmentFormComponent implements OnChanges {
       name: this.equipmentForm.value.name || "",
       description: this.equipmentForm.value.description || "",
       type: this.equipmentForm.value.type || "",
-      grade: this.equipmentForm.value.grade || 0
+      grade: this.equipmentForm.value.grade || 0,
+      quantity: 0 //PROMENI OVO VUKASINE NA ONO STA TI TREBA
     };
     equipment.id = this.equipment.id;
     this.service.updateEquipment(equipment).subscribe({

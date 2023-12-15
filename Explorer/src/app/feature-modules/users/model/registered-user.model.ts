@@ -2,7 +2,7 @@ export interface RegisteredUser {
   id?: number;
   name: string;
   surname: string;
-  password?: string; // so that the password does not have to be updated
+  password?: string;
   email: string;
   companyInformation: string;
   telephoneNumber: string;
