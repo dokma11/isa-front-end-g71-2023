@@ -10,6 +10,9 @@ import {
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { RegisteredUser } from '../model/registered-user.model';
 import { UsersServiceService } from '../users.service.service';
+import { AuthService } from 'src/app/infrastructure/auth/auth.service';
+import { Login } from 'src/app/infrastructure/auth/model/login.model';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'xp-user-registration',
@@ -21,15 +24,27 @@ export class UserRegistrationComponent {
   @Input() user: RegisteredUser;
   @Input() shouldEdit: boolean = false;
 
-  constructor(private service: UsersServiceService) {}
+  constructor(
+    private service: UsersServiceService,
+    private authService: AuthService,
+    private router: Router
+  ) {}
 
   ngOnChanges(): void {
     this.registrationFrom.reset();
     if (this.shouldEdit) {
       this.registrationFrom.patchValue(this.user);
+      this.registrationFrom.controls.password.setValue('');
     }
   }
 
+  ngOnInit(): void {
+    this.registrationFrom.reset();
+    if (this.shouldEdit) {
+      this.registrationFrom.patchValue(this.user);
+    }
+    this.registrationFrom.controls.password.setValue(''); // we dont want to display encrypted password
+  }
   registrationFrom = new FormGroup({
     name: new FormControl('', [Validators.required]),
     surname: new FormControl('', [Validators.required]),
@@ -106,19 +121,36 @@ export class UserRegistrationComponent {
       this.registrationFrom.value.state == '' ||
       this.registrationFrom.value.telephoneNumber == '' ||
       this.registrationFrom.value.profession == '' ||
-      this.registrationFrom.value.companyInformation == '' ||
-      this.registrationFrom.value.password == '' ||
-      this.registrationFrom.value.renteredPassword == '' ||
-      this.registrationFrom.value.password !=
-        this.registrationFrom.value.renteredPassword
+      this.registrationFrom.value.companyInformation == ''
+      //this.registrationFrom.value.password == '' ||
+      //this.registrationFrom.value.renteredPassword == '' ||
+      //this.registrationFrom.value.password !=
+      //  this.registrationFrom.value.renteredPassword
     ) {
       alert('Fileds are not filled validly');
     } else {
-      this.service.update(user).subscribe({
-        next: () => {
-          this.userUpdated.emit();
-        },
-      });
+      if (
+        //check if the password has been changed
+        this.registrationFrom.value.password != '' &&
+        this.registrationFrom.value.password !=
+          this.registrationFrom.value.renteredPassword
+      ) {
+        alert('Fileds are not filled validly');
+      } else {
+        this.service.update(user).subscribe({
+          next: () => {
+            if (this.registrationFrom.value.password != '') {
+              //if the password has been changed user must log in again
+              alert('User updated! Password reset! Please log in again');
+              this.authService.logout();
+              this.router.navigate(['/']);
+            } else {
+              alert('Account updated successfully!');
+              this.userUpdated.emit();
+            }
+          },
+        });
+      }
     }
   }
 }

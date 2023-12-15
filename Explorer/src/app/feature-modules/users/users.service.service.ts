@@ -17,16 +17,16 @@ export class UsersServiceService {
     );
   }
 
-  getOne() : Observable<RegisteredUser>{
+  getOne(userId: number): Observable<RegisteredUser> {
     return this.http.get<RegisteredUser>(
-        environment.apiHost + 'registeredUsers/' + 1
-    )
-  }
-
-  update(user: RegisteredUser): Observable<RegisteredUser>{
-    return this.http.put<RegisteredUser>(
-      environment.apiHost + 'registeredUsers/' + user.id, user
+      environment.apiHost + 'registeredUsers/' + userId
     );
   }
 
+  update(user: RegisteredUser): Observable<RegisteredUser> {
+    return this.http.put<RegisteredUser>(
+      environment.apiHost + 'registeredUsers/' + user.id,
+      user
+    );
+  }
 }
