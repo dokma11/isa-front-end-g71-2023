@@ -46,7 +46,9 @@
 
 <br>
 
-<div id="map" class="map"></div>
+<div class="row">
+  <div id="hotel_map"></div>
+</div>
 
 <br>
 <h3>List of company's appointments</h3>
@@ -66,13 +68,15 @@
       <tbody>
         <tr *ngFor="let app of appointments">
           <td>{{ app.administrator?.name + " " + app.administrator?.surname }}</td>
-          <td>{{ app.pickupTime }}</td>
-          <td>{{ app.pickupTime }}</td>
+          <td>{{ app.dateString }}</td>
+          <td>{{ app.timeString }}</td>
+ <!--
           <td>
             <button (click)="onDeleteAppointmentClicked(app)" color="accent" mat-icon-button>
               <mat-icon class="faIcon">delete</mat-icon>
             </button>
           </td>
+-->
         </tr>
         <tr>
           <td>

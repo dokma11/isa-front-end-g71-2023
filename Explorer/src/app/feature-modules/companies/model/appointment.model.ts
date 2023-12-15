@@ -5,8 +5,8 @@ export interface Appointment {
   id?: number;
   administrator?: CompanyAdmin;
   pickupTime: Date;
-  //dateString: string;
-  //timeString: string;
+  dateString?: string;
+  timeString?: string;
   companyId?: number;
   status: AppointmentStatus;
   type: AppointmentType;

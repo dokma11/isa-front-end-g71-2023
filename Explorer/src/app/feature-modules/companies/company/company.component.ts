@@ -3,13 +3,25 @@ import { Company } from '../model/company.model';
 import { CompaniesService } from '../companies.service';
 import { Equipment } from '../../administration/model/equipment.model';
 import { Appointment } from '../model/appointment.model';
-import { View } from 'ol';
-import TileLayer from 'ol/layer/Tile';
 import { AppointmentsComponent } from '../appointments/appointments.component';
 import { MatDialog } from "@angular/material/dialog";
 import { EquipmentComponent } from '../../administration/equipment/equipment.component';
 import { CompanyAdmin } from '../../administration/model/company-admin.model';
 import { DatePipe } from '@angular/common'; 
+import { EquipmentFormComponent } from '../../administration/equipment-form/equipment-form.component';
+
+import Map from 'ol/Map';
+import View from 'ol/View';
+import VectorLayer from 'ol/layer/Vector';
+import Style from 'ol/style/Style';
+import Icon from 'ol/style/Icon';
+import OSM from 'ol/source/OSM';
+import * as olProj from 'ol/proj';
+import TileLayer from 'ol/layer/Tile';
+import { Feature } from 'ol';
+import { Point } from 'ol/geom';
+import VectorSource from 'ol/source/Vector';
+import { fromLonLat } from 'ol/proj';
 
 @Component({
   selector: 'xp-company',
@@ -18,19 +30,6 @@ import { DatePipe } from '@angular/common';
 })
 export class CompanyComponent implements OnInit{
   
-
-
-
-
-
-  // DODAJ LISTU ADMINA KOMPANIJE DA SE ISPISE
-
-
-
-
-
-
-
   company: Company = {
     name: "",
     address: "",
@@ -58,7 +57,7 @@ export class CompanyComponent implements OnInit{
 
   administrators: CompanyAdmin[] = [];
 
-  //public map!: Map;
+  public map!: Map;
   predefinedAppointments: Appointment[] = [];
   exceptional: boolean = false;
   selectedDate: Date;
@@ -70,20 +69,6 @@ export class CompanyComponent implements OnInit{
 
   ngOnInit(): void {
     this.getCompanies();
-/*
-    this.map = new Map({
-      layers: [
-        new TileLayer({
-          source: new OSM(),
-        }),
-      ],
-      target: 'map',
-      view: new View({ 
-        center: [0, 0],
-        zoom: 2,maxZoom: 18, 
-      }),
-    });
-  */ 
   }
 
   getCompanies(): void{
@@ -94,9 +79,6 @@ export class CompanyComponent implements OnInit{
               next: (result: Equipment | Equipment[]) =>{
                 if (Array.isArray(result)) {
                   this.companiesEquipment = result;
-                  
-                  // ovde namestam listu equipmenta i sta sa njom
-
                 }
                 else{
                   this.companiesEquipment = [result];
@@ -111,7 +93,7 @@ export class CompanyComponent implements OnInit{
                 for (let appointment of this.appointments) {
                   appointment.companyId = this.company.id || 0;
                 
-                  //[appointment.dateString, appointment.timeString] = appointment.pickupTime.toString().split('T');
+                  [appointment.dateString, appointment.timeString] = appointment.pickupTime.toString().split('T');
                 
                 }
               }
@@ -131,6 +113,41 @@ export class CompanyComponent implements OnInit{
               }
             }
           });
+
+          this.map = new Map({
+            target: 'hotel_map',
+            layers: [
+              new TileLayer({
+                source: new OSM()
+              })
+            ],
+            view: new View({
+              center: olProj.fromLonLat([this.company.longitude, this.company.latitude]),
+              zoom: 17
+            })
+          });
+
+          const point = new Point(fromLonLat([this.company.longitude, this.company.latitude]));
+
+          const startMarker = new Feature(point);
+
+          const markerStyle = new Style({
+              image: new Icon({
+                  anchor: [0.5, 1],
+                  src: 'http://www.pngall.com/wp-content/uploads/2017/05/Map-Marker-PNG-HD-180x180.png',
+                  scale: 0.4
+              })
+          });
+
+          startMarker.setStyle(markerStyle);
+
+          const vectorLayer = new VectorLayer({
+              source: new VectorSource({
+                  features: [startMarker]
+              })
+          });
+
+          this.map.addLayer(vectorLayer);
       },
       error: (err) => {
         console.error('Error fetching companies:', err);
@@ -176,13 +193,14 @@ export class CompanyComponent implements OnInit{
       this.service.deleteEquipment(equipment.id).subscribe({
         next: () => {
           this.getCompanies();
+          location.reload();
         }
       })
     }
   }
 
   onAddEquipmentClicked(): void{
-    this.dialogRef.open(EquipmentComponent, {
+    this.dialogRef.open(EquipmentFormComponent, {
       data: this.equipment,
     });
   }
@@ -208,4 +226,5 @@ export class CompanyComponent implements OnInit{
   removeEquipmnet(index: number): void {
       this.selectedEquipment.splice(index, 1);
   }  
+
 }

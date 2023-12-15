@@ -44,13 +44,15 @@ export class EquipmentFormComponent implements OnChanges {
       quantity: this.equipmentForm.value.quantity || 0
     };
 
-    //dodaj samo za kompaniju jej ;<
     this.companiesService.getCompanyById(-1).subscribe({
       next: (result: Company) => {
           equipment.company = result;
 
           this.service.addEquipment(equipment).subscribe({
-            next: () => { this.equimpentUpdated.emit() }
+            next: () => { 
+              this.equimpentUpdated.emit();
+              location.reload(); 
+            }
           });
       }
     });
