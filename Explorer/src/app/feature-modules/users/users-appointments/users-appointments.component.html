@@ -1,0 +1,27 @@
+<div>
+  <table>
+    <thead>
+      <tr>
+        <th>Pickup ime</th>
+        <th>Duration</th>
+        <th>Company Name</th>
+        <th>Company Administrator</th>
+        <th>Status</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let a of appointments">
+        <td>{{ a.pickupTime }}</td>
+        <td>{{ a.duration }}</td>
+        <td>{{ a.companyName }}</td>
+        <td>{{ a.companyAdminName }}</td>
+        <td>{{ a.status }}</td>
+        <td>
+          <button (click)="seeEquipment(a.id || 0)">
+            See ordered equipment
+          </button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>

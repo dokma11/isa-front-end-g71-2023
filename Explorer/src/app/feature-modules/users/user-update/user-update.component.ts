@@ -31,7 +31,6 @@ export class UserUpdateComponent implements OnInit {
     points: 0,
   };
   loggedInUser: User | undefined;
-  id = 1;
   selectedUser: RegisteredUser;
   shouldRenderUserForm: boolean = false;
   shouldEdit: boolean = false;

@@ -1,135 +1,174 @@
 <div id="companies">
-    <div id="companies-details">
-      <div>
-        <table>
-          <thead>
-            <tr>
-              <th>Name</th>
-              <th>Address</th>
-              <th>Description</th>
-              <th>Average grade</th>
-              <th>List of available Equipment</th>
-              <th></th>
-              <th></th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr [class.selected-row]="selectedCompany === company">
-              <td>{{ company.name }}</td>
-              <td>{{ company.address }}</td>
-              <td>{{ company.description }}</td>
-              <td>{{ company.averageGrade }}</td>
-              <td>{{ company.equipment }}</td>
-              <td>
-                <button (click)="onDeleteClicked(company)" color="accent" mat-icon-button>Delete</button>
-              </td>
-              <td>
-                <button (click)="onEditClicked(company)" color="primary" mat-icon-button>Edit</button>
-              </td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
-      <xp-company-form *ngIf="shouldRenderCompaniesForm" 
-                       (facilitesUpdated)="getCompanies()" 
-                       [company]="selectedCompany" 
-                       [shouldEdit]="shouldEdit">
-      </xp-company-form>
-      
-      
-    </div>
-    <h1>Company's equipment</h1>
-    <div class="container">
-      
-      <li *ngFor="let eq of companiesEquipment; let i = index" class="result-item">
-        <div class="result-row">
-            <label>Name:</label>
-            <span>{{ eq.name }}</span>
-        </div>
-        <div class="result-row">
-            <label>Address:</label>
-            <span>{{ eq.description }}</span>
-        </div>
-        <div class="result-row">
-            <label>Average Grade:</label>
-            <span>{{ eq.grade }}</span>
-        </div>
-        <div class="result-row">
-          <label>Type:</label>
-          <span>{{ eq.type }}</span>
-        </div>
-        <div class="result-row">
-          <label>Quantity:</label>
-          <input type="number" [(ngModel)]="selectedQuantities[i]" min="0" [max]="eq.quantity">
-        </div>
-        <button (click)="addEquipmentToAppointment(eq, selectedQuantities[i])">Add to appointment</button>
-      </li>
-    </div>
+  <div id="companies-details">
     <div>
-      <h1>Equipment wanted for appointment</h1>
-      <li *ngFor="let e of selectedEquipment; let i = index" class="result-item">
-        <div class="result-row">
-          <label>Name:</label>
-          <span>{{ e.name }}</span>
-        </div>
-        <div class="result-row">
-            <label>Address:</label>
-            <span>{{ e.description }}</span>
-        </div>
-        <div class="result-row">
-            <label>Average Grade:</label>
-            <span>{{ e.grade }}</span>
-        </div>
-        <div class="result-row">
-          <label>Type:</label>
-          <span>{{ e.type }}</span>
-        </div>
-        <button class="form-button-remove" (click)="removeEquipmnet(i)">Remove</button>
-      </li>
-      <button (click)="getPredefidedAppointments(company.id || 0)">Finish with choosing</button> <!--ISPRAVITI DA BUDE UZET ID OD KOMPANIJE SAD NECE JER JE POBRKAN PRIKAZ-->
-      <!--NEMAMO KOMPANIJU U OBJEKTU VEC SE SAMO UCITANA SA 1-->
-      <div>
-        <table>
-          <thead>
-            <tr>
-              <th>PickUp time</th>
-              <th>Duration</th>
-              <th>Administartor ID</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr *ngFor="let p of predefinedAppointments">
-              <td>{{ p.pickupTime }}</td>
-              <td>{{ p.duration }}</td>
-              <td>OVDE DA BUDE IME I PRZ ADMINA TERMINA</td>
-            </tr>
-          </tbody>
-        </table>
+      <table>
+        <thead>
+          <tr>
+            <th>Name</th>
+            <th>Address</th>
+            <th>Description</th>
+            <th>Average grade</th>
+            <th>List of available Equipment</th>
+            <th></th>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr [class.selected-row]="selectedCompany === company">
+            <td>{{ company.name }}</td>
+            <td>{{ company.address }}</td>
+            <td>{{ company.description }}</td>
+            <td>{{ company.averageGrade }}</td>
+            <td>{{ company.equipment }}</td>
+            <td>
+              <button
+                (click)="onDeleteClicked(company)"
+                color="accent"
+                mat-icon-button
+              >
+                Delete
+              </button>
+            </td>
+            <td>
+              <button
+                (click)="onEditClicked(company)"
+                color="primary"
+                mat-icon-button
+              >
+                Edit
+              </button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <xp-company-form
+      *ngIf="shouldRenderCompaniesForm"
+      (facilitesUpdated)="getCompanies()"
+      [company]="selectedCompany"
+      [shouldEdit]="shouldEdit"
+    >
+    </xp-company-form>
+  </div>
+  <h1>Company's equipment</h1>
+  <div class="container">
+    <li
+      *ngFor="let eq of companiesEquipment; let i = index"
+      class="result-item"
+    >
+      <div class="result-row">
+        <label>Name:</label>
+        <span>{{ eq.name }}</span>
       </div>
-      <button class="button-neki" (click)="changeExc()">Schedule an exceptional appointment</button>
-      <mat-form-field *ngIf="exceptional" class="datum">
-        <input matInput [matDatepicker]="picker" placeholder="Choose a date" [(ngModel)]="selectedDate" (dateChange)="onDateSelected()">
-        <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
-        <mat-datepicker #picker></mat-datepicker>
-      </mat-form-field>   
-      <div>
-        <h1>Available Time Slots</h1>
-        <table>
-          <thead>
-            <tr>
-              <th>Start Time</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr *ngFor="let timeSlot of timeSlots">
-              <td>{{ timeSlot | date: 'HH:mm:ss' }}</td>
-              <td>
-                <button (click)="scheduleAppointment(timeSlot)">Schedule</button>
-              </td>
-            </tr>
-          </tbody>
-        </table>
+      <div class="result-row">
+        <label>Address:</label>
+        <span>{{ eq.description }}</span>
       </div>
+      <div class="result-row">
+        <label>Average Grade:</label>
+        <span>{{ eq.grade }}</span>
+      </div>
+      <div class="result-row">
+        <label>Type:</label>
+        <span>{{ eq.type }}</span>
+      </div>
+      <div class="result-row">
+        <label>Quantity:</label>
+        <input
+          type="number"
+          [(ngModel)]="selectedQuantities[i]"
+          min="0"
+          [max]="getAvailableQuantity(eq.id || 0)"
+        />
+      </div>
+      <button (click)="addEquipmentToAppointment(eq, selectedQuantities[i])">
+        Add to appointment
+      </button>
+    </li>
+  </div>
+  <div>
+    <h1>Equipment wanted for appointment</h1>
+    <li *ngFor="let e of selectedEquipment; let i = index" class="result-item">
+      <div class="result-row">
+        <label>Name:</label>
+        <span>{{ e.name }}</span>
+      </div>
+      <div class="result-row">
+        <label>Address:</label>
+        <span>{{ e.description }}</span>
+      </div>
+      <div class="result-row">
+        <label>Average Grade:</label>
+        <span>{{ e.grade }}</span>
+      </div>
+      <div class="result-row">
+        <label>Type:</label>
+        <span>{{ e.type }}</span>
+      </div>
+      <button class="form-button-remove" (click)="removeEquipmnet(i)">
+        Remove
+      </button>
+    </li>
+    <button (click)="getPredefidedAppointments(company.id || 0)">
+      Finish with choosing
+    </button>
+    <!--ISPRAVITI DA BUDE UZET ID OD KOMPANIJE SAD NECE JER JE POBRKAN PRIKAZ-->
+    <!--NEMAMO KOMPANIJU U OBJEKTU VEC SE SAMO UCITANA SA 1-->
+    <div>
+      <table>
+        <thead>
+          <tr>
+            <th>PickUp time</th>
+            <th>Duration</th>
+            <th>Administartor</th>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let p of predefinedAppointments">
+            <td>{{ p.pickupTime }}</td>
+            <td>{{ p.duration }}</td>
+            <td>{{ p.companyAdminName }}</td>
+            <td>
+              <button (click)="schedulePredefinedAppointment(p.id || 0)">
+                Schedule
+              </button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <button class="button-neki" (click)="changeExc()">
+      Schedule an exceptional appointment
+    </button>
+    <mat-form-field *ngIf="exceptional" class="datum">
+      <input
+        matInput
+        [matDatepicker]="picker"
+        placeholder="Choose a date"
+        [(ngModel)]="selectedDate"
+        (dateChange)="onDateSelected()"
+      />
+      <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+      <mat-datepicker #picker></mat-datepicker>
+    </mat-form-field>
+    <div>
+      <h1>Available Time Slots</h1>
+      <table>
+        <thead>
+          <tr>
+            <th>Start Time</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let timeSlot of timeSlots">
+            <td>{{ timeSlot | date : "HH:mm:ss" }}</td>
+            <td>
+              <button (click)="scheduleAppointment(timeSlot)">Schedule</button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
     </div>
   </div>
-  
+</div>
