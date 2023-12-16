@@ -14,16 +14,15 @@ import { AuthService } from 'src/app/infrastructure/auth/auth.service';
 @Component({
   selector: 'xp-company-user-view',
   templateUrl: './company-user-view.component.html',
-  styleUrls: ['./company-user-view.component.css']
+  styleUrls: ['./company-user-view.component.css'],
 })
 export class CompanyUserViewComponent {
-
   company: Company = {
-    name: "",
-    address: "",
+    name: '',
+    address: '',
     longitude: 0.0,
     latitude: 0.0,
-    description: "",
+    description: '',
     averageGrade: 0.0,
   };
   selectedCompany: Company;
@@ -35,56 +34,56 @@ export class CompanyUserViewComponent {
   exceptional: boolean = false;
   selectedDate: Date;
   timeSlots: any;
-  id:number
+  id: number;
   route = inject(ActivatedRoute);
   user: User | undefined;
   administratorIds: number[] = [];
 
-  constructor(private service: CompaniesService,private datePipe: DatePipe, private authService: AuthService) { }
+  constructor(
+    private service: CompaniesService,
+    private datePipe: DatePipe,
+    private authService: AuthService
+  ) {}
 
   ngOnInit(): void {
-    this.id = Number(this.route.snapshot.paramMap.get('id'))
+    this.id = Number(this.route.snapshot.paramMap.get('id'));
     this.getCompanies();
     this.selectedEquipment = [];
-    this.authService.user$.subscribe(user => {
+    this.authService.user$.subscribe((user) => {
       this.user = user;
     });
-    
   }
 
-  getCompanies(): void{
+  getCompanies(): void {
     this.service.getCompanyById(this.id).subscribe({
       next: (result: Company) => {
-          this.company = result;
-          this.service.getCompaniesEquipment(this.company).subscribe({
-              next: (result: Equipment | Equipment[]) =>{
-                if (Array.isArray(result)) {
-                  this.companiesEquipment = result;
-                  this.company.equipment = "";
-                  for(let ce of this.companiesEquipment){
-                    if(this.company.equipment == ""){
-                      this.company.equipment += ce.name;
-                    }
-                    else{
-                      this.company.equipment += ", " + ce.name;
-                    }
-                  }
+        this.company = result;
+        this.service.getCompaniesEquipment(this.company).subscribe({
+          next: (result: Equipment | Equipment[]) => {
+            if (Array.isArray(result)) {
+              this.companiesEquipment = result;
+              this.company.equipment = '';
+              for (let ce of this.companiesEquipment) {
+                if (this.company.equipment == '') {
+                  this.company.equipment += ce.name;
+                } else {
+                  this.company.equipment += ', ' + ce.name;
                 }
-                else{
-                  this.companiesEquipment = [result];
-                }
-                this.service.getCompaniesAdministrators(this.company).subscribe({
-                  next: (result: number | number[]) =>{
-                    if (Array.isArray(result)) {
-                      this.administratorIds = result;
-                    }
-                    else{
-                      this.administratorIds = [result];
-                    }
-                  }
-                });
               }
+            } else {
+              this.companiesEquipment = [result];
+            }
+            this.service.getCompaniesAdministrators(this.company).subscribe({
+              next: (result: number | number[]) => {
+                if (Array.isArray(result)) {
+                  this.administratorIds = result;
+                } else {
+                  this.administratorIds = [result];
+                }
+              },
             });
+          },
+        });
       },
       error: (err) => {
         console.error('Error fetching companies:', err);
@@ -98,13 +97,13 @@ export class CompanyUserViewComponent {
     this.shouldRenderCompaniesForm = true;
   }
 
-  onDeleteClicked(company: Company): void{
-    if(company.id){  
+  onDeleteClicked(company: Company): void {
+    if (company.id) {
       this.service.deleteCompany(company.id).subscribe({
         next: () => {
           this.getCompanies();
-        }
-      })
+        },
+      });
     }
   }
 
@@ -115,15 +114,14 @@ export class CompanyUserViewComponent {
       if (!this.selectedEquipment.includes(eq)) {
         this.selectedEquipment.push(eq);
 
-        if(eq.id !== undefined){
+        if (eq.id !== undefined) {
           const equipmentQuantity: EquipmentQuantity = {
             equipmentId: eq.id,
-            quantity: quantity
+            quantity: quantity,
           };
           // Add to the list of EquipmentQuantity
           this.addEquipmentQuantity(equipmentQuantity);
         }
-        
       }
     }
   }
@@ -146,7 +144,8 @@ export class CompanyUserViewComponent {
 
     if (existingIndex !== -1) {
       // Update existing quantity
-      this.equipmentQuantities[existingIndex].quantity = equipmentQuantity.quantity;
+      this.equipmentQuantities[existingIndex].quantity =
+        equipmentQuantity.quantity;
     } else {
       // Add new equipment quantity
       this.equipmentQuantities.push(equipmentQuantity);
@@ -164,24 +163,21 @@ export class CompanyUserViewComponent {
     }
   }
 
-
-  getPredefidedAppointments(id: number):void{
+  getPredefidedAppointments(id: number): void {
     if (id !== undefined) {
-    this.service.getCompanysPredefinedAppointments(id).subscribe({
-      next: (result: Appointment | Appointment[]) => {
-        if (Array.isArray(result)) {
-          this.predefinedAppointments = result;
-        }
-        else{
-          this.predefinedAppointments = [result];
-        }
-      }
-    })
-  }
+      this.service.getCompanysPredefinedAppointments(id).subscribe({
+        next: (result: Appointment | Appointment[]) => {
+          if (Array.isArray(result)) {
+            this.predefinedAppointments = result;
+          } else {
+            this.predefinedAppointments = [result];
+          }
+        },
+      });
+    }
   }
 
-
-  changeExc():void{
+  changeExc(): void {
     this.exceptional = true;
   }
 
@@ -189,7 +185,7 @@ export class CompanyUserViewComponent {
     const year = date.getFullYear();
     const month = (date.getMonth() + 1).toString().padStart(2, '0');
     const day = date.getDate().toString().padStart(2, '0');
-  
+
     // Format: YYYY-MM-DD
     return `${year}-${month}-${day}`;
   }
@@ -197,101 +193,139 @@ export class CompanyUserViewComponent {
   onDateSelected(): void {
     if (this.selectedDate && this.company && this.company.id) {
       const companyId = this.company.id;
-      const localDate = new Date(this.selectedDate.getTime() - this.selectedDate.getTimezoneOffset() * 60000);
-      const formattedDate = localDate.toISOString().slice(0, 19).replace('T', ' '); // Implement formatDate as needed
-      const dateForWorkingHours =  localDate.toISOString().slice(0, 10).replace('T', ' ');
+      const localDate = new Date(
+        this.selectedDate.getTime() -
+          this.selectedDate.getTimezoneOffset() * 60000
+      );
+      const formattedDate = localDate
+        .toISOString()
+        .slice(0, 19)
+        .replace('T', ' '); // Implement formatDate as needed
+      const dateForWorkingHours = localDate
+        .toISOString()
+        .slice(0, 10)
+        .replace('T', ' ');
       const startTime = dateForWorkingHours + ' 08:00:00'; // Set the start time PROMENTII KAD SE IMPLEMENTIRA RADNO VREME KOMPANIEJ
       const endTime = dateForWorkingHours + ' 16:00:00'; // Set the end time PROMENTII KAD SE IMPLEMENTIRA RADNO VREME KOMPANIEJ
 
-      this.service.getFreeTimeSlots(companyId, formattedDate, startTime, endTime).subscribe({
-        next: (freeTimeSlots: any) => {
-          // Handle the freeTimeSlots data and update your UI as needed
-          this.timeSlots = freeTimeSlots;
-        },
-        error: (error) => {
-          console.error('Error fetching free time slots:', error);
-        }
-      });
+      this.service
+        .getFreeTimeSlots(companyId, formattedDate, startTime, endTime)
+        .subscribe({
+          next: (freeTimeSlots: any) => {
+            // Handle the freeTimeSlots data and update your UI as needed
+            this.timeSlots = freeTimeSlots;
+          },
+          error: (error) => {
+            console.error('Error fetching free time slots:', error);
+          },
+        });
     }
   }
 
-  scheduleAppointment(timeSlot: any): void{
+  scheduleAppointment(timeSlot: any): void {
     //sad zovemo metode za cuvanje appointmenta
     //kad se sacuva appointment
-    
 
+    if (this.company.id !== undefined) {
+      this.service
+        .findAdminIdsForAppointmentsAtPickupTime(this.company.id, timeSlot)
+        .subscribe({
+          next: (result: any) => {
+            // Handle the freeTimeSlots data and update your UI as needed
+            const adminIdsWithAppointments = result; // Assuming result is an array of admin IDs with appointments
+            const adminIdsWithoutAppointments = this.administratorIds.filter(
+              (adminId) => !adminIdsWithAppointments.includes(adminId)
+            );
 
+            if (adminIdsWithoutAppointments.length > 0) {
+              const firstAdminIdWithoutAppointment =
+                adminIdsWithoutAppointments[0];
+              if (this.company.id !== undefined) {
+                const localDate = new Date(
+                  this.selectedDate.getTime() -
+                    this.selectedDate.getTimezoneOffset() * 60000
+                );
 
-    if(this.company.id !== undefined){
+                const appointment: Appointment = {
+                  pickupTime: timeSlot, //URADI KONVERZIJU SA VREMENSKI ZONU
+                  duration: 30,
+                  status: Status.IN_PROGRESS,
+                  type: Type.EXCEPTIONAL,
+                  companyId: this.company.id,
+                  userId: this.user?.id,
+                  administratorId: firstAdminIdWithoutAppointment,
+                };
 
-      this.service.findAdminIdsForAppointmentsAtPickupTime(this.company.id,timeSlot).subscribe({
-        next: (result: any) => {
-          // Handle the freeTimeSlots data and update your UI as needed
-          const adminIdsWithAppointments = result; // Assuming result is an array of admin IDs with appointments
-          const adminIdsWithoutAppointments = this.administratorIds.filter(adminId => !adminIdsWithAppointments.includes(adminId));
+                console.log(appointment);
 
-          if (adminIdsWithoutAppointments.length > 0) {
-            const firstAdminIdWithoutAppointment = adminIdsWithoutAppointments[0];
-            if(this.company.id !== undefined){
-              const localDate = new Date(this.selectedDate.getTime() - this.selectedDate.getTimezoneOffset() * 60000);
-              
-              const appointment: Appointment = {
-                pickupTime: timeSlot, //URADI KONVERZIJU SA VREMENSKI ZONU
-                duration: 30,
-                status: Status.IN_PROGRESS,
-                type: Type.EXCEPTIONAL,
-                companyId: this.company.id,
-                userId: this.user?.id,
-                administratorId: firstAdminIdWithoutAppointment
-              };
-
-              console.log(appointment);
-
-              this.service.addAppointment(appointment).subscribe({
-                next: (result: Appointment) => {
-                  // Handle the freeTimeSlots data and update your UI as needed
-                  for (let eq of this.equipmentQuantities) {
-                    // Set the appointmentId for each object in the list
-                    eq.appointmentId = result.id;
-                  }
-
-                  this.service.addAppointmentEquipment(this.equipmentQuantities).subscribe({
-                    next: (result) => {
-                      // Handle the freeTimeSlots data and update your UI as needed
-                      console.log("RADIiiiiiiii"); //POSALJI QR KOD
-                      alert("You have made an appointment");
-                    },
-                    error: (error) => {
-                      console.error('Error fetching free time slots:', error);
+                this.service.addAppointment(appointment).subscribe({
+                  next: (result: Appointment) => {
+                    // Handle the freeTimeSlots data and update your UI as needed
+                    for (let eq of this.equipmentQuantities) {
+                      // Set the appointmentId for each object in the list
+                      eq.appointmentId = result.id;
                     }
-                  });
 
-                },
-                error: (error) => {
-                  console.error('Error fetching free time slots:', error);
-                }
-              });
-
-
-
+                    this.service
+                      .addAppointmentEquipment(this.equipmentQuantities)
+                      .subscribe({
+                        next: (result) => {
+                          // Handle the freeTimeSlots data and update your UI as needed
+                          console.log('RADIiiiiiiii'); //POSALJI QR KOD
+                          alert('You have made an appointment');
+                        },
+                        error: (error) => {
+                          console.error(
+                            'Error fetching free time slots:',
+                            error
+                          );
+                        },
+                      });
+                  },
+                  error: (error) => {
+                    console.error('Error fetching free time slots:', error);
+                  },
+                });
+              }
             }
-            
-
-      
-          }
-        },
-        error: (error) => {
-          console.error('Error available admin ids for free time slots:', error);
-        }
-      });
-
-
-
-      
+          },
+          error: (error) => {
+            console.error(
+              'Error available admin ids for free time slots:',
+              error
+            );
+          },
+        });
     }
-    
-   
   }
 
+  schedulePredefinedAppointment(appointmentId: number): void {
+    //first schedule the appointments
+    this.service
+      .schedulePredefinedAppointment(this.user?.id || 0, appointmentId)
+      .subscribe({
+        next: (result: any) => {
+          // add equipment quantities
+          for (let eq of this.equipmentQuantities) {
+            // Set the appointmentId for each object in the list
+            eq.appointmentId = result.id;
+          }
 
+          this.service
+            .addAppointmentEquipment(this.equipmentQuantities)
+            .subscribe({
+              next: (result) => {
+                // Handle the freeTimeSlots data and update your UI as needed
+                console.log('RADIiiiiiiii'); //POSALJI QR KOD
+                alert('You have made an appointment');
+                //ponovno dobavljanje predefinisanih termina
+                this.getPredefidedAppointments(this.id);
+              },
+              error: (error) => {
+                console.error('Error adding equipment to appointment:', error);
+              },
+            });
+        },
+      });
+  }
 }

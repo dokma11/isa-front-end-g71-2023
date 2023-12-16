@@ -7,16 +7,14 @@ import { Equipment } from '../administration/model/equipment.model';
 import { Appointment } from './model/appointment.model';
 import { EquipmentQuantity } from './model/equipmentQuantity.model';
 
-
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class CompaniesService {
-
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient) {}
 
   getCompanies(): Observable<Company> {
-    return this.http.get<Company>(environment.apiHost + 'companies')
+    return this.http.get<Company>(environment.apiHost + 'companies');
   }
 
   deleteCompany(id: number): Observable<Company> {
@@ -28,56 +26,92 @@ export class CompaniesService {
   }
 
   updateCompany(company: Company): Observable<Company> {
-    return this.http.put<Company>(environment.apiHost + 'companies/' + company.id, company);
+    return this.http.put<Company>(
+      environment.apiHost + 'companies/' + company.id,
+      company
+    );
   }
 
   getCompaniesEquipment(company: Company): Observable<Equipment> {
-    return this.http.get<Equipment>(environment.apiHost + 'companies/' + company.id + '/equipment');
+    return this.http.get<Equipment>(
+      environment.apiHost + 'companies/' + company.id + '/equipment'
+    );
   }
-  
+
   getCompanyById(id: number): Observable<Company> {
     return this.http.get<Company>(environment.apiHost + 'companies/' + id);
   }
 
-  getCompanysPredefinedAppointments(id:number) : Observable<Appointment>{
-    return this.http.get<Appointment>(environment.apiHost + 'appointments/predefined/' + id);
+  getCompanysPredefinedAppointments(id: number): Observable<Appointment> {
+    return this.http.get<Appointment>(
+      environment.apiHost + 'appointments/predefined/' + id
+    );
   }
 
-
-  getFreeTimeSlots(companyId: number, date: string, startTime: string, endTime: string): Observable<any> {
-    
+  getFreeTimeSlots(
+    companyId: number,
+    date: string,
+    startTime: string,
+    endTime: string
+  ): Observable<any> {
     const params = {
       companyId: companyId.toString(),
       date: date,
       startTime: startTime,
-      endTime: endTime
+      endTime: endTime,
     };
 
-    return this.http.get<any>(environment.apiHost + 'appointments/freeTimeSlots', { params: params });
+    return this.http.get<any>(
+      environment.apiHost + 'appointments/freeTimeSlots',
+      { params: params }
+    );
   }
 
-  addAppointment(appointment: Appointment){
-    return this.http.post<Appointment>(environment.apiHost + 'appointments', appointment);
+  addAppointment(appointment: Appointment) {
+    return this.http.post<Appointment>(
+      environment.apiHost + 'appointments',
+      appointment
+    );
   }
 
-  addAppointmentEquipment(equipmentQuantities: EquipmentQuantity[]){
-    return this.http.post<any>(environment.apiHost + 'equipmentQuantity', equipmentQuantities);
+  addAppointmentEquipment(equipmentQuantities: EquipmentQuantity[]) {
+    return this.http.post<any>(
+      environment.apiHost + 'equipmentQuantity',
+      equipmentQuantities
+    );
   }
 
-  findAdminIdsForAppointmentsAtPickupTime(companyId: number, pickupTime: string): Observable<number[]> {
+  findAdminIdsForAppointmentsAtPickupTime(
+    companyId: number,
+    pickupTime: string
+  ): Observable<number[]> {
     const params = new HttpParams()
       .set('pickupTime', pickupTime)
       .set('companyId', companyId.toString());
 
-
-    return this.http.get<number[]>(environment.apiHost + 'appointments/admins', { params: params });
+    return this.http.get<number[]>(
+      environment.apiHost + 'appointments/admins',
+      { params: params }
+    );
   }
-
 
   getCompaniesAdministrators(company: Company): Observable<number> {
-    return this.http.get<number>(environment.apiHost + 'companies/' + company.id + '/administrator');
+    return this.http.get<number>(
+      environment.apiHost + 'companies/' + company.id + '/administrator'
+    );
   }
 
-  
-
+  schedulePredefinedAppointment(
+    userId: number,
+    appointmentId: number
+  ): Observable<Appointment> {
+    return this.http.put<Appointment>(
+      environment.apiHost +
+        'appointments/schedule/' +
+        userId +
+        '/' +
+        appointmentId,
+      {}
+    );
+  }
 }
