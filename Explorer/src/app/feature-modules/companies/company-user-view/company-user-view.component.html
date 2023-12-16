@@ -78,7 +78,7 @@
           type="number"
           [(ngModel)]="selectedQuantities[i]"
           min="0"
-          [max]="eq.quantity"
+          [max]="getAvailableQuantity(eq.id || 0)"
         />
       </div>
       <button (click)="addEquipmentToAppointment(eq, selectedQuantities[i])">

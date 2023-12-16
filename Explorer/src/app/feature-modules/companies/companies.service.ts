@@ -6,6 +6,7 @@ import { Company } from './model/company.model';
 import { Equipment } from '../administration/model/equipment.model';
 import { Appointment } from './model/appointment.model';
 import { EquipmentQuantity } from './model/equipmentQuantity.model';
+import { AvailableEquipmentQuantity } from './model/availableEquipmentQuantity.model';
 
 @Injectable({
   providedIn: 'root',
@@ -112,6 +113,14 @@ export class CompaniesService {
         '/' +
         appointmentId,
       {}
+    );
+  }
+
+  getAvailableEquipmentQuantity(
+    companyId: number
+  ): Observable<AvailableEquipmentQuantity[]> {
+    return this.http.get<AvailableEquipmentQuantity[]>(
+      environment.apiHost + 'equipment/available/' + companyId
     );
   }
 }

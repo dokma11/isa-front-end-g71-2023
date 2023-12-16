@@ -10,6 +10,7 @@ import { RegisteredUser } from '../../users/model/registered-user.model';
 import { User } from 'src/app/infrastructure/auth/model/user.model';
 import { NavbarComponent } from '../../layout/navbar/navbar.component';
 import { AuthService } from 'src/app/infrastructure/auth/auth.service';
+import { AvailableEquipmentQuantity } from '../model/availableEquipmentQuantity.model';
 
 @Component({
   selector: 'xp-company-user-view',
@@ -38,6 +39,7 @@ export class CompanyUserViewComponent {
   route = inject(ActivatedRoute);
   user: User | undefined;
   administratorIds: number[] = [];
+  availableEquipmentQuantity: AvailableEquipmentQuantity[] = []; // for validation
 
   constructor(
     private service: CompaniesService,
@@ -80,6 +82,12 @@ export class CompanyUserViewComponent {
                 } else {
                   this.administratorIds = [result];
                 }
+                // dobavljanje
+                this.service.getAvailableEquipmentQuantity(this.id).subscribe({
+                  next: (result: AvailableEquipmentQuantity[]) => {
+                    this.availableEquipmentQuantity = result;
+                  },
+                });
               },
             });
           },
@@ -327,5 +335,17 @@ export class CompanyUserViewComponent {
             });
         },
       });
+  }
+
+  getAvailableQuantity(equipmentId: number): number {
+    let equipmentQuantity = this.availableEquipmentQuantity.find(
+      (aq) => aq.equipmentId === equipmentId
+    );
+
+    if (equipmentQuantity) {
+      return equipmentQuantity.availableQuantity;
+    } else {
+      return 0;
+    }
   }
 }
