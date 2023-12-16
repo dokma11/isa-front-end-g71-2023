@@ -120,7 +120,7 @@
           <tr>
             <th>PickUp time</th>
             <th>Duration</th>
-            <th>Administartor ID</th>
+            <th>Administartor</th>
             <th></th>
           </tr>
         </thead>
@@ -128,7 +128,7 @@
           <tr *ngFor="let p of predefinedAppointments">
             <td>{{ p.pickupTime }}</td>
             <td>{{ p.duration }}</td>
-            <td>OVDE DA BUDE IME I PRZ ADMINA TERMINA</td>
+            <td>{{ p.companyAdminName }}</td>
             <td>
               <button (click)="schedulePredefinedAppointment(p.id || 0)">
                 Schedule
