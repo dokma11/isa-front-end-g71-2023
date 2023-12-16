@@ -17,6 +17,8 @@ import { CompaniesModule } from './feature-modules/companies/companies.module';
 import { CompanySearchComponent } from './feature-modules/company/company-search/company-search.component';
 import { UsersModule } from './feature-modules/users/users.module';
 import { CompanyModule } from './feature-modules/company/company.module';
+import { MatDialogModule } from '@angular/material/dialog';
+import { MatDatepickerModule } from '@angular/material/datepicker';
 
 @NgModule({
   declarations: [AppComponent],
@@ -35,7 +37,9 @@ import { CompanyModule } from './feature-modules/company/company.module';
     CompaniesModule,
     FormsModule,
     UsersModule,
-    CompanyModule
+    CompanyModule,
+    MatDialogModule,
+    MatDatepickerModule
   ],
   providers: [
     {

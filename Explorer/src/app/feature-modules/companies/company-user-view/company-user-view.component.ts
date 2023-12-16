@@ -1,7 +1,11 @@
 import { Component, inject } from '@angular/core';
 import { Company } from '../model/company.model';
 import { Equipment } from '../../administration/model/equipment.model';
-import { Appointment, Status, Type } from '../model/appointment.model';
+import {
+  Appointment,
+  AppointmentStatus,
+  AppointmentType,
+} from '../model/appointment.model';
 import { CompaniesService } from '../companies.service';
 import { DatePipe } from '@angular/common';
 import { ActivatedRoute } from '@angular/router';
@@ -77,7 +81,7 @@ export class CompanyUserViewComponent {
             } else {
               this.companiesEquipment = [result];
             }
-            this.service.getCompaniesAdministrators(this.company).subscribe({
+            this.service.getCompaniesAdministratorIds(this.company).subscribe({
               next: (result: number | number[]) => {
                 if (Array.isArray(result)) {
                   this.administratorIds = result;
@@ -215,8 +219,10 @@ export class CompanyUserViewComponent {
         .toISOString()
         .slice(0, 10)
         .replace('T', ' ');
-      const startTime = dateForWorkingHours + ' 08:00:00'; // Set the start time PROMENTII KAD SE IMPLEMENTIRA RADNO VREME KOMPANIEJ
-      const endTime = dateForWorkingHours + ' 16:00:00'; // Set the end time PROMENTII KAD SE IMPLEMENTIRA RADNO VREME KOMPANIEJ
+      //const startTime = dateForWorkingHours + ' 08:00:00'; // Set the start time PROMENTII KAD SE IMPLEMENTIRA RADNO VREME KOMPANIEJ
+      const startTime =
+        dateForWorkingHours + ' ' + this.company.workingHoursStart;
+      const endTime = dateForWorkingHours + ' ' + this.company.workingHoursEnd;
 
       this.service
         .getFreeTimeSlots(companyId, formattedDate, startTime, endTime)
@@ -259,8 +265,8 @@ export class CompanyUserViewComponent {
                 const appointment: Appointment = {
                   pickupTime: timeSlot, //URADI KONVERZIJU SA VREMENSKI ZONU
                   duration: 30,
-                  status: Status.IN_PROGRESS,
-                  type: Type.EXCEPTIONAL,
+                  status: AppointmentStatus.IN_PROGRESS,
+                  type: AppointmentType.EXCEPTIONAL,
                   companyId: this.company.id,
                   userId: this.user?.id,
                   administratorId: firstAdminIdWithoutAppointment,

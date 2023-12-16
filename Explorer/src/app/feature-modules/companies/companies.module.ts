@@ -7,6 +7,8 @@ import { MatIconModule } from '@angular/material/icon';
 import { CompanyFormComponent } from './company-form/company-form/company-form.component';
 import { RouterModule } from '@angular/router';
 import { SharedModule } from 'src/app/shared/shared.module';
+import { AppointmentsComponent } from './appointments/appointments.component';
+import { AdministrationModule } from '../administration/administration.module';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatInputModule } from '@angular/material/input';
 import { MatNativeDateModule } from '@angular/material/core';
@@ -16,6 +18,7 @@ import { CompanyUserViewComponent } from './company-user-view/company-user-view.
   declarations: [
     CompanyComponent,
     CompanyFormComponent,
+    AppointmentsComponent,
     CompanyUserViewComponent
   ],
   imports: [
@@ -26,6 +29,7 @@ import { CompanyUserViewComponent } from './company-user-view/company-user-view.
     MaterialModule,
     RouterModule,
     SharedModule,
+    AdministrationModule,
     MatDatepickerModule,
     MatInputModule,
     MatNativeDateModule
