@@ -1,0 +1,23 @@
+<div>
+  <p>You have ordered following itmes:</p>
+
+  <table>
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Description</th>
+        <th>Type</th>
+        <th>Quantity</th>
+      </tr>
+    </thead>
+
+    <tbody>
+      <tr *ngFor="let e of equipment">
+        <td>{{ e.name }}</td>
+        <td>{{ e.description }}</td>
+        <td>{{ e.type }}</td>
+        <td>{{ e.quantity }}</td>
+      </tr>
+    </tbody>
+  </table>
+</div>

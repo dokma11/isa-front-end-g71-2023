@@ -7,9 +7,17 @@ import { MaterialModule } from 'src/app/infrastructure/material/material.module'
 import { SharedModule } from 'src/app/shared/shared.module';
 import { RegistrationComponent } from './registration/registration.component';
 import { UserUpdateComponent } from './user-update/user-update.component';
-
+import { UsersAppointmentsComponent } from './users-appointments/users-appointments.component';
+import { AppointmentEquipmentViewComponent } from './appointment-equipment-view/appointment-equipment-view.component';
+import { MatDialogModule } from '@angular/material/dialog';
 @NgModule({
-  declarations: [RegistrationComponent, UserRegistrationComponent, UserUpdateComponent],
+  declarations: [
+    RegistrationComponent,
+    UserRegistrationComponent,
+    UserUpdateComponent,
+    UsersAppointmentsComponent,
+    AppointmentEquipmentViewComponent,
+  ],
   imports: [
     CommonModule,
     MaterialModule,
@@ -17,6 +25,7 @@ import { UserUpdateComponent } from './user-update/user-update.component';
     SharedModule,
     RouterModule,
     FormsModule,
+    MatDialogModule,
   ],
   exports: [UserRegistrationComponent, RegistrationComponent],
 })

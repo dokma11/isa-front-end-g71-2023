@@ -13,6 +13,7 @@ export interface Appointment {
   userId?: number;
   administratorId?: number;
   companyAdminName?: string;
+  companyName?: string;
 }
 
 export enum Status {

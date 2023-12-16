@@ -3,6 +3,8 @@ import { HttpClient, HttpResponse } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { RegisteredUser } from './model/registered-user.model';
 import { environment } from 'src/env/environment';
+import { Appointment } from '../companies/model/appointment.model';
+import { Equipment } from '../administration/model/equipment.model';
 
 @Injectable({
   providedIn: 'root',
@@ -27,6 +29,18 @@ export class UsersServiceService {
     return this.http.put<RegisteredUser>(
       environment.apiHost + 'registeredUsers/' + user.id,
       user
+    );
+  }
+
+  getAppointments(userId: number): Observable<Appointment[]> {
+    return this.http.get<Appointment[]>(
+      environment.apiHost + 'appointments/users/' + userId
+    );
+  }
+
+  getAppointmentsEquipment(appointmentId: number): Observable<Equipment[]> {
+    return this.http.get<Equipment[]>(
+      environment.apiHost + 'equipment/appointments/' + appointmentId
     );
   }
 }

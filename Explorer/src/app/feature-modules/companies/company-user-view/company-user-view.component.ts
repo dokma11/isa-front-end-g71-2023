@@ -11,6 +11,7 @@ import { User } from 'src/app/infrastructure/auth/model/user.model';
 import { NavbarComponent } from '../../layout/navbar/navbar.component';
 import { AuthService } from 'src/app/infrastructure/auth/auth.service';
 import { AvailableEquipmentQuantity } from '../model/availableEquipmentQuantity.model';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'xp-company-user-view',
@@ -44,7 +45,8 @@ export class CompanyUserViewComponent {
   constructor(
     private service: CompaniesService,
     private datePipe: DatePipe,
-    private authService: AuthService
+    private authService: AuthService,
+    private router: Router
   ) {}
 
   ngOnInit(): void {
@@ -281,6 +283,7 @@ export class CompanyUserViewComponent {
                           // Handle the freeTimeSlots data and update your UI as needed
                           console.log('RADIiiiiiiii'); //POSALJI QR KOD
                           alert('You have made an appointment');
+                          this.router.navigate(['/userProfile']);
                         },
                         error: (error) => {
                           console.error(
@@ -326,8 +329,9 @@ export class CompanyUserViewComponent {
                 // Handle the freeTimeSlots data and update your UI as needed
                 console.log('RADIiiiiiiii'); //POSALJI QR KOD
                 alert('You have made an appointment');
+                this.router.navigate(['/userProfile']);
                 //ponovno dobavljanje predefinisanih termina
-                this.getPredefidedAppointments(this.id);
+                //this.getPredefidedAppointments(this.id);
               },
               error: (error) => {
                 console.error('Error adding equipment to appointment:', error);
