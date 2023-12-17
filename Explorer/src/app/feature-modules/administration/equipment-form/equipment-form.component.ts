@@ -4,6 +4,7 @@ import { Equipment } from '../model/equipment.model';
 import { AdministrationService } from '../administration.service';
 import { CompaniesService } from '../../companies/companies.service';
 import { Company } from '../../companies/model/company.model';
+import { AvailableEquipmentQuantity } from '../../companies/model/availableEquipmentQuantity.model';
 
 @Component({
   selector: 'xp-equipment-form',
@@ -69,16 +70,25 @@ export class EquipmentFormComponent implements OnChanges {
     equipment.id = this.equipment.id;
 
     if(equipment.id){
-      this.service.getBookedQuantities(equipment.id).subscribe({
-        next: (result: number) => {
-          if(equipment.quantity >= result){
-            this.service.updateEquipment(equipment).subscribe({
-              next: () => { 
-                this.equimpentUpdated.emit();
-                location.reload();
-              
+      this.companiesService.getAvailableEquipmentQuantity(this.equipment.company?.id!).subscribe({
+        next: (result: AvailableEquipmentQuantity[]) => {
+          
+          for(let aeq of result){
+            if(aeq.equipmentId == equipment.id){
+              let t = this.equipment.quantity - aeq.availableQuantity;
+              if(equipment.quantity >= t){
+                this.service.updateEquipment(equipment).subscribe({
+                  next: () => { 
+                    this.equimpentUpdated.emit();
+                    location.reload();
+                  
+                  }
+                }); 
               }
-            });  
+              else{
+                alert("The quantity is too low");
+              }
+            }
           }
         }  
       });  

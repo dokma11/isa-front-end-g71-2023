@@ -191,13 +191,15 @@ export class CompanyComponent implements OnInit{
   }
 
   onDeleteAppointmentClicked(appointment: Appointment): void{
-    if(appointment.id){  
-      // menjaj
-      this.service.deleteCompany(appointment.id).subscribe({
+    if(appointment.id && !appointment.user?.id){  
+      this.service.deleteAppointment(appointment.id).subscribe({
         next: () => {
-          this.getCompanies(appointment.companyId!);
+          location.reload();
         }
       })
+    }
+    else{
+      alert("Can not delete a busy appointment!");
     }
   }  
 

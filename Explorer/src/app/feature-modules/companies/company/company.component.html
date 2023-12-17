@@ -54,6 +54,7 @@
           <th>Responsible Admin</th>
           <th>Date</th>
           <th>Time</th>
+          <th>Type</th>
           <th></th>
           <th></th>
         </tr>
@@ -63,13 +64,12 @@
           <td>{{ app.administrator?.name + " " + app.administrator?.surname }}</td>
           <td>{{ app.dateString }}</td>
           <td>{{ app.timeString }}</td>
- <!--
+          <td>{{ app.type }}</td>
           <td>
             <button (click)="onDeleteAppointmentClicked(app)" color="accent" mat-icon-button>
               <mat-icon class="faIcon">delete</mat-icon>
             </button>
           </td>
--->
         </tr>
         <tr>
           <td>

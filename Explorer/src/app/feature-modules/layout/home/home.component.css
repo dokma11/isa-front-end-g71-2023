@@ -18,9 +18,11 @@ p {
   }
 
   .btn {
-    margin-left: 110px;
+    width: 300px;
   }
   
   .userInput {
     width: 300px;
   }
+
+  /* DODAJ ALERT */

@@ -58,6 +58,10 @@ export class CompaniesService {
     );
   }
 
+  deleteAppointment(id: number): Observable<Appointment> {
+    return this.http.delete<Appointment>(environment.apiHost + 'appointments/' + id);
+  }
+
   getAdminByEmail(email: string): Observable<CompanyAdmin> {
     return this.http.get<CompanyAdmin>(
       environment.apiHost + 'companyAdministrator/email/' + email
