@@ -5,7 +5,6 @@
         <thead>
           <tr>
             <th>Name</th>
-            <th>Address</th>
             <th>Description</th>
             <th>Average grade</th>
             <th></th>
@@ -15,7 +14,6 @@
         <tbody>
           <tr [class.selected-row]="selectedCompany === company">
             <td>{{ company.name }}</td>
-            <td>{{ company.address }}</td>
             <td>{{ company.description }}</td>
             <td>{{ company.averageGrade }}</td>
             <td>
@@ -40,7 +38,8 @@
 
 <br>
 
-<div class="row">
+<h3 *ngIf="!shouldEdit">Company's location: </h3>
+<div class="row" *ngIf="!shouldEdit">
   <div id="hotel_map"></div>
 </div>
 

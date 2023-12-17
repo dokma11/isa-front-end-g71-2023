@@ -4,3 +4,13 @@ div {
   gap: 20px;
   flex-direction: column;
 }
+
+.row {
+  width: 450px;
+  height: 400px
+}
+
+#hotel_map {
+  width: 100%; /* or specify a fixed width */
+  height: 400px; /* or specify a fixed height */
+}

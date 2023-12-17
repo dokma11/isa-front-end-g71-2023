@@ -14,16 +14,21 @@
               cdkAutosizeMaxRows="5"
           ></textarea>
       </mat-form-field>
-      <mat-form-field>
-        <mat-label>Address</mat-label>
-        <textarea
-            matInput
-            cdkTextareaAutosize
-            cdkAutosizeMinRows="1"
-            formControlName="address"
-            cdkAutosizeMaxRows="5"
-        ></textarea>
-      </mat-form-field>
+
+      <button
+          type="submit"
+          color="primary"
+          (click)="enableMap()"
+          mat-raised-button
+      >
+          Enable map
+      </button>
+
+      <div *ngIf="enableMap" class="row">
+        <div id="hotel_map"></div>
+      </div>
+      
+
       <button
           *ngIf="shouldEdit"
           type="submit"
