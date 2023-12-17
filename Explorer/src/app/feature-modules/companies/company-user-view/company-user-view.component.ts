@@ -265,7 +265,7 @@ export class CompanyUserViewComponent {
                 const appointment: Appointment = {
                   pickupTime: timeSlot, //URADI KONVERZIJU SA VREMENSKI ZONU
                   duration: 30,
-                  status: AppointmentStatus.IN_PROGRESS,
+                  status: AppointmentStatus.ON_HOLD,
                   type: AppointmentType.EXCEPTIONAL,
                   companyId: this.company.id,
                   userId: this.user?.id,
