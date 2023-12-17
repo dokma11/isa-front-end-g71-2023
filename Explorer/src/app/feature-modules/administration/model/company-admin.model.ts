@@ -13,6 +13,7 @@ export interface CompanyAdmin {
   role: UserRole;
   profession: string;
   company?: Company;
+  verified?: boolean;
 }
 
 export enum UserRole {

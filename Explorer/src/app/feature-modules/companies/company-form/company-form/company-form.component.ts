@@ -85,6 +85,8 @@ export class CompanyFormComponent implements OnChanges {
       };
 
       company.id = this.company.id;
+      company.workingHoursEnd = this.company.workingHoursEnd;
+      company.workingHoursStart = this.company.workingHoursStart;
 
       if (this.newLatitude != 0 && this.newLongitude != 0) {
           company.longitude = this.newLongitude;

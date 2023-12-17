@@ -22,6 +22,8 @@ import { Point } from 'ol/geom';
 import VectorSource from 'ol/source/Vector';
 import { fromLonLat } from 'ol/proj';
 import { EquipmentQuantity } from '../model/equipmentQuantity.model';
+import { User } from 'src/app/infrastructure/auth/model/user.model';
+import { AuthService } from 'src/app/infrastructure/auth/auth.service';
 
 @Component({
   selector: 'xp-company',
@@ -29,7 +31,9 @@ import { EquipmentQuantity } from '../model/equipmentQuantity.model';
   styleUrls: ['./company.component.css']
 })
 export class CompanyComponent implements OnInit{
-  
+
+  user: User | undefined;
+
   company: Company = {
     name: "",
     address: "",
@@ -68,14 +72,27 @@ export class CompanyComponent implements OnInit{
 
   constructor(private service: CompaniesService, 
               public dialogRef: MatDialog,
-              private datePipe: DatePipe) { } 
+              private datePipe: DatePipe,
+              private authService: AuthService) { } 
 
   ngOnInit(): void {
-    this.getCompanies();
+    this.authService.user$.subscribe(user => {
+      this.user = user;
+      this.service.getAdminById(this.user.id).subscribe({
+        next: (result: CompanyAdmin) => {
+          if(result){
+            this.getCompanies(result.company?.id!);
+          }
+        },
+        error: (err) => {
+          console.error('Error fetching companies:', err);
+        },
+      });
+    });    
   }
 
-  getCompanies(): void{
-    this.service.getCompanyById(-1).subscribe({
+  getCompanies(id: number): void{
+    this.service.getCompanyById(id).subscribe({
       next: (result: Company) => {
           this.company = result;
           this.service.getCompaniesEquipment(this.company).subscribe({
@@ -167,7 +184,7 @@ export class CompanyComponent implements OnInit{
     if(company.id){  
       this.service.deleteCompany(company.id).subscribe({
         next: () => {
-          this.getCompanies();
+          this.getCompanies(company.id!);
         }
       })
     }
@@ -178,7 +195,7 @@ export class CompanyComponent implements OnInit{
       // menjaj
       this.service.deleteCompany(appointment.id).subscribe({
         next: () => {
-          this.getCompanies();
+          this.getCompanies(appointment.companyId!);
         }
       })
     }
@@ -200,7 +217,7 @@ export class CompanyComponent implements OnInit{
             if(this.removableQuantites.length == 0 && equipment.id){
               this.service.deleteEquipment(equipment.id).subscribe({
                 next: () => {
-                  this.getCompanies();
+                  this.getCompanies(equipment?.company?.id!);
                   location.reload();
                 }
               });

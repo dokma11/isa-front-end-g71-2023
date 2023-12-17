@@ -9,6 +9,8 @@ import { CompanyAdminFormComponent } from './company-admin-form/company-admin-fo
 import { MatIconModule } from '@angular/material/icon';
 import { RouterModule } from '@angular/router';
 import { SharedModule } from 'src/app/shared/shared.module';
+import { AuthModule } from 'src/app/infrastructure/auth/auth.module';
+import { CompanyAdminPasswordFormComponent } from './company-admin-password-form/company-admin-password-form.component';
 
 
 
@@ -17,7 +19,8 @@ import { SharedModule } from 'src/app/shared/shared.module';
     EquipmentFormComponent,
     EquipmentComponent,
     CompanyAdminComponent,
-    CompanyAdminFormComponent
+    CompanyAdminFormComponent,
+    CompanyAdminPasswordFormComponent
   ],
   imports: [
     CommonModule,
@@ -26,7 +29,8 @@ import { SharedModule } from 'src/app/shared/shared.module';
     MatIconModule,
     MaterialModule,
     RouterModule,
-    SharedModule
+    SharedModule,
+    AuthModule
   ],
   exports: [
     EquipmentComponent,

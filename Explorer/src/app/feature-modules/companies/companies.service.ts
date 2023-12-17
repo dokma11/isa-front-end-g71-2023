@@ -70,6 +70,13 @@ export class CompaniesService {
     );
   }
 
+  updateCompanyAdministrator(companyAdmin: CompanyAdmin): Observable<CompanyAdmin> {
+    return this.http.put<CompanyAdmin>(
+      environment.apiHost + 'companyAdministrator/' + companyAdmin.id,
+      companyAdmin
+    );
+  }
+
   addEquipment(equipment: Equipment): Observable<Equipment> {
     return this.http.post<Equipment>(
       environment.apiHost + 'equipment',
@@ -145,6 +152,7 @@ export class CompaniesService {
       environment.apiHost + 'companies/' + company.id + '/administrator'
     );
   }
+
   getEquipmentQuantities(id: number): Observable<EquipmentQuantity> {
     return this.http.get<EquipmentQuantity>(
       environment.apiHost + 'equipmentQuantity/equipment/' + id
@@ -156,6 +164,7 @@ export class CompaniesService {
       environment.apiHost + 'equipmentQuantity/removable/' + id
     );
   }
+  
   schedulePredefinedAppointment(
     userId: number,
     appointmentId: number

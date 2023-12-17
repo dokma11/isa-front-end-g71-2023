@@ -19,11 +19,6 @@
             <td>{{ company.description }}</td>
             <td>{{ company.averageGrade }}</td>
             <td>
-              <button (click)="onDeleteClicked(company)" color="accent" mat-icon-button>
-                <mat-icon class="faIcon">delete</mat-icon>
-              </button>
-            </td>
-            <td>
               <button (click)="onEditClicked(company)" color="primary" mat-icon-button>
                 <mat-icon class="faIcon">edit</mat-icon>
               </button>
@@ -33,7 +28,6 @@
       </table>
     </div>
     <xp-company-form *ngIf="shouldRenderCompaniesForm" 
-                     (facilitesUpdated)="getCompanies()" 
                      [company]="selectedCompany" 
                      [shouldEdit]="shouldEdit">
     </xp-company-form>
@@ -91,8 +85,7 @@
     <div class="right-column">
       <xp-appointments *ngIf="shouldRenderAppointmentsForm" 
                   [shouldEdit]="shouldEdit" 
-                  [appointment]="selectedAppointment" 
-                  (appointmentUpdated)="getCompanies()">
+                  [appointment]="selectedAppointment">
       </xp-appointments>
     </div>
 

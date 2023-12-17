@@ -2,6 +2,9 @@ import { Component, EventEmitter, Input, OnChanges, Output } from '@angular/core
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { CompanyAdmin, UserRole } from '../model/company-admin.model';
 import { AdministrationService } from '../administration.service';
+import { Router } from '@angular/router';
+import { Login } from 'src/app/infrastructure/auth/model/login.model';
+import { AuthService } from 'src/app/infrastructure/auth/auth.service';
 
 @Component({
   selector: 'xp-company-admin-form',
@@ -13,7 +16,9 @@ export class CompanyAdminFormComponent implements OnChanges{
   @Input() companyAdmin: CompanyAdmin;
   @Input() shouldEdit: boolean = false;
 
-  constructor(private service: AdministrationService) {}
+  constructor(private service: AdministrationService,
+              private router: Router,
+              private authService: AuthService) {}
 
   ngOnChanges(): void{
     this.companyAdminForm.reset();
@@ -38,8 +43,6 @@ export class CompanyAdminFormComponent implements OnChanges{
     name: new FormControl("", [Validators.required]),
     surname: new FormControl("", [Validators.required]),
     username: new FormControl("", [Validators.required]),
-    password: new FormControl("", [Validators.required]),
-    repeatPassword: new FormControl("", [Validators.required]),
     companyInformation: new FormControl("", [Validators.required]),
     telephoneNumber: new FormControl("", [Validators.required]),
     city: new FormControl("", [Validators.required]),
@@ -53,7 +56,7 @@ export class CompanyAdminFormComponent implements OnChanges{
       name: this.companyAdminForm.value.name || "",
       surname: this.companyAdminForm.value.surname || "",
       username: this.companyAdminForm.value.username || "",
-      password:  this.companyAdminForm.value.password || "",
+      password:  this.companyAdmin.password,
       companyInformation:  this.companyAdminForm.value.companyInformation || "",
       telephoneNumber:  this.companyAdminForm.value.telephoneNumber || "",
       city:  this.companyAdminForm.value.city || "",
@@ -63,12 +66,12 @@ export class CompanyAdminFormComponent implements OnChanges{
     };
 
     companyAdmin.id = this.companyAdmin.id;
+    companyAdmin.verified = true;
+    companyAdmin.password = this.companyAdmin.password;
 
-    if(this.companyAdminForm.value.repeatPassword == companyAdmin.password &&
-      this.companyAdminForm.value.name != "" &&
+    if(this.companyAdminForm.value.name != "" &&
       this.companyAdminForm.value.surname != "" &&
       this.companyAdminForm.value.username != "" &&
-      this.companyAdminForm.value.password != "" &&
       this.companyAdminForm.value.companyInformation != "" &&
       this.companyAdminForm.value.telephoneNumber != "" &&
       this.companyAdminForm.value.city != "" &&
@@ -76,7 +79,18 @@ export class CompanyAdminFormComponent implements OnChanges{
       this.companyAdminForm.value.profession != ""){
       this.service.updateCompanyAdministrator(companyAdmin).subscribe({
         next: _ => {
-            this.companyAdminUpdated.emit();
+          /*
+            const login: Login = {
+              username: this.companyAdmin.username || "",
+              password: this.companyAdmin.password || "",
+            };
+        
+            this.authService.login(login).subscribe({
+              next: () => {
+                location.reload();
+              },
+            }); */
+            location.reload();
         },
       });
     }
