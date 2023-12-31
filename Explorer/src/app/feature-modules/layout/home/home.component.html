@@ -1,25 +1,70 @@
-<p><b>Home component</b></p>
-
+<!-- COMPANY ADMINISTRATOR CHANGE PASSWORD FORM -->
 <div class="center-container" *ngIf="shouldUpdatePassword">
   <h2>When logging for the first time, you are required to change your password.<br>After the change you will be required to log in again</h2>
   <h2></h2>
-  <form [formGroup]="passwordForm" class="center-form">  
+  <form [formGroup]="passwordForm" 
+        class="center-form">  
     <div>
       <mat-form-field class="userInput">
         <mat-label>Enter your new password</mat-label>
-        <input matInput formControlName="password" type="password" />
+        <input matInput 
+               formControlName="password" 
+               type="password" />
       </mat-form-field>
     </div>
 
     <div>
       <mat-form-field class="userInput">
         <mat-label>Repeat your new password</mat-label>
-        <input matInput formControlName="passwordRepeated" type="password" />
+        <input matInput 
+               formControlName="passwordRepeated" 
+               type="password" />
       </mat-form-field>
     </div>
 
     <div>
-      <button type="submit" (click)="changePassword()" mat-raised-button class="btn">Done</button>
+      <button type="submit" 
+              (click)="changePassword()" 
+              mat-raised-button 
+              class="btn">
+              Done</button>
     </div>
   </form>
+</div>
+
+<!-- COMPANY ADMINISTRATOR HOME COMPONENT -->
+<h1 *ngIf="!shouldUpdatePassword && 
+    user?.role === 'ROLE_COMPANY_ADMINISTRATOR'">
+    Welcome {{companyAdmin.name}} {{companyAdmin.surname}}!
+</h1>
+<div *ngIf=" !shouldUpdatePassword && 
+     user?.role === 'ROLE_COMPANY_ADMINISTRATOR'"
+     class="company-admin-home">
+   <div>
+    <h2>Manage your profile:</h2>
+    <button type="submit" 
+            (click)="companyAdminManageProfile()" 
+            mat-raised-button 
+            class="btn"
+            color="primary">
+            Take me there</button>
+   </div>
+   <div>
+    <h2>Manage company's appointments:</h2>
+    <button type="submit" 
+            (click)="companyAdminManageCompanyProfile()" 
+            mat-raised-button 
+            class="btn"
+            color="primary">
+            Take me there</button> 
+   </div>
+   <div>
+    <h2>Check users who made appointments:</h2>
+    <button type="submit" 
+            (click)="companyAdminManageUserAppointments()" 
+            mat-raised-button 
+            class="btn"
+            color="primary">
+            Take me there</button> 
+   </div>
 </div>

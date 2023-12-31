@@ -25,4 +25,35 @@ p {
     width: 300px;
   }
 
-  /* DODAJ ALERT */
+  .company-admin-home {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    margin-top: -175px;
+  }
+  
+  .company-admin-home > div {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    width: 50%;
+    margin-bottom: 20px; 
+  }
+  
+  .company-admin-home h2 {
+    margin: 0;
+  }
+  
+  .company-admin-home button {
+    margin-left: 10px; 
+  }
+  
+  h1 {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 75px;
+  }

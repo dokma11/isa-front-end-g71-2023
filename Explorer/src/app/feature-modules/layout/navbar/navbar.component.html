@@ -11,15 +11,6 @@
         Login
       </button>
       
-      <button
-        *ngIf="user && user.username !== ''"
-        color="accent"
-        mat-raised-button
-        (click)="onLogout()"
-      >
-        Logout
-      </button>
-      
       <button color="primary" mat-raised-button [routerLink]="['home']">
         Home
       </button>
@@ -42,7 +33,11 @@
         Search companies
       </button>
       
-      <button color="primary" mat-raised-button [routerLink]="['register']">
+      <button *ngIf="user && user.role !== 'ROLE_COMPANY_ADMINISTRATOR'" 
+              color="primary" 
+              mat-raised-button 
+              [routerLink]="['register']"
+      >
         Register
       </button>
       
@@ -70,7 +65,16 @@
         mat-raised-button 
         [routerLink]="['company-administrators']"
       >
-        Manage company admin profile
+        Manage your profile
+      </button>
+      
+      <button
+        *ngIf="user && user.username !== ''"
+        color="accent"
+        mat-raised-button
+        (click)="onLogout()"
+      >
+        Logout
       </button>
 
     </div>
