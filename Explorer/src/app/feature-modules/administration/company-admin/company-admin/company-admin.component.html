@@ -1,3 +1,5 @@
+<h1>Manage your profile</h1>
+
 <div id="company-admin">
   <div id="company-admin-details">
     <div>
@@ -30,22 +32,22 @@
             <td>{{ companyAdmin.state }}</td>
             <td>{{ companyAdmin.profession }}</td>
             <td>
-              <button (click)="onEditClicked(companyAdmin)" color="primary" mat-icon-button>Edit</button>
+              <button (click)="onEditClicked(companyAdmin)" 
+                      color="primary" 
+                      mat-icon-button>
+                      Edit
+              </button>
             </td>
             <td>
-              <button (click)="onEditPasswordClicked(companyAdmin)" color="primary" mat-icon-button>Change</button>
+              <button (click)="onEditPasswordClicked(companyAdmin)" 
+                      color="primary" 
+                      mat-icon-button>
+                      Change
+              </button>
             </td>
           </tr>
         </tbody>
       </table>
     </div>
-    <xp-company-admin-form *ngIf="shouldRenderCompanyAdminForm" 
-                           [companyAdmin]="selectedCompanyAdmin" 
-                           [shouldEdit]="shouldEdit">
-    </xp-company-admin-form>
-    <xp-company-admin-password-form *ngIf="shouldRenderCompanyAdminPasswordForm" 
-                                    [companyAdmin]="selectedCompanyAdmin" 
-                                    [shouldEdit]="shouldEdit">
-    </xp-company-admin-password-form>
   </div>
 </div>
