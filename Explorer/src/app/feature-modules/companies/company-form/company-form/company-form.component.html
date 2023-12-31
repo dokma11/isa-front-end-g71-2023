@@ -1,42 +1,49 @@
-<form [formGroup]="companyForm">
-  <div>
-      <mat-form-field>
-          <mat-label>Name</mat-label>
-          <input matInput formControlName="name" type="text" />
-      </mat-form-field>
-      <mat-form-field>
-          <mat-label>Description</mat-label>
-          <textarea
-              matInput
-              cdkTextareaAutosize
-              cdkAutosizeMinRows="1"
-              formControlName="description"
-              cdkAutosizeMaxRows="5"
-          ></textarea>
-      </mat-form-field>
+<div class="dialogue">
+ <form [formGroup]="companyForm">
+    <div>
+        <h2>Edit Company</h2>
+        <mat-form-field>
+            <mat-label>Name</mat-label>
+            <input matInput formControlName="name" type="text" />
+        </mat-form-field>
+        <mat-form-field>
+            <mat-label>Description</mat-label>
+            <textarea
+                matInput
+                cdkTextareaAutosize
+                cdkAutosizeMinRows="1"
+                formControlName="description"
+                cdkAutosizeMaxRows="5"
+            ></textarea>
+        </mat-form-field>
 
-      <button
-          type="submit"
-          color="primary"
-          (click)="enableMap()"
-          mat-raised-button
-      >
-          Enable map
-      </button>
+        <mat-label id="enable-map-label">To change location click enable map</mat-label>
+        <br>
+        <button
+            type="submit"
+            color="primary"
+            (click)="enableMap()"
+            mat-raised-button
+        >
+            Enable map
+        </button>
 
-      <div *ngIf="enableMap" class="row">
-        <div id="hotel_map"></div>
-      </div>
-      
+        <br>
+        
+        <div *ngIf="enableMap" class="row">
+            <div id="hotel_map_dialogue"></div>
+        </div>
 
-      <button
-          *ngIf="shouldEdit"
-          type="submit"
-          color="primary"
-          (click)="updateCompany()"
-          mat-raised-button
-      >
-          Done
-      </button>
-  </div>
-</form>
+        <br>
+
+        <button
+            type="submit"
+            color="primary"
+            (click)="updateCompany()"
+            mat-raised-button
+        >
+            Done
+        </button>
+    </div>
+ </form>
+</div>
