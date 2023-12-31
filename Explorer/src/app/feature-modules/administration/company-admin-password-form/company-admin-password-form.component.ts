@@ -1,9 +1,11 @@
-import { Component, EventEmitter, Input, OnChanges, Output } from '@angular/core';
+import { Component, EventEmitter, Inject, Input, OnChanges, Output } from '@angular/core';
 import { CompanyAdmin, UserRole } from '../model/company-admin.model';
 import { AdministrationService } from '../administration.service';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { AuthService } from 'src/app/infrastructure/auth/auth.service';
+import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
+import { CompanyAdminComponent } from '../company-admin/company-admin/company-admin.component';
 
 @Component({
   selector: 'xp-company-admin-password-form',
@@ -17,7 +19,11 @@ export class CompanyAdminPasswordFormComponent implements OnChanges{
 
   constructor(private service: AdministrationService,
               private authService: AuthService,
-              private router: Router) {}
+              private router: Router,
+              @Inject(MAT_DIALOG_DATA) public data: any,
+              private dialogRef: MatDialogRef<CompanyAdminPasswordFormComponent>) {
+                this.companyAdmin = data;
+              }
 
   ngOnChanges(): void{
     this.companyAdminForm.reset();
@@ -51,8 +57,8 @@ export class CompanyAdminPasswordFormComponent implements OnChanges{
       this.service.updateCompanyAdministrator(companyAdmin).subscribe({
         next: _ => {
             this.companyAdminUpdated.emit();
+            this.dialogRef.close();
             this.authService.logout();
-
             this.router.navigate(['/login']);
         },
       });
