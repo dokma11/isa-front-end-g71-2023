@@ -1,0 +1,40 @@
+.dialogue {
+  width: 40rem;
+  height: 40rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+form div{
+  width: 35rem;
+  height: 38rem;
+  display:flex;
+  gap: 0.1rem;
+  flex-direction: column;
+  font: inherit; 
+}
+
+#done-button {
+  height: 55px;
+}
+
+.mat-icon {
+  vertical-align: middle;
+}
+
+form {
+  margin-top: 10px;
+  width: 75%;
+  height: 70%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+form h2 {
+  margin-top: 10px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
