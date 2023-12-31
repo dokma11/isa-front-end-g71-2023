@@ -181,3 +181,10 @@ li:hover {
 h3 {
   margin-left: 21px;
 }
+
+h1 {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 25px;
+}

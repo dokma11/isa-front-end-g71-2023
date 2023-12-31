@@ -1,6 +1,16 @@
 import { Component, OnInit } from '@angular/core';
 import { AuthService } from 'src/app/infrastructure/auth/auth.service';
 import { User } from 'src/app/infrastructure/auth/model/user.model';
+import { 
+  faHSquare,
+  faHome,
+  faBuilding,
+  faUser,
+  faSignOut,
+  faSignIn,
+  faStethoscope,
+  faAmbulance
+ } from "@fortawesome/free-solid-svg-icons";
 
 @Component({
   selector: 'xp-navbar',
@@ -22,4 +32,13 @@ export class NavbarComponent implements OnInit {
   onLogout(): void {
     this.authService.logout();
   }
+
+  faHSquare = faHSquare;
+  faHome = faHome;
+  faBuilding = faBuilding;
+  faUser = faUser;
+  faSignOut = faSignOut;
+  faSignIn = faSignIn;
+  faStethoscope = faStethoscope;
+  faAmbulance = faAmbulance;
 }

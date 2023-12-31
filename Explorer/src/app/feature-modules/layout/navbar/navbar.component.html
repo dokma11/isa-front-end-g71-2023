@@ -1,5 +1,6 @@
 <mat-toolbar color="primary">
   <div>
+    <fa-icon [icon]="faAmbulance" />    
     <p>Hospital equipment delivery</p>
     <div id="buttons">
       <button
@@ -8,11 +9,13 @@
         mat-raised-button
         [routerLink]="['login']"
       >
-        Login
+      <fa-icon [icon]="faSignIn" />    
+        &nbsp;Login
       </button>
-      
+
       <button color="primary" mat-raised-button [routerLink]="['home']">
-        Home
+        <fa-icon [icon]="faHome" />    
+        &nbsp;Home
       </button>
       
       <button
@@ -21,7 +24,8 @@
         mat-raised-button
         [routerLink]="['equipment']"
       >
-        Manage equipment
+      <fa-icon [icon]="faStethoscope" />    
+        &nbsp;Manage equipment
       </button>
       
       <button
@@ -30,7 +34,8 @@
         mat-raised-button
         [routerLink]="['searchCompanies']"
       >
-        Search companies
+      <fa-icon [icon]="faBuilding" />    
+        &nbsp;Search companies
       </button>
       
       <button *ngIf="user && user.role !== 'ROLE_COMPANY_ADMINISTRATOR'" 
@@ -38,7 +43,8 @@
               mat-raised-button 
               [routerLink]="['register']"
       >
-        Register
+      <fa-icon [icon]="faUser" />    
+        &nbsp;Register
       </button>
       
       <button
@@ -47,7 +53,8 @@
         mat-raised-button
         [routerLink]="['userProfile']"
       >
-        My profile
+      <fa-icon [icon]="faUser" />    
+        &nbsp;My profile
       </button>
       
       <button 
@@ -56,7 +63,8 @@
         mat-raised-button 
         [routerLink]="['companies']"
       >
-        Manage your company
+      <fa-icon [icon]="faBuilding" />    
+        &nbsp;My company
       </button>
       
       <button 
@@ -65,7 +73,8 @@
         mat-raised-button 
         [routerLink]="['company-administrators']"
       >
-        Manage your profile
+      <fa-icon [icon]="faUser" />    
+        &nbsp;My profile
       </button>
       
       <button
@@ -74,7 +83,8 @@
         mat-raised-button
         (click)="onLogout()"
       >
-        Logout
+      <fa-icon [icon]="faSignOut" />    
+        &nbsp;Logout
       </button>
 
     </div>
