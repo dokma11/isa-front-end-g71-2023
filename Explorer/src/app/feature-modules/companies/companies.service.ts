@@ -190,4 +190,11 @@ export class CompaniesService {
       environment.apiHost + 'equipment/available/' + companyId
     );
   }
+
+  updateAppointment(appointment: Appointment): Observable<Appointment> {
+    return this.http.put<Appointment>(
+      environment.apiHost + 'appointments/' + appointment.id,
+      appointment
+    );
+  }
 }

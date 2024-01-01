@@ -2,10 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import { Company } from '../model/company.model';
 import { CompaniesService } from '../companies.service';
 import { Equipment } from '../../administration/model/equipment.model';
-import { Appointment } from '../model/appointment.model';
+import { Appointment, AppointmentStatus } from '../model/appointment.model';
 import { AppointmentsComponent } from '../appointments/appointments.component';
 import { MatDialog } from "@angular/material/dialog";
-import { EquipmentComponent } from '../../administration/equipment/equipment.component';
 import { CompanyAdmin } from '../../administration/model/company-admin.model';
 import { DatePipe } from '@angular/common'; 
 import { EquipmentFormComponent } from '../../administration/equipment-form/equipment-form.component';
@@ -24,6 +23,7 @@ import { fromLonLat } from 'ol/proj';
 import { EquipmentQuantity } from '../model/equipmentQuantity.model';
 import { User } from 'src/app/infrastructure/auth/model/user.model';
 import { AuthService } from 'src/app/infrastructure/auth/auth.service';
+import { CompanyFormComponent } from '../company-form/company-form/company-form.component';
 
 @Component({
   selector: 'xp-company',
@@ -52,26 +52,17 @@ export class CompanyComponent implements OnInit{
   companiesEquipment: Equipment[] = [];
   shouldRenderEquipmentForm: boolean = false;
 
-  appointment: Appointment;
-  appointments: Appointment[] = [];
-  selectedAppointment: Appointment;
-  shouldRenderAppointmentsForm: boolean = false;
-  timeString: string = "";
-  dateString: string = "";
-
   administrators: CompanyAdmin[] = [];
 
   public map!: Map;
-  predefinedAppointments: Appointment[] = [];
-  exceptional: boolean = false;
-  selectedDate: Date;
-  timeSlots: any;
-
+  
   quantites: EquipmentQuantity[] = [];
   removableQuantites: EquipmentQuantity[] = [];
 
+  private dialogRef: any;
+
   constructor(private service: CompaniesService, 
-              public dialogRef: MatDialog,
+              public dialog: MatDialog,
               private datePipe: DatePipe,
               private authService: AuthService) { } 
 
@@ -105,22 +96,6 @@ export class CompanyComponent implements OnInit{
                 }
               }
             });
-
-          this.service.getCompaniesAppointments(this.company).subscribe({
-            next: (result: Appointment | Appointment[]) =>{
-              if (Array.isArray(result)) {
-                this.appointments = result;
-                for (let appointment of this.appointments) {
-                  appointment.companyId = this.company.id || 0;
-                
-                  [appointment.dateString, appointment.timeString] = appointment.pickupTime.toString().split('T');
-                }
-              }
-              else{
-                this.appointments = [result];
-              }
-            }
-          });
 
           this.service.getCompaniesAdministrators(this.company).subscribe({
             next: (result: CompanyAdmin | CompanyAdmin[]) =>{
@@ -175,37 +150,8 @@ export class CompanyComponent implements OnInit{
   }
 
   onEditClicked(company: Company): void {
-    this.shouldEdit = true;
-    this.selectedCompany = company;
-    this.shouldRenderCompaniesForm = true;
-  }
-
-  onDeleteClicked(company: Company): void{
-    if(company.id){  
-      this.service.deleteCompany(company.id).subscribe({
-        next: () => {
-          this.getCompanies(company.id!);
-        }
-      })
-    }
-  }
-
-  onDeleteAppointmentClicked(appointment: Appointment): void{
-    if(appointment.id && !appointment.user?.id){  
-      this.service.deleteAppointment(appointment.id).subscribe({
-        next: () => {
-          location.reload();
-        }
-      })
-    }
-    else{
-      alert("Can not delete a busy appointment!");
-    }
-  }  
-
-  onAddClicked(): void{
-    this.dialogRef.open(AppointmentsComponent, {
-      data: this.appointment,
+    this.dialogRef = this.dialog.open(CompanyFormComponent, {
+      data: company,
     });
   }
 
@@ -238,15 +184,20 @@ export class CompanyComponent implements OnInit{
   }
 
   onAddEquipmentClicked(): void{
-    this.dialogRef.open(EquipmentFormComponent, {
-      data: this.equipment,
+    this.dialogRef = this.dialog.open(EquipmentFormComponent, {
+      data: {
+        shouldEdit: false
+      }
     });
   }
 
   onEditEquipmentClicked(equipment: Equipment): void{
-    this.shouldEdit = true;
-    this.sEquipment = equipment;
-    this.shouldRenderEquipmentForm = true;
+    this.dialogRef = this.dialog.open(EquipmentFormComponent, {
+      data: { 
+        equipment: equipment,
+        shouldEdit: true
+      }
+    });
   } 
 
   getEquipment(): void{
@@ -264,5 +215,4 @@ export class CompanyComponent implements OnInit{
   removeEquipmnet(index: number): void {
       this.selectedEquipment.splice(index, 1);
   }  
-
 }

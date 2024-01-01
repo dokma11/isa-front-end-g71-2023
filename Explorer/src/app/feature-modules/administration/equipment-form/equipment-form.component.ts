@@ -5,6 +5,7 @@ import { AdministrationService } from '../administration.service';
 import { CompaniesService } from '../../companies/companies.service';
 import { Company } from '../../companies/model/company.model';
 import { AvailableEquipmentQuantity } from '../../companies/model/availableEquipmentQuantity.model';
+import { MAT_DIALOG_DATA } from '@angular/material/dialog';
 
 @Component({
   selector: 'xp-equipment-form',
@@ -18,7 +19,13 @@ export class EquipmentFormComponent implements OnChanges {
   @Input() shouldEdit: boolean = false;
 
   constructor(private service: AdministrationService,
-              private companiesService: CompaniesService) {
+              private companiesService: CompaniesService,
+              @Inject(MAT_DIALOG_DATA) public data: any) {
+                if(data.equipment != null && data.shouldEdit){
+                  this.equipment = data.equipment;
+                  this.shouldEdit = data.shouldEdit;
+                  this.ngOnChanges();
+                }
   }
 
   ngOnChanges(): void {

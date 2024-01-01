@@ -8,8 +8,7 @@
             <th>Name</th>
             <th>Description</th>
             <th>Average grade</th>
-            <th></th>
-            <th></th>
+            <th>Edit</th>
           </tr>
         </thead>
         <tbody>
@@ -26,10 +25,6 @@
         </tbody>
       </table>
     </div>
-    <xp-company-form *ngIf="shouldRenderCompaniesForm" 
-                     [company]="selectedCompany" 
-                     [shouldEdit]="shouldEdit">
-    </xp-company-form>
   </div>
 </div>
 
@@ -38,54 +33,6 @@
 <h3 *ngIf="!shouldEdit">Company's location: </h3>
 <div class="row" *ngIf="!shouldEdit">
   <div id="hotel_map"></div>
-</div>
-
-<br>
-<h3>List of company's appointments</h3>
-
-<div id="appointments">
-  <div id="appointment-details">
-    <table>
-      <thead>
-        <tr>
-          <th>Responsible Admin</th>
-          <th>Date</th>
-          <th>Time</th>
-          <th>Type</th>
-          <th></th>
-          <th></th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr *ngFor="let app of appointments">
-          <td>{{ app.administrator?.name + " " + app.administrator?.surname }}</td>
-          <td>{{ app.dateString }}</td>
-          <td>{{ app.timeString }}</td>
-          <td>{{ app.type }}</td>
-          <td>
-            <button (click)="onDeleteAppointmentClicked(app)" color="accent" mat-icon-button>
-              <mat-icon class="faIcon">delete</mat-icon>
-            </button>
-          </td>
-        </tr>
-        <tr>
-          <td>
-            <button color="primary" (click)="onAddClicked()" mat-icon-button>
-              <mat-icon>add</mat-icon>
-            </button>        
-          </td>
-        </tr>
-      </tbody>
-    </table>
-
-    <div class="right-column">
-      <xp-appointments *ngIf="shouldRenderAppointmentsForm" 
-                  [shouldEdit]="shouldEdit" 
-                  [appointment]="selectedAppointment">
-      </xp-appointments>
-    </div>
-
-    </div>  
 </div>
 
 <br>
@@ -101,8 +48,8 @@
           <th>Type</th>
           <th>Grade</th>
           <th>Quantity</th>
-          <th></th>
-          <th></th>
+          <th>Remove</th>
+          <th>Edit</th>
         </tr>
       </thead>
       <tbody>
@@ -132,15 +79,6 @@
         </tr>
       </tbody>
     </table>
-    
-    <xp-equipment-form 
-                *ngIf="shouldRenderEquipmentForm"
-                (equimpentUpdated)="getEquipment()" 
-                [equipment]="sEquipment" 
-                [shouldEdit]="shouldEdit">
-    >
-    </xp-equipment-form>
-
   </div>
 </div>
 

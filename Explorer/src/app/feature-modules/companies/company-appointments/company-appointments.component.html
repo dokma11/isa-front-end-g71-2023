@@ -1,0 +1,56 @@
+<h1>Manage you appointments</h1>
+
+<br>
+<h3>List of company's appointments</h3>
+
+<div id="appointments">
+  <div id="appointment-details">
+    <table>
+      <thead>
+        <tr>
+          <th>Responsible Admin</th>
+          <th>Date</th>
+          <th>Time</th>
+          <th>Type</th>
+          <th>&nbsp;&nbsp;&nbsp;Status</th>
+          <th>Remove</th>
+          <th>Mark as picked up</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let app of appointments">
+          <td>{{ app.administrator?.name + " " + app.administrator?.surname }}</td>
+          <td>{{ app.dateString }}</td>
+          <td>{{ app.timeString }}</td>
+          <td>{{ app.type }}</td>
+          <td>{{ app.status }}</td>
+          <td>
+            <button (click)="onDeleteAppointmentClicked(app)" color="accent" mat-icon-button>
+              <mat-icon class="faIcon">delete</mat-icon>
+            </button>
+          </td>
+
+          <td *ngIf="app.status.toString() === 'ON_HOLD'">
+            <button (click)="onMarkAsPickedUpClicked(app)" color="primary" mat-icon-button>
+              <mat-icon class="faIcon">check-square</mat-icon>
+            </button>
+          </td>
+
+          
+          <td *ngIf="app.status.toString() !== 'ON_HOLD'">
+            Can only mark appointments that are on hold
+          </td>
+
+        </tr>
+        <tr>
+          <td>
+            <button color="primary" (click)="onAddClicked()" mat-icon-button>
+              <mat-icon>add</mat-icon>
+            </button>        
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    </div>  
+</div>
+

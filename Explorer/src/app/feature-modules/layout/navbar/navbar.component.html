@@ -58,7 +58,7 @@
       </button>
       
       <button 
-      *ngIf="user && user.role === 'ROLE_COMPANY_ADMINISTRATOR'"
+        *ngIf="user && user.role === 'ROLE_COMPANY_ADMINISTRATOR'"
         color="primary" 
         mat-raised-button 
         [routerLink]="['companies']"
@@ -68,7 +68,17 @@
       </button>
       
       <button 
-      *ngIf="user && user.role === 'ROLE_COMPANY_ADMINISTRATOR'"
+        *ngIf="user && user.role === 'ROLE_COMPANY_ADMINISTRATOR'"
+        color="primary" 
+        mat-raised-button 
+        [routerLink]="['appointments']"
+      >
+      <fa-icon [icon]="faMedKit" />    
+        &nbsp;My appointments
+      </button>
+
+      <button 
+        *ngIf="user && user.role === 'ROLE_COMPANY_ADMINISTRATOR'"
         color="primary" 
         mat-raised-button 
         [routerLink]="['company-administrators']"

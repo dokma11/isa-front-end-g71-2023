@@ -1,6 +1,7 @@
 <div class="dialogue">  
   <form [formGroup]="equipmentForm">
-    <h2>Add equipment</h2>
+    <h2 *ngIf="!shouldEdit">Add equipment</h2>
+    <h2 *ngIf="shouldEdit">Edit equipment</h2>
     <div>
         <mat-form-field>
           <mat-label >Name</mat-label>
