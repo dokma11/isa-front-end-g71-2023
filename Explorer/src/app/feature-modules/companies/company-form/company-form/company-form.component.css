@@ -1,16 +1,44 @@
-div {
-  width: 320px;
+.dialogue {
+  width: 40rem;
+  height: 40rem;
   display: flex;
-  gap: 20px;
+  align-items: center;
+  justify-content: center;
+}
+
+form div{
+  width: 30rem;
+  height: 32rem;
+  display:flex;
+  gap: 0.1rem;
   flex-direction: column;
+  font: inherit; 
 }
 
-.row {
-  width: 450px;
-  height: 400px
+#done-button {
+  height: 100%;
 }
 
-#hotel_map {
-  width: 100%; /* or specify a fixed width */
-  height: 400px; /* or specify a fixed height */
+.mat-icon {
+  vertical-align: middle;
+}
+
+form {
+  width: 75%;
+  height: 70%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+form h2 {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+#enable-map-label {
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }

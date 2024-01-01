@@ -27,6 +27,7 @@ export enum AppointmentStatus {
   IN_PROGRESS = 1,
   DONE = 2,
   CANCELED = 3,
+  EXPIRED = 4
 }
 
 export enum AppointmentType {

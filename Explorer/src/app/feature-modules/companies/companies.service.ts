@@ -1,4 +1,4 @@
-import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { environment } from 'src/env/environment';
 import { Observable } from 'rxjs';
@@ -9,6 +9,7 @@ import { CompanyAdmin } from '../administration/model/company-admin.model';
 import { EquipmentQuantity } from './model/equipmentQuantity.model';
 
 import { AvailableEquipmentQuantity } from './model/availableEquipmentQuantity.model';
+import { RegisteredUser } from '../users/model/registered-user.model';
 
 @Injectable({
   providedIn: 'root',
@@ -188,6 +189,26 @@ export class CompaniesService {
   ): Observable<AvailableEquipmentQuantity[]> {
     return this.http.get<AvailableEquipmentQuantity[]>(
       environment.apiHost + 'equipment/available/' + companyId
+    );
+  }
+
+  updateAppointment(appointment: Appointment): Observable<Appointment> {
+    return this.http.put<Appointment>(
+      environment.apiHost + 'appointments/' + appointment.id,
+      appointment
+    );
+  }
+
+  pickUpAppointment(appointment: Appointment): Observable<Appointment> {
+    return this.http.put<Appointment>(
+      environment.apiHost + 'appointments/pickUpAppointment/' + appointment.id,
+      appointment
+    );
+  }
+
+  getUserByid(id: number): Observable<RegisteredUser> {
+    return this.http.get<RegisteredUser>(
+      environment.apiHost + 'registeredUsers/' + id
     );
   }
 }

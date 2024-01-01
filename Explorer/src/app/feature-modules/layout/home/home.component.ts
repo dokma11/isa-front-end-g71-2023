@@ -63,4 +63,16 @@ export class HomeComponent implements OnInit{
       });
     }
   }
+
+  companyAdminManageProfile(): void{
+    this.router.navigate(['/company-administrators']);
+  }
+
+  companyAdminManageCompanyProfile(): void{
+    this.router.navigate(['/companies']);
+  }
+
+  companyAdminManageUserAppointments(): void{
+    this.router.navigate(['/appointments']);
+  }
 }

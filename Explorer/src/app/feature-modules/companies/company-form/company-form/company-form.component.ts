@@ -1,4 +1,4 @@
-import {Component, EventEmitter, Input, OnChanges, Output, ViewChild} from "@angular/core";
+import {Component, EventEmitter, Inject, Input, OnChanges, Output, ViewChild} from "@angular/core";
 import { FormControl, FormGroup, Validators } from "@angular/forms";
 import { Company } from "../../model/company.model";
 import { CompaniesService } from "../../companies.service";
@@ -14,6 +14,7 @@ import { Feature } from 'ol';
 import { Point } from 'ol/geom';
 import VectorSource from 'ol/source/Vector';
 import { fromLonLat } from 'ol/proj';
+import { MAT_DIALOG_DATA, MatDialogRef } from "@angular/material/dialog";
 
 @Component({
   selector: "xp-company-form",
@@ -25,7 +26,12 @@ export class CompanyFormComponent implements OnChanges {
   @Input() company: Company;
   @Input() shouldEdit: boolean = false;
 
-  constructor(private service: CompaniesService) {}
+  constructor(private service: CompaniesService,
+              @Inject(MAT_DIALOG_DATA) public data: any,
+              private dialogRef: MatDialogRef<CompanyFormComponent>) {
+                this.company = data;
+                this.ngOnChanges();
+              }
 
   selectedOption: string | null;
   newLongitude: number = 0;
@@ -38,7 +44,6 @@ export class CompanyFormComponent implements OnChanges {
 
   ngOnChanges(): void {
       this.companyForm.reset();
-      if (this.shouldEdit) {
           const companyToPatch = {
               name: this.company.name || null,
               description: this.company.description || null,
@@ -48,7 +53,6 @@ export class CompanyFormComponent implements OnChanges {
               averageGrade: this.company.averageGrade.toString() || null
           };
           this.companyForm.patchValue(companyToPatch);
-      }
   }
 
   companyForm = new FormGroup({
@@ -116,7 +120,7 @@ export class CompanyFormComponent implements OnChanges {
     this.mapEnabled = true;
 
     this.map = new Map({
-        target: 'hotel_map',
+        target: 'hotel_map_dialogue',
         layers: [
           new TileLayer({
             source: new OSM()

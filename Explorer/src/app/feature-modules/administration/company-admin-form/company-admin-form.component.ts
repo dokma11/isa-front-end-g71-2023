@@ -1,10 +1,10 @@
-import { Component, EventEmitter, Input, OnChanges, Output } from '@angular/core';
+import { Component, EventEmitter, Inject, Input, OnChanges, Output } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { CompanyAdmin, UserRole } from '../model/company-admin.model';
 import { AdministrationService } from '../administration.service';
 import { Router } from '@angular/router';
-import { Login } from 'src/app/infrastructure/auth/model/login.model';
 import { AuthService } from 'src/app/infrastructure/auth/auth.service';
+import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 
 @Component({
   selector: 'xp-company-admin-form',
@@ -18,11 +18,15 @@ export class CompanyAdminFormComponent implements OnChanges{
 
   constructor(private service: AdministrationService,
               private router: Router,
-              private authService: AuthService) {}
+              private authService: AuthService,
+              @Inject(MAT_DIALOG_DATA) public data: any,
+              private dialogRef: MatDialogRef<CompanyAdminFormComponent>) {
+                this.companyAdmin = data;
+                this.ngOnChanges();
+              }
 
   ngOnChanges(): void{
     this.companyAdminForm.reset();
-      if (this.shouldEdit) {
           const companyAdminToPatch = {
             name: this.companyAdmin.name || null,
             surname: this.companyAdmin.surname || null,
@@ -36,7 +40,6 @@ export class CompanyAdminFormComponent implements OnChanges{
             profession:  this.companyAdmin.profession || null,
           };
           this.companyAdminForm.patchValue(companyAdminToPatch);
-      }
   }
 
   companyAdminForm = new FormGroup({
@@ -79,17 +82,6 @@ export class CompanyAdminFormComponent implements OnChanges{
       this.companyAdminForm.value.profession != ""){
       this.service.updateCompanyAdministrator(companyAdmin).subscribe({
         next: _ => {
-          /*
-            const login: Login = {
-              username: this.companyAdmin.username || "",
-              password: this.companyAdmin.password || "",
-            };
-        
-            this.authService.login(login).subscribe({
-              next: () => {
-                location.reload();
-              },
-            }); */
             location.reload();
         },
       });

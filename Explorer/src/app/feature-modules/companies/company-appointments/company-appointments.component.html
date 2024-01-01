@@ -1,0 +1,82 @@
+<h1>My appointments</h1>
+
+<br>
+<h3>List of my company's appointments</h3>
+
+<div id="appointments">
+  <div id="appointment-details">
+    <table>
+      <thead>
+        <tr>
+          <th>Responsible Admin</th>
+          <th>Date</th>
+          <th>Time</th>
+          <th>Type</th>
+          <th>&nbsp;&nbsp;&nbsp;Status</th>
+          <th>Remove</th>
+          <th>Mark as picked up</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let app of appointments">
+          <td>{{ app.administrator?.name + " " + app.administrator?.surname }}</td>
+          <td>{{ app.dateString }}</td>
+          <td>{{ app.timeString }}</td>
+          <td>{{ app.type }}</td>
+          <td>{{ app.status }}</td>
+          <td>
+            <button (click)="onDeleteAppointmentClicked(app)" color="accent" mat-icon-button>
+              <mat-icon class="faIcon">delete</mat-icon>
+            </button>
+          </td>
+
+          <td *ngIf="app.status.toString() === 'ON_HOLD'">
+            <button (click)="onMarkAsPickedUpClicked(app)" color="primary" mat-icon-button>
+              <mat-icon class="faIcon">check-square</mat-icon>
+            </button>
+          </td>
+
+          
+          <td *ngIf="app.status.toString() !== 'ON_HOLD'">
+            Can only mark appointments that are on hold
+          </td>
+
+        </tr>
+        <tr>
+          <td>
+            <button color="primary" (click)="onAddClicked()" mat-icon-button>
+              <mat-icon>add</mat-icon>
+            </button>        
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    </div>  
+</div>
+
+<br>
+<h3>List of users who made appointments</h3>
+
+<div id="equipment">
+  <div id="equipment-details">
+    <table>
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Surname</th>
+          <th>Email</th>
+          <th>Profession</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let a of registeredUsers">
+          <td>{{ a.name }}</td>
+          <td>{{ a.surname }}</td>
+          <td>{{ a.email }}</td>
+          <td>{{ a.profession }}</td>
+        </tr>
+        <tr>
+      </tbody>
+    </table>
+  </div>
+</div>

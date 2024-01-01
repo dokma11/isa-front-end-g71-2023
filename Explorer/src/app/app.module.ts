@@ -1,6 +1,5 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-
 import { AppRoutingModule } from './infrastructure/routing/app-routing.module';
 import { AppComponent } from './app.component';
 import { LayoutModule } from './feature-modules/layout/layout.module';
@@ -19,6 +18,7 @@ import { UsersModule } from './feature-modules/users/users.module';
 import { CompanyModule } from './feature-modules/company/company.module';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatDatepickerModule } from '@angular/material/datepicker';
+import { FontAwesomeModule } from "@fortawesome/angular-fontawesome";
 
 @NgModule({
   declarations: [AppComponent],
@@ -39,7 +39,8 @@ import { MatDatepickerModule } from '@angular/material/datepicker';
     UsersModule,
     CompanyModule,
     MatDialogModule,
-    MatDatepickerModule
+    MatDatepickerModule,
+    FontAwesomeModule
   ],
   providers: [
     {

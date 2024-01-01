@@ -12,25 +12,52 @@ import { CompanySearchComponent } from 'src/app/feature-modules/company/company-
 import { UserUpdateComponent } from 'src/app/feature-modules/users/user-update/user-update.component';
 import { UserRegistrationComponent } from 'src/app/feature-modules/users/user-registration/user-registration.component';
 import { CompanyUserViewComponent } from 'src/app/feature-modules/companies/company-user-view/company-user-view.component';
+import { AppointmentsComponent } from 'src/app/feature-modules/companies/appointments/appointments.component';
+import { CompanyAppointmentsComponent } from 'src/app/feature-modules/companies/company-appointments/company-appointments.component';
 
 const routes: Routes = [
-  { path: 'home', component: HomeComponent },
-  { path: 'login', component: LoginComponent },
-  { path: 'register', component: UserRegistrationComponent },
+  { 
+    path: 'home', 
+    component: HomeComponent 
+  },
+  { 
+    path: 'login', 
+    component: LoginComponent 
+  },
+  { 
+    path: 'register', 
+    component: UserRegistrationComponent 
+  },
   {
     path: 'equipment',
     component: EquipmentComponent,
     canActivate: [AuthGuard],
   },
-  { path: 'searchCompanies', component: CompanySearchComponent },
-  { path: 'userProfile', component: UserUpdateComponent },
-  { path: 'companies', component: CompanyComponent},
-  { path: 'company-administrators', component: CompanyAdminComponent},
+  { 
+    path: 'searchCompanies', 
+    component: CompanySearchComponent 
+  },
+  { 
+    path: 'userProfile', 
+    component: UserUpdateComponent 
+  },
+  { 
+    path: 'companies', 
+    component: CompanyComponent
+  },
+  { 
+    path: 'company-administrators', 
+    component: CompanyAdminComponent
+  },
   {
     path: "searchCompanies/company/:id",
     component: CompanyUserViewComponent,
     canActivate: [AuthGuard],
-}
+  },
+  { 
+    path: 'appointments', 
+    component: CompanyAppointmentsComponent
+  },
 
 ];
 
