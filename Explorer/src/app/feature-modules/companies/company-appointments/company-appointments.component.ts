@@ -67,7 +67,7 @@ export class CompanyAppointmentsComponent implements OnInit{
                     this.registeredUsers.push(result);
                     this.registeredUsersIds.push(appointment.user?.id!);
                   }
-                  
+
                   [appointment.dateString, appointment.timeString] = appointment.pickupTime.toString().split('T');
 
                   this.checkForExpired();
@@ -111,7 +111,7 @@ export class CompanyAppointmentsComponent implements OnInit{
     if(appointment.id && appointment.user?.id){  
       if(appointment.status.toString() === "ON_HOLD"){
         appointment.status = AppointmentStatus.IN_PROGRESS;
-        this.service.updateAppointment(appointment).subscribe({
+        this.service.pickUpAppointment(appointment).subscribe({
           next: () => { location.reload(); }
         })
       }
@@ -134,6 +134,19 @@ export class CompanyAppointmentsComponent implements OnInit{
           this.service.updateAppointment(appointment).subscribe({
             next : () => {}
           });
+        }
+      }
+      else if(appointment.status.toString() === "IN_PROGRESS"){
+        const appointmentPickupTime = new Date(appointment.pickupTime);
+        appointmentPickupTime.setMinutes(appointmentPickupTime.getMinutes() + 30);
+
+        const currentDate = new Date();
+
+        if(appointmentPickupTime < currentDate){  
+          appointment.status = AppointmentStatus.DONE;
+          this.service.updateAppointment(appointment).subscribe({
+            next: () => {}
+          })
         }
       }
     }

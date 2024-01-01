@@ -1,4 +1,4 @@
-import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { environment } from 'src/env/environment';
 import { Observable } from 'rxjs';
@@ -195,6 +195,13 @@ export class CompaniesService {
   updateAppointment(appointment: Appointment): Observable<Appointment> {
     return this.http.put<Appointment>(
       environment.apiHost + 'appointments/' + appointment.id,
+      appointment
+    );
+  }
+
+  pickUpAppointment(appointment: Appointment): Observable<Appointment> {
+    return this.http.put<Appointment>(
+      environment.apiHost + 'appointments/pickUpAppointment/' + appointment.id,
       appointment
     );
   }
