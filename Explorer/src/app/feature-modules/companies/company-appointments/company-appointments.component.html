@@ -1,7 +1,7 @@
-<h1>Manage you appointments</h1>
+<h1>My appointments</h1>
 
 <br>
-<h3>List of company's appointments</h3>
+<h3>List of my company's appointments</h3>
 
 <div id="appointments">
   <div id="appointment-details">
@@ -54,3 +54,29 @@
     </div>  
 </div>
 
+<br>
+<h3>List of users who made appointments</h3>
+
+<div id="equipment">
+  <div id="equipment-details">
+    <table>
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Surname</th>
+          <th>Email</th>
+          <th>Profession</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let a of registeredUsers">
+          <td>{{ a.name }}</td>
+          <td>{{ a.surname }}</td>
+          <td>{{ a.email }}</td>
+          <td>{{ a.profession }}</td>
+        </tr>
+        <tr>
+      </tbody>
+    </table>
+  </div>
+</div>

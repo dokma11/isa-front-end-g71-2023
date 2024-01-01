@@ -9,6 +9,7 @@ import { CompanyAdmin } from '../administration/model/company-admin.model';
 import { EquipmentQuantity } from './model/equipmentQuantity.model';
 
 import { AvailableEquipmentQuantity } from './model/availableEquipmentQuantity.model';
+import { RegisteredUser } from '../users/model/registered-user.model';
 
 @Injectable({
   providedIn: 'root',
@@ -195,6 +196,12 @@ export class CompaniesService {
     return this.http.put<Appointment>(
       environment.apiHost + 'appointments/' + appointment.id,
       appointment
+    );
+  }
+
+  getUserByid(id: number): Observable<RegisteredUser> {
+    return this.http.get<RegisteredUser>(
+      environment.apiHost + 'registeredUsers/' + id
     );
   }
 }

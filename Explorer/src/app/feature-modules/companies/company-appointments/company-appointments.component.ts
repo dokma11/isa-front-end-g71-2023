@@ -7,6 +7,7 @@ import { AuthService } from 'src/app/infrastructure/auth/auth.service';
 import { CompaniesService } from '../companies.service';
 import { CompanyAdmin } from '../../administration/model/company-admin.model';
 import { Company } from '../model/company.model';
+import { RegisteredUser } from '../../users/model/registered-user.model';
 
 @Component({
   selector: 'xp-company-appointments',
@@ -16,6 +17,8 @@ import { Company } from '../model/company.model';
 export class CompanyAppointmentsComponent implements OnInit{
 
   user: User | undefined;
+  registeredUsers: RegisteredUser[] = [];
+  registeredUsersIds: number[] = [];
 
   appointment: Appointment;
   appointments: Appointment[] = [];
@@ -56,7 +59,22 @@ export class CompanyAppointmentsComponent implements OnInit{
           this.appointments = result;
           for (let appointment of this.appointments) {
             appointment.companyId = company.id || 0;
-          
+  
+            if(appointment.user?.id){
+              this.service.getUserByid(appointment.user.id).subscribe({
+                next: (result: RegisteredUser) => {
+                  if(!this.registeredUsersIds.includes(appointment.user?.id!)){                    
+                    this.registeredUsers.push(result);
+                    this.registeredUsersIds.push(appointment.user?.id!);
+                  }
+                  
+                  [appointment.dateString, appointment.timeString] = appointment.pickupTime.toString().split('T');
+
+                  this.checkForExpired();
+                }
+              })
+            }
+
             [appointment.dateString, appointment.timeString] = appointment.pickupTime.toString().split('T');
           }
         }

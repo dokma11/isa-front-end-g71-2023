@@ -41,7 +41,7 @@
      user?.role === 'ROLE_COMPANY_ADMINISTRATOR'"
      class="company-admin-home">
    <div>
-    <h2>Manage your profile:</h2>
+    <h2>Manage profile:</h2>
     <button type="submit" 
             (click)="companyAdminManageProfile()" 
             mat-raised-button 
@@ -50,9 +50,18 @@
             Take me there</button>
    </div>
    <div>
-    <h2>Manage company's appointments:</h2>
+    <h2>Manage company:</h2>
     <button type="submit" 
             (click)="companyAdminManageCompanyProfile()" 
+            mat-raised-button 
+            class="btn"
+            color="primary">
+            Take me there</button> 
+   </div>
+   <div>
+    <h2>Manage company's appointments:</h2>
+    <button type="submit" 
+            (click)="companyAdminManageUserAppointments()" 
             mat-raised-button 
             class="btn"
             color="primary">

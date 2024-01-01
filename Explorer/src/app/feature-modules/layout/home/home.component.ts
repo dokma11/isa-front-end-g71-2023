@@ -73,6 +73,6 @@ export class HomeComponent implements OnInit{
   }
 
   companyAdminManageUserAppointments(): void{
-    this.router.navigate(['/companies']);
+    this.router.navigate(['/appointments']);
   }
 }
