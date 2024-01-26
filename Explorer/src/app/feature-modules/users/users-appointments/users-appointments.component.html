@@ -20,6 +20,10 @@
           <button (click)="seeEquipment(a.id || 0)">
             See ordered equipment
           </button>
+          <button (click)="cancelAppointment(a.id || 0)"
+          [disabled]="isPastPickupTime(a.pickupTime)">
+            Cancel
+          </button>
         </td>
       </tr>
     </tbody>

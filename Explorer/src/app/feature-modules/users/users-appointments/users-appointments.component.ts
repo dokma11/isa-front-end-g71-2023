@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, EventEmitter, Output } from '@angular/core';
 import { UsersServiceService } from '../users.service.service';
 import { Router } from '@angular/router';
 import { Appointment } from '../../companies/model/appointment.model';
@@ -13,6 +13,7 @@ import { AppointmentEquipmentViewComponent } from '../appointment-equipment-view
   styleUrls: ['./users-appointments.component.css'],
 })
 export class UsersAppointmentsComponent {
+  @Output() customEvent = new EventEmitter<void>();
   appointments: Appointment[] = [];
   user: User;
   constructor(
@@ -38,6 +39,23 @@ export class UsersAppointmentsComponent {
         this.appointments = result;
       },
     });
+  }
+
+  isPastPickupTime(pickupTime: Date): boolean {
+    const currentDateTime = new Date();
+    const pickupDateTime = new Date(pickupTime);
+    currentDateTime.setDate(currentDateTime.getDate());
+    
+    return pickupDateTime < currentDateTime;
+  }
+
+  cancelAppointment(appointmentId: number):void{
+    this.service.cancelAppointment(appointmentId).subscribe({
+      next: (result:any) =>{
+        this.customEvent.emit();
+        this.getAppointments();
+      }
+    })
   }
 
   seeEquipment(appointmentId: number): void {

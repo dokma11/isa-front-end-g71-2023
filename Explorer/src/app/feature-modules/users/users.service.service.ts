@@ -49,4 +49,8 @@ export class UsersServiceService {
       environment.apiHost + 'appointments/users/future/' + userId
     );
   }
+
+  cancelAppointment(appointmentId: number): Observable<Appointment>{
+    return this.http.put<Appointment>(environment.apiHost + 'appointments/cancel/'+appointmentId,{});
+  }
 }
