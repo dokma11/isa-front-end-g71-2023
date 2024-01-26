@@ -19,6 +19,9 @@ import { CompanyModule } from './feature-modules/company/company.module';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { FontAwesomeModule } from "@fortawesome/angular-fontawesome";
+import { NgxQRCodeModule } from '@techiediaries/ngx-qrcode';
+import { QRCodeModule } from 'angularx-qrcode';
+import { MatSortModule } from '@angular/material/sort';
 
 @NgModule({
   declarations: [AppComponent],
@@ -40,7 +43,9 @@ import { FontAwesomeModule } from "@fortawesome/angular-fontawesome";
     CompanyModule,
     MatDialogModule,
     MatDatepickerModule,
-    FontAwesomeModule
+    FontAwesomeModule,
+    QRCodeModule,
+    MatSortModule
   ],
   providers: [
     {

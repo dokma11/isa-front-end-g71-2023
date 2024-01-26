@@ -10,6 +10,11 @@ import { UserUpdateComponent } from './user-update/user-update.component';
 import { UsersAppointmentsComponent } from './users-appointments/users-appointments.component';
 import { AppointmentEquipmentViewComponent } from './appointment-equipment-view/appointment-equipment-view.component';
 import { MatDialogModule } from '@angular/material/dialog';
+import { UsersQrcodesComponent } from './users-qrcodes/users-qrcodes.component';
+import { UsersAppintmentHistoryComponent } from './users-appintment-history/users-appintment-history.component';
+import { QRCodeModule } from 'angularx-qrcode';
+import { MatSortModule } from '@angular/material/sort';
+import { MatTableModule } from '@angular/material/table';
 @NgModule({
   declarations: [
     RegistrationComponent,
@@ -17,6 +22,8 @@ import { MatDialogModule } from '@angular/material/dialog';
     UserUpdateComponent,
     UsersAppointmentsComponent,
     AppointmentEquipmentViewComponent,
+    UsersQrcodesComponent,
+    UsersAppintmentHistoryComponent,
   ],
   imports: [
     CommonModule,
@@ -26,6 +33,9 @@ import { MatDialogModule } from '@angular/material/dialog';
     RouterModule,
     FormsModule,
     MatDialogModule,
+    QRCodeModule,
+    MatSortModule,
+    MatTableModule
   ],
   exports: [UserRegistrationComponent, RegistrationComponent],
 })

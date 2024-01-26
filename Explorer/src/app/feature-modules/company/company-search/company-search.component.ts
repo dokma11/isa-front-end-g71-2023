@@ -100,4 +100,56 @@ export class CompanySearchComponent {
     seeDetails() : void{
       
     }
+
+    sortBy: string = 'name'; // Default sorting by name
+  sortOrder: 'asc' | 'desc' = 'asc'; // Default sorting order
+
+  // Function to toggle sorting order
+  toggleSortOrder(): void {
+    this.sortOrder = this.sortOrder === 'asc' ? 'desc' : 'asc';
+    this.sortResults();
+  }
+
+  // Function to sort the search results
+  sortResults(): void {
+    this.searchResults.sort((a, b) => {
+      const order = this.sortOrder === 'asc' ? 1 : -1;
+
+      if (this.sortBy === 'name') {
+        return a.name.localeCompare(b.name) * order;
+      } else if (this.sortBy === 'city') {
+        return a.address.split(',')[2].localeCompare(b.address.split(',')[2]) * order;
+      } else if (this.sortBy === 'grade') {
+        return (a.averageGrade - b.averageGrade) * order;
+      }
+
+      return 0; // No sorting if sortBy is not recognized
+    });
+  }
+
+  // Existing code...
+
+  // Additional method to reset sorting
+  resetSorting(): void {
+    this.sortBy = 'name';
+    this.sortOrder = 'asc';
+    this.sortResults();
+  }
+
+// Add these methods to your component
+sortByName(): void {
+  this.sortBy = 'name';
+  this.toggleSortOrder();
+}
+
+sortByCity(): void {
+  this.sortBy = 'city';
+  this.toggleSortOrder();
+}
+
+sortByGrade(): void {
+  this.sortBy = 'grade';
+  this.toggleSortOrder();
+}
+
 }
