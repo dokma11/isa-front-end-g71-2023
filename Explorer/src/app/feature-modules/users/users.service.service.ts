@@ -43,4 +43,10 @@ export class UsersServiceService {
       environment.apiHost + 'equipment/appointments/' + appointmentId
     );
   }
+
+  getFutureAppointments(userId: number): Observable<Appointment[]> {
+    return this.http.get<Appointment[]>(
+      environment.apiHost + 'appointments/users/future/' + userId
+    );
+  }
 }
