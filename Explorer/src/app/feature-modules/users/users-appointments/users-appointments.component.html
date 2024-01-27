@@ -2,7 +2,7 @@
   <table>
     <thead>
       <tr>
-        <th>Pickup ime</th>
+        <th>Pickup time</th>
         <th>Duration</th>
         <th>Company Name</th>
         <th>Company Administrator</th>
@@ -19,6 +19,10 @@
         <td>
           <button (click)="seeEquipment(a.id || 0)">
             See ordered equipment
+          </button>
+          <button (click)="cancelAppointment(a.id || 0)"
+          [disabled]="isPastPickupTime(a.pickupTime)">
+            Cancel
           </button>
         </td>
       </tr>
