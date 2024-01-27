@@ -14,6 +14,7 @@ import { UserRegistrationComponent } from 'src/app/feature-modules/users/user-re
 import { CompanyUserViewComponent } from 'src/app/feature-modules/companies/company-user-view/company-user-view.component';
 import { AppointmentsComponent } from 'src/app/feature-modules/companies/appointments/appointments.component';
 import { CompanyAppointmentsComponent } from 'src/app/feature-modules/companies/company-appointments/company-appointments.component';
+import { VehicleLocationComponent } from 'src/app/feature-modules/administration/vehicle-location/vehicle-location.component';
 
 const routes: Routes = [
   { 
@@ -57,6 +58,10 @@ const routes: Routes = [
   { 
     path: 'appointments', 
     component: CompanyAppointmentsComponent
+  },
+  { 
+    path: 'simulator', 
+    component: VehicleLocationComponent
   },
 
 ];

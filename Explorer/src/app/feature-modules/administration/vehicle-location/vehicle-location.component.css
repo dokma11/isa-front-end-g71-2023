@@ -1,0 +1,17 @@
+html, body {
+  height: 100%;
+  margin: 0;
+}
+
+body {
+  position: relative;
+}
+
+#hotel_map {
+  width: 900px;
+  height: 500px;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}

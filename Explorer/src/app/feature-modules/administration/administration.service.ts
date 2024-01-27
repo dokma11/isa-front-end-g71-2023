@@ -1,4 +1,4 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Equipment } from './model/equipment.model';
 import { environment } from 'src/env/environment';
@@ -6,11 +6,16 @@ import { Observable } from 'rxjs';
 import { PagedResults } from 'src/app/shared/model/paged-results.model';
 import { CompanyAdmin } from './model/company-admin.model';
 import { EquipmentQuantity } from '../companies/model/equipmentQuantity.model';
+import { Message } from './model/message.model';
+import { map } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AdministrationService {
+
+  url: string = environment.apiHost + "socket";
+  restUrl: string = environment.apiHost + "sendMessageRest";
 
   constructor(private http: HttpClient) { }
 
@@ -44,5 +49,18 @@ export class AdministrationService {
 
   getBookedQuantities(id: number): Observable<number>{
     return this.http.get<number>(environment.apiHost + 'equipmentQuantity/quantity/' + id);
+  }
+
+  getVehicleLocationCoordinates(): Observable<string> {
+    return this.http.get(environment.apiHost + 'vehicles/', { responseType: 'text' });
+  }
+
+  startSimulator(): Observable<string> {
+    return this.http.get(environment.apiHost + 'vehicles/startSending', { responseType: 'text' });
+  }
+  
+  post(data: Message) {
+    return this.http.post<Message>(this.url, data)
+      .pipe(map((data: Message) => { return data; }));
   }
 }
