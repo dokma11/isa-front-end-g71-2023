@@ -69,4 +69,9 @@ export class AuthService {
     };
     this.user$.next(user);
   }
+
+  getJwtToken(): string | null {
+    // Retrieve the JWT token from wherever it is stored (e.g., localStorage)
+    return localStorage.getItem('jwtToken');
+  }
 }
