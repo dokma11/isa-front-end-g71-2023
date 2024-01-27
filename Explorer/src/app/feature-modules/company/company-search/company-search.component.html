@@ -19,6 +19,14 @@
         <button (click)="reset()">Reset</button>
     </div>
 </form>
+
+<button (click)="sortByName()">Sort by Name</button>
+<button (click)="sortByCity()">Sort by City</button>
+<button (click)="sortByGrade()">Sort by Grade</button>
+
+<!-- Reset sorting button -->
+<button (click)="resetSorting()">Reset Sorting</button>
+
     <div *ngIf="searchResults && searchResults.length > 0" class="results">
         <ul>
             <li *ngFor="let result of searchResults" class="result-item">

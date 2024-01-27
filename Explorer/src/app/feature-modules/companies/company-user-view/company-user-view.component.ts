@@ -45,7 +45,7 @@ export class CompanyUserViewComponent {
   user: User | undefined;
   administratorIds: number[] = [];
   availableEquipmentQuantity: AvailableEquipmentQuantity[] = []; // for validation
-
+  registeredUser: RegisteredUser | undefined;
   constructor(
     private service: CompaniesService,
     private datePipe: DatePipe,
@@ -60,6 +60,8 @@ export class CompanyUserViewComponent {
     this.authService.user$.subscribe((user) => {
       this.user = user;
     });
+    this.getRegisteredUser();
+    
   }
 
   getCompanies(): void {
@@ -241,8 +243,10 @@ export class CompanyUserViewComponent {
   scheduleAppointment(timeSlot: any): void {
     //sad zovemo metode za cuvanje appointmenta
     //kad se sacuva appointment
-
-    if (this.company.id !== undefined) {
+    if(this.registeredUser?.points != undefined && this.registeredUser.points >= 3){
+      alert('YOU CANT MAKE AN APPOINTMENT BECAUSE YOU HAVE 3 OR MORE PENALTY POINTS');
+    }
+    else if (this.company.id !== undefined) {
       this.service
         .findAdminIdsForAppointmentsAtPickupTime(this.company.id, timeSlot)
         .subscribe({
@@ -318,7 +322,12 @@ export class CompanyUserViewComponent {
 
   schedulePredefinedAppointment(appointmentId: number): void {
     //first schedule the appointments
-    this.service
+
+    if(this.registeredUser?.points != undefined && this.registeredUser.points >= 3){
+      alert('YOU CANT MAKE AN APPOINTMENT BECAUSE YOU HAVE 3 OR MORE PENALTY POINTS');
+    }
+    else{
+      this.service
       .schedulePredefinedAppointment(this.user?.id || 0, appointmentId)
       .subscribe({
         next: (result: any) => {
@@ -345,6 +354,9 @@ export class CompanyUserViewComponent {
             });
         },
       });
+    } 
+
+   
   }
 
   getAvailableQuantity(equipmentId: number): number {
@@ -357,5 +369,19 @@ export class CompanyUserViewComponent {
     } else {
       return 0;
     }
+  }
+
+  getRegisteredUser():void{
+    if(this.user?.id){
+      this.service.getUserByid(this.user?.id).subscribe({
+        next: (result : RegisteredUser) => {
+              this.registeredUser = result;
+        },
+        error: (error) => {
+          console.error('Ne radi');
+        },
+      });
+    }
+    
   }
 }
