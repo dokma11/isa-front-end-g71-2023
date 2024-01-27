@@ -27,6 +27,8 @@
     "@fortawesome/free-brands-svg-icons": "^6.4.0",
     "@fortawesome/free-regular-svg-icons": "^6.4.0",
     "@fortawesome/free-solid-svg-icons": "^6.5.1",
+    "@techiediaries/ngx-qrcode": "^9.1.0",
+    "angularx-qrcode": "^16.0.2",
     "ol": "^8.2.0",
     "rxjs": "~7.8.0",
     "tslib": "^2.3.0",

@@ -77,3 +77,51 @@
             Take me there</button> 
    </div>
 </div>
+
+
+
+<!-- REGISTERED USER HOME COMPONENT -->
+<h1 *ngIf="!shouldUpdatePassword && 
+    user?.role === 'ROLE_REGISTERED_USER'">
+    Welcome {{registeredUser.name}} {{registeredUser.surname}}!
+</h1>
+<div *ngIf=" !shouldUpdatePassword && 
+     user?.role === 'ROLE_REGISTERED_USER'"
+     class="company-admin-home">
+   <div>
+    <h2>Manage profile:</h2>
+    <button type="submit" 
+            (click)="registeredUserManageProfile()" 
+            mat-raised-button 
+            class="btn"
+            color="primary">
+            Take me there</button>
+   </div>
+   <div>
+    <h2>See companies:</h2>
+    <button type="submit" 
+            (click)="companiesForUsers()" 
+            mat-raised-button 
+            class="btn"
+            color="primary">
+            Take me there</button> 
+   </div>
+   <div>
+    <h2>See your qr codes:</h2>
+    <button type="submit" 
+            (click)="registeredUserQRCodes()" 
+            mat-raised-button 
+            class="btn"
+            color="primary">
+            Take me there</button> 
+   </div>
+   <div>
+    <h2>Check you done appintement history:</h2>
+    <button type="submit" 
+            (click)="registeredUserAppointementHistory()" 
+            mat-raised-button 
+            class="btn"
+            color="primary">
+            Take me there</button> 
+   </div>
+</div>
