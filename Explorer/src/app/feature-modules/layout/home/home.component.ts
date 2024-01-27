@@ -6,6 +6,8 @@ import { CompanyAdmin, UserRole } from '../../administration/model/company-admin
 import { CompaniesService } from '../../companies/companies.service';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+import { RegisteredUser } from '../../users/model/registered-user.model';
+import { UsersServiceService } from '../../users/users.service.service';
 
 @Component({
   selector: 'xp-home',
@@ -17,10 +19,24 @@ export class HomeComponent implements OnInit{
   user: User | undefined;
   shouldUpdatePassword: boolean = false;
   companyAdmin: CompanyAdmin;
-
+  //registeredUser: RegisteredUser;
+  registeredUser: RegisteredUser = {
+    name: '',
+    surname: '',
+    password: '',
+    email: '',
+    companyInformation: '',
+    telephoneNumber: '',
+    city: '',
+    state: '',
+    role: '',
+    profession: '',
+    points: 0,
+  };
   constructor(private service: LayoutService,
               private authService: AuthService,
               private companiesService: CompaniesService,
+              private userService: UsersServiceService,
               private router: Router
               ) {}
 
@@ -40,6 +56,31 @@ export class HomeComponent implements OnInit{
           }
         });
       }
+
+      if(this.user.role == "ROLE_REGISTERED_USER"){
+        this.companiesService.getUserByid(this.user.id).subscribe({
+          next: (result: RegisteredUser) =>{
+            this.registeredUser = result;
+
+            const currentDate = new Date();
+            if (currentDate.getDate() === 1){
+              this.registeredUser.points = 0;
+              this.registeredUser.password = '';
+              this.userService.update(this.registeredUser).subscribe({
+                next: () => {
+                  console.log('Updatovan je');
+                },
+                error: (err) => {
+                  console.error('Error updating user:', err);
+                },
+              });
+            } 
+            
+          }
+        });
+      }
+
+
     });
   }
 
@@ -75,4 +116,26 @@ export class HomeComponent implements OnInit{
   companyAdminManageUserAppointments(): void{
     this.router.navigate(['/appointments']);
   }
+
+
+
+
+  registeredUserManageProfile(): void{
+    this.router.navigate(['/userProfile']);
+  }
+
+  registeredUserQRCodes(): void{
+    this.router.navigate(['/qrCodes']);
+  }
+  registeredUserAppointementHistory(): void{
+    this.router.navigate(['/appointmentHistory']);
+  }
+
+  companiesForUsers(): void{
+    this.router.navigate(['/searchCompanies']);
+  }
+  
+
+
+
 }

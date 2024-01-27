@@ -5,6 +5,7 @@ import { RegisteredUser } from './model/registered-user.model';
 import { environment } from 'src/env/environment';
 import { Appointment } from '../companies/model/appointment.model';
 import { Equipment } from '../administration/model/equipment.model';
+import { QRCodes } from './model/qrcode.model';
 
 @Injectable({
   providedIn: 'root',
@@ -43,4 +44,23 @@ export class UsersServiceService {
       environment.apiHost + 'equipment/appointments/' + appointmentId
     );
   }
+
+  getAllQRCodeByUser(userId: number): Observable<QRCodes[]> {
+    return this.http.get<QRCodes[]>(
+      environment.apiHost + 'qrCode/users/' + userId + '/qrCodes'
+      );
+  }
+
+  getFilteredQRCodeByUserAndStatus(userId: number, status: string): Observable<QRCodes[]> {
+    return this.http.get<QRCodes[]>(
+      environment.apiHost +'qrCode/users/' + userId + '/qrCodes/status/' + status
+      );
+  }
+
+  getDoneAppointments(userId: number): Observable<Appointment[]> {
+    return this.http.get<Appointment[]>(
+      environment.apiHost + 'appointments/users/' + userId + '/doneAppointemnts'
+    );
+  }
+
 }

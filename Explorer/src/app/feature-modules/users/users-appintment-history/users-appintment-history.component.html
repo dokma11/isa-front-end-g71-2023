@@ -1,0 +1,25 @@
+<!-- your-component.component.html -->
+<table>
+    <thead>
+      <tr>
+        <th (click)="sortBy = 'pickupTime'; toggleSortOrder()">Pickup Time</th>
+        <th (click)="sortBy = 'duration'; toggleSortOrder()">Duration</th>
+        <th>Company Name</th>
+        <th>Company admin name</th>
+        <!-- ... other headers -->
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let appointment of appointments">
+        <td>{{ appointment.dateFormated}}</td>
+        <td>{{ appointment.duration }}</td>
+        <td>{{appointment.companyName}}</td>
+        <td>{{appointment.companyAdminName}}</td>
+        <td>
+          <button (click)="seeEquipment(appointment.id || 0)">
+            See ordered equipment
+          </button>
+        </td>
+      </tr>
+    </tbody>
+  </table>

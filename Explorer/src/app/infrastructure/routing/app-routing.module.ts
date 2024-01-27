@@ -14,6 +14,8 @@ import { UserRegistrationComponent } from 'src/app/feature-modules/users/user-re
 import { CompanyUserViewComponent } from 'src/app/feature-modules/companies/company-user-view/company-user-view.component';
 import { AppointmentsComponent } from 'src/app/feature-modules/companies/appointments/appointments.component';
 import { CompanyAppointmentsComponent } from 'src/app/feature-modules/companies/company-appointments/company-appointments.component';
+import { UsersQrcodesComponent } from 'src/app/feature-modules/users/users-qrcodes/users-qrcodes.component';
+import { UsersAppintmentHistoryComponent } from 'src/app/feature-modules/users/users-appintment-history/users-appintment-history.component';
 
 const routes: Routes = [
   { 
@@ -57,6 +59,14 @@ const routes: Routes = [
   { 
     path: 'appointments', 
     component: CompanyAppointmentsComponent
+  },
+  { 
+    path: 'qrCodes', 
+    component: UsersQrcodesComponent
+  },
+  { 
+    path: 'appointmentHistory', 
+    component: UsersAppintmentHistoryComponent
   },
 
 ];

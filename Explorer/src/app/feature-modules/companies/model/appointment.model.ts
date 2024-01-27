@@ -20,6 +20,7 @@ export interface Appointment {
   companyAdminName?: string;
   companyName?: string;
   user?: User;
+  dateFormated?: string;
 }
 
 export enum AppointmentStatus {

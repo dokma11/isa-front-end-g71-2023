@@ -1,0 +1,18 @@
+
+<form [formGroup]="filterFrom">
+    <label for="statusFilter">Filter by Status:</label>
+    <select id="statusFilter"   formControlName="filterStatus">
+      <option value="ALL">All</option>
+      <option value="ON_HOLD">On Hold</option>
+      <option value="DONE">Done</option>
+      <option value="CANCELED">Canceled</option>
+      <option value="EXPIRED">Expired</option>
+    </select>
+    <button (click)="filter()">Filter</button>
+</form>
+
+<div *ngFor="let qrCode of qrCodes">
+    <p>Content: {{ qrCode.content }}</p>
+    <qrcode [qrdata]="qrCode.content" [width]="256" [errorCorrectionLevel]="'M'"></qrcode>
+    <hr />
+</div>
