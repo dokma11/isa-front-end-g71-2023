@@ -5,6 +5,7 @@ import { AuthService } from 'src/app/infrastructure/auth/auth.service';
 import { User } from 'src/app/infrastructure/auth/model/user.model';
 import { AppointmentEquipmentViewComponent } from '../appointment-equipment-view/appointment-equipment-view.component';
 import { MatTableDataSource } from '@angular/material/table';
+import { MatDialog } from '@angular/material/dialog';
 
 @Component({
   selector: 'xp-users-appintment-history',
@@ -15,10 +16,9 @@ export class UsersAppintmentHistoryComponent {
 
   appointments: Appointment[] = [];
   loggedInUser: User | undefined;
-  dialog: any;
   displayedColumns: string[] = ['pickupTime', 'duration', 'companyName', 'companyAdminName', 'actions'];
   dataSource = new MatTableDataSource<Appointment>();
-  constructor(private service: UsersServiceService, private authService: AuthService) {}
+  constructor(private service: UsersServiceService, private authService: AuthService,public dialog: MatDialog) {}
 
   ngOnInit() {
     this.authService.user$.subscribe((user) => {
@@ -70,5 +70,12 @@ export class UsersAppintmentHistoryComponent {
     });
   }
 
-
+  seeEquipment(appointmentId: number): void {
+    // opening of the dialog
+    const dialogRef = this.dialog.open(AppointmentEquipmentViewComponent, {
+      width: '600px',
+      height: '550px',
+      data: { appointmentId: appointmentId }, // Pass your data here
+    });
+  }
 }
