@@ -46,6 +46,7 @@ export class CompanyUserViewComponent {
   administratorIds: number[] = [];
   availableEquipmentQuantity: AvailableEquipmentQuantity[] = []; // for validation
   registeredUser: RegisteredUser | undefined;
+  minDate: Date;
   constructor(
     private service: CompaniesService,
     private datePipe: DatePipe,
@@ -57,6 +58,12 @@ export class CompanyUserViewComponent {
     this.id = Number(this.route.snapshot.paramMap.get('id'));
     this.getCompanies();
     this.selectedEquipment = [];
+    const today = new Date();
+
+    const tomorrow = new Date(today);
+    tomorrow.setDate(today.getDate() + 1);   
+
+    this.minDate = tomorrow;
     this.authService.user$.subscribe((user) => {
       this.user = user;
     });
