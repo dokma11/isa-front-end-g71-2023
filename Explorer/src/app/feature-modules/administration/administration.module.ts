@@ -11,6 +11,7 @@ import { RouterModule } from '@angular/router';
 import { SharedModule } from 'src/app/shared/shared.module';
 import { AuthModule } from 'src/app/infrastructure/auth/auth.module';
 import { CompanyAdminPasswordFormComponent } from './company-admin-password-form/company-admin-password-form.component';
+import { VehicleLocationComponent } from './vehicle-location/vehicle-location.component';
 
 
 
@@ -20,7 +21,8 @@ import { CompanyAdminPasswordFormComponent } from './company-admin-password-form
     EquipmentComponent,
     CompanyAdminComponent,
     CompanyAdminFormComponent,
-    CompanyAdminPasswordFormComponent
+    CompanyAdminPasswordFormComponent,
+    VehicleLocationComponent
   ],
   imports: [
     CommonModule,
