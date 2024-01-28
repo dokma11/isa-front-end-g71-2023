@@ -15,13 +15,15 @@ import { MatNativeDateModule } from '@angular/material/core';
 import { DatePipe } from '@angular/common';
 import { CompanyUserViewComponent } from './company-user-view/company-user-view.component';
 import { CompanyAppointmentsComponent } from './company-appointments/company-appointments.component';
+import { ContractDisplayComponent } from './contract-display/contract-display.component';
 @NgModule({
   declarations: [
     CompanyComponent,
     CompanyFormComponent,
     AppointmentsComponent,
     CompanyUserViewComponent,
-    CompanyAppointmentsComponent
+    CompanyAppointmentsComponent,
+    ContractDisplayComponent
   ],
   imports: [
     CommonModule,
