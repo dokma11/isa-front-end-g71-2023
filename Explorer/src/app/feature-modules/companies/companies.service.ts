@@ -211,4 +211,8 @@ export class CompaniesService {
       environment.apiHost + 'registeredUsers/' + id
     );
   }
+
+  updateExpiredAndDoneAppointments(appointments: Appointment[]): Observable<Appointment[]>{
+    return this.http.put<Appointment[]>(environment.apiHost + 'appointments/updateAll',appointments);
+  }
 }

@@ -19,7 +19,7 @@ export class CompanyAppointmentsComponent implements OnInit{
   user: User | undefined;
   registeredUsers: RegisteredUser[] = [];
   registeredUsersIds: number[] = [];
-
+  companyAdmin:  CompanyAdmin;
   appointment: Appointment;
   appointments: Appointment[] = [];
   timeString: string = "";
@@ -38,6 +38,7 @@ export class CompanyAppointmentsComponent implements OnInit{
       this.service.getAdminById(this.user.id).subscribe({
         next: (result: CompanyAdmin) => {
           if(result){
+            this.companyAdmin = result;
             this.service.getCompanyById(result.company?.id!).subscribe({
               next: (result: Company) => {
                   this.getAppointments(result);
@@ -70,9 +71,11 @@ export class CompanyAppointmentsComponent implements OnInit{
 
                   [appointment.dateString, appointment.timeString] = appointment.pickupTime.toString().split('T');
 
-                  this.checkForExpired();
+                  
                 }
               })
+            }else{
+              
             }
 
             [appointment.dateString, appointment.timeString] = appointment.pickupTime.toString().split('T');
@@ -80,11 +83,12 @@ export class CompanyAppointmentsComponent implements OnInit{
         }
         else{
           this.appointments = [result];
+          
         }
       }
     });
 
-    this.checkForExpired();
+    
 
   }
 
@@ -108,47 +112,25 @@ export class CompanyAppointmentsComponent implements OnInit{
   }
   
   onMarkAsPickedUpClicked(appointment: Appointment): void {
-    if(appointment.id && appointment.user?.id){  
-      if(appointment.status.toString() === "ON_HOLD"){
-        appointment.status = AppointmentStatus.IN_PROGRESS;
-        this.service.pickUpAppointment(appointment).subscribe({
-          next: () => { location.reload(); }
-        })
-      }
-    }
-    // mozda dodati malo vise jasnjih alertova
-    else{
-      alert("Can not mark that appointment as picked up!");
-    }
-  }
-
-  checkForExpired(): void{
-    for (let appointment of this.appointments) {
-      // da li je rok preuzimanja prosao
-      if(appointment.status.toString() === "ON_HOLD"){
-        const currentDate = new Date();
-        const appointmentPickUpTimeDate = new Date(appointment.pickupTime.toString());
-
-        if(appointmentPickUpTimeDate < currentDate){
-          appointment.status = AppointmentStatus.EXPIRED;
-          this.service.updateAppointment(appointment).subscribe({
-            next : () => {}
-          });
-        }
-      }
-      else if(appointment.status.toString() === "IN_PROGRESS"){
-        const appointmentPickupTime = new Date(appointment.pickupTime);
-        appointmentPickupTime.setMinutes(appointmentPickupTime.getMinutes() + 30);
-
-        const currentDate = new Date();
-
-        if(appointmentPickupTime < currentDate){  
-          appointment.status = AppointmentStatus.DONE;
-          this.service.updateAppointment(appointment).subscribe({
-            next: () => {}
+    if(this.companyAdmin.id == appointment.administrator?.id){
+      if(appointment.id && appointment.user?.id){  
+        if(appointment.status.toString() === "ON_HOLD"){
+          appointment.status = AppointmentStatus.IN_PROGRESS;
+          this.service.pickUpAppointment(appointment).subscribe({
+            next: () => { location.reload(); }
           })
         }
       }
+      // mozda dodati malo vise jasnjih alertova
+    else{
+      alert("Can not mark that appointment as picked up!");
     }
+    }
+    else{
+      alert("Can not mark appointment as ready because you are not in charge for this appointement");
+    }
+    
+    
   }
+
 }

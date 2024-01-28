@@ -34,7 +34,7 @@ export class UsersAppointmentsComponent {
     this.getAppointments();
   }
   getAppointments(): void {
-    this.service.getAppointments(this.user.id).subscribe({
+    this.service.getFutureAppointments(this.user.id).subscribe({
       next: (result: Appointment[]) => {
         this.appointments = result;
       },
