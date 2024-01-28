@@ -1,0 +1,84 @@
+<div class="dialogue">
+    <form [formGroup]="contractForm">
+      <div>
+        <h2>Edit Contract</h2>
+        <div>
+          <mat-form-field>
+            <mat-label >Hospital name</mat-label>
+            <input matInput 
+                   formControlName="hospitalName" 
+                   type="text"/>
+          </mat-form-field>
+        </div>
+        <div>
+            <mat-form-field>
+              <mat-label >Hospital address</mat-label>
+              <input matInput 
+                     formControlName="hospitalAddress" 
+                     type="text"/>
+            </mat-form-field>
+          </div>
+          <div>
+            <mat-form-field>
+              <mat-label >Company name</mat-label>
+              <input matInput 
+                     formControlName="companyName" 
+                     type="text"/>
+            </mat-form-field>
+          </div>
+          <div>
+              <mat-form-field>
+                <mat-label >Company address</mat-label>
+                <input matInput 
+                       formControlName="companyAddress" 
+                       type="text"/>
+              </mat-form-field>
+            </div>  
+        <div>
+            <mat-form-field>
+              <mat-label >Equipment name</mat-label>
+              <input matInput 
+                     formControlName="equipmentName" 
+                     type="text"/>
+            </mat-form-field>
+          </div>
+        <div>
+            <mat-form-field>
+              <mat-label >Equipment quantity</mat-label>
+              <input matInput 
+                     formControlName="equipmentQuantity" 
+                     type="text"/>
+            </mat-form-field>
+          </div>
+          
+       <!--
+
+<div>
+        <mat-form-field>
+          <mat-label >Delivery date</mat-label>
+          <input matInput 
+                [matDatepicker]="picker" 
+                placeholder="Choose a date" 
+                formControlName="deliveryDate" 
+                [min]="minDate"> 
+          <mat-datepicker-toggle 
+                  matSuffix 
+                  [for]="picker">
+          </mat-datepicker-toggle>
+          <mat-datepicker #picker></mat-datepicker>
+        </mat-form-field>  
+      </div> 
+
+       --> 
+
+      <button *ngIf="shouldEdit" 
+              type="submit" 
+              (click)="editContract()" 
+              mat-raised-button
+              id="done-button"
+              color="primary">
+              Done
+      </button>
+    </div>
+  </form>
+</div>

@@ -1,0 +1,44 @@
+.dialogue {
+  width: 40rem;
+  height: 40rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+form div{
+  width: 30rem;
+  height: 32rem;
+  display:flex;
+  gap: 0.1rem;
+  flex-direction: column;
+  font: inherit; 
+}
+
+#done-button {
+  height: 100%;
+}
+
+.mat-icon {
+  vertical-align: middle;
+}
+
+form {
+  width: 75%;
+  height: 70%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+form h2 {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+#enable-map-label {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
