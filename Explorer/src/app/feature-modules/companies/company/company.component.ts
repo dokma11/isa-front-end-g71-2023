@@ -2,8 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import { Company } from '../model/company.model';
 import { CompaniesService } from '../companies.service';
 import { Equipment } from '../../administration/model/equipment.model';
-import { Appointment, AppointmentStatus } from '../model/appointment.model';
-import { AppointmentsComponent } from '../appointments/appointments.component';
 import { MatDialog } from "@angular/material/dialog";
 import { CompanyAdmin } from '../../administration/model/company-admin.model';
 import { DatePipe } from '@angular/common'; 

@@ -10,6 +10,7 @@ import { EquipmentQuantity } from './model/equipmentQuantity.model';
 
 import { AvailableEquipmentQuantity } from './model/availableEquipmentQuantity.model';
 import { RegisteredUser } from '../users/model/registered-user.model';
+import { Contract } from './model/contract.model';
 
 @Injectable({
   providedIn: 'root',
@@ -214,5 +215,15 @@ export class CompaniesService {
 
   updateExpiredAndDoneAppointments(appointments: Appointment[]): Observable<Appointment[]>{
     return this.http.put<Appointment[]>(environment.apiHost + 'appointments/updateAll',appointments);
+  }
+
+  getContracts(): Observable<Contract[]> {
+    return this.http.get<Contract[]>(
+      environment.apiHost + 'contracts'
+    );
+  }
+
+  updateContract(contract: Contract): Observable<Contract>{
+    return this.http.put<Contract>(environment.apiHost + 'contracts/' + contract.id, contract);
   }
 }

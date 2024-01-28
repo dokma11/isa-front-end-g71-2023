@@ -16,6 +16,7 @@ import { DatePipe } from '@angular/common';
 import { CompanyUserViewComponent } from './company-user-view/company-user-view.component';
 import { CompanyAppointmentsComponent } from './company-appointments/company-appointments.component';
 import { ContractDisplayComponent } from './contract-display/contract-display.component';
+import { ContractFormComponent } from './contract-form/contract-form.component';
 @NgModule({
   declarations: [
     CompanyComponent,
@@ -23,7 +24,8 @@ import { ContractDisplayComponent } from './contract-display/contract-display.co
     AppointmentsComponent,
     CompanyUserViewComponent,
     CompanyAppointmentsComponent,
-    ContractDisplayComponent
+    ContractDisplayComponent,
+    ContractFormComponent
   ],
   imports: [
     CommonModule,
@@ -41,7 +43,8 @@ import { ContractDisplayComponent } from './contract-display/contract-display.co
   exports: [
     CompanyComponent,
     CompanyFormComponent,
-    CompanyUserViewComponent
+    CompanyUserViewComponent,
+    ContractDisplayComponent
   ],
   providers: [
     DatePipe

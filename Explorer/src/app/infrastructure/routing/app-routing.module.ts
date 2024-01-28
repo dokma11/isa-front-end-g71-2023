@@ -17,6 +17,7 @@ import { CompanyAppointmentsComponent } from 'src/app/feature-modules/companies/
 import { VehicleLocationComponent } from 'src/app/feature-modules/administration/vehicle-location/vehicle-location.component';
 import { UsersQrcodesComponent } from 'src/app/feature-modules/users/users-qrcodes/users-qrcodes.component';
 import { UsersAppintmentHistoryComponent } from 'src/app/feature-modules/users/users-appintment-history/users-appintment-history.component';
+import { ContractDisplayComponent } from 'src/app/feature-modules/companies/contract-display/contract-display.component';
 
 const routes: Routes = [
   { 
@@ -72,6 +73,10 @@ const routes: Routes = [
   { 
     path: 'appointmentHistory', 
     component: UsersAppintmentHistoryComponent
+  },
+  { 
+    path: 'contracts', 
+    component: ContractDisplayComponent
   },
 
 ];

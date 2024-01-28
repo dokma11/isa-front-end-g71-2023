@@ -1,6 +1,6 @@
 
 export interface Contract {
-    id:number;
+    id?: number;
     companyName: string;
     companyAddress: string;
     hospitalName: string;
