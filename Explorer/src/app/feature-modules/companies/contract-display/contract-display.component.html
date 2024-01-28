@@ -1,0 +1,47 @@
+<div>
+    <h1>Contracts</h1>
+
+    <table>
+        <thead>
+            <tr>
+              <th>Company Name</th>
+            </tr>
+            <tr>
+                <th>Company Address</th>
+            </tr>
+            <tr>
+                <th>Hospital Name</th>
+            </tr>
+
+            <tr>
+                <th>Hospital Address</th>
+            </tr>
+            <tr>
+                <th>Equipment Name</th>
+            </tr>
+            <tr>
+                <th>Equipment Quantity</th>
+            </tr>
+            <tr>
+                <th>Delivery Date</th>
+            </tr>
+            <tr>
+                <th>Status</th>
+            </tr>
+            <tr></tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let c of contracts">
+              <td>{{ c.companyName }}</td>
+              <td>{{c.companyAddress}}</td>
+              <td>{{c.hospitalName}}</td>
+              <td>{{c.hospitalAddress}}</td>
+              <td>{{c.equipmentName}}</td>
+              <td>{{c.equipmentQuantity}}</td>
+              <td>{{c.deliveryDate | date : "dd:mm:yyyy"}}</td>
+              <td>{{c.status}}</td>
+              <td><button (click) = "onCancel(c.id || 0)">Cancel</button></td>
+            </tr>
+          </tbody>
+    </table>
+</div>
