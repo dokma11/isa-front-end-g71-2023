@@ -1,6 +1,8 @@
 import { Component } from '@angular/core';
 import { Contract } from '../model/contract.model';
 import { CompaniesService } from '../companies.service';
+import { MatDialog } from '@angular/material/dialog';
+import { ContractFormComponent } from '../contract-form/contract-form.component';
 
 @Component({
   selector: 'xp-contract-display',
@@ -9,14 +11,44 @@ import { CompaniesService } from '../companies.service';
 })
 export class ContractDisplayComponent {
   contracts: Contract[] = [];
+  private dialogRef: any;
 
-  constructor(private service: CompaniesService,){}
+  constructor(private service: CompaniesService,
+              public dialog: MatDialog){}
 
   ngOnInit(){
-    //poziv servisa za dobavljanje svih ugovora
+    this.service.getContracts().subscribe({
+      next: (result: Contract[]) => {
+        this.contracts = result;
+      }
+    });
   }
 
-  onCancel(id: number): void{
-    //kada se pozove za otkazivanje
+  onCancel(contract: Contract): void{
+    contract.status = 1
+
+    const today = new Date();
+    const deliveryDate = new Date(contract.deliveryDate);
+
+    const timeDifferenceMs = deliveryDate.getTime() - today.getTime();
+
+    const timeDifferenceHours = timeDifferenceMs / (1000 * 60 * 60);
+
+    if (timeDifferenceHours < 24) {
+      alert('Can not cancel a delivery that is in less than 24 hours.');
+      location.reload();
+    } else {
+      this.service.updateContract(contract).subscribe({
+        next: (result: Contract) => {
+          location.reload();
+        }
+      });
+    }
+  }
+
+  onEditClicked(contract: Contract): void{
+    this.dialogRef = this.dialog.open(ContractFormComponent, {
+      data: contract,
+    });
   }
 }

@@ -5,42 +5,38 @@
         <thead>
             <tr>
               <th>Company Name</th>
+              <th>Company Address</th>
+              <th>Hospital Name</th>
+              <th>Hospital Address</th>
+              <th>Equipment Name</th>
+              <th>Equipment Quantity</th>
+              <th>Delivery Date</th>
+              <th>Status</th>
+              <th>Cancel</th>
+              <th>Edit</th>
             </tr>
-            <tr>
-                <th>Company Address</th>
-            </tr>
-            <tr>
-                <th>Hospital Name</th>
-            </tr>
-
-            <tr>
-                <th>Hospital Address</th>
-            </tr>
-            <tr>
-                <th>Equipment Name</th>
-            </tr>
-            <tr>
-                <th>Equipment Quantity</th>
-            </tr>
-            <tr>
-                <th>Delivery Date</th>
-            </tr>
-            <tr>
-                <th>Status</th>
-            </tr>
-            <tr></tr>
           </thead>
           <tbody>
             <tr *ngFor="let c of contracts">
               <td>{{ c.companyName }}</td>
-              <td>{{c.companyAddress}}</td>
-              <td>{{c.hospitalName}}</td>
-              <td>{{c.hospitalAddress}}</td>
-              <td>{{c.equipmentName}}</td>
-              <td>{{c.equipmentQuantity}}</td>
-              <td>{{c.deliveryDate | date : "dd:mm:yyyy"}}</td>
-              <td>{{c.status}}</td>
-              <td><button (click) = "onCancel(c.id || 0)">Cancel</button></td>
+              <td>{{ c.companyAddress }}</td>
+              <td>{{ c.hospitalName }}</td>
+              <td>{{ c.hospitalAddress }}</td>
+              <td>{{ c.equipmentName }}</td>
+              <td>{{ c.equipmentQuantity }}</td>
+              <td>{{ c.deliveryDate | date : "dd:mm:yyyy"}}</td>
+              <td>{{ c.status }}</td>
+              <td *ngIf="c.status.toString() == 'NEW'">
+                <button (click) = "onCancel(c)">Cancel</button>
+              </td>
+              <td *ngIf="c.status.toString() == 'CANCELED'">
+                Already canceled
+              </td>
+              <td>
+                <button (click)="onEditClicked(c)" color="primary" mat-icon-button>
+                  <mat-icon class="faIcon">edit</mat-icon>
+                </button>
+              </td>
             </tr>
           </tbody>
     </table>
