@@ -3,6 +3,9 @@ import { Contract } from '../model/contract.model';
 import { CompaniesService } from '../companies.service';
 import { MatDialog } from '@angular/material/dialog';
 import { ContractFormComponent } from '../contract-form/contract-form.component';
+import { AuthService } from 'src/app/infrastructure/auth/auth.service';
+import { User } from 'src/app/infrastructure/auth/model/user.model';
+import { CompanyAdmin } from '../../administration/model/company-admin.model';
 
 @Component({
   selector: 'xp-contract-display',
@@ -12,15 +15,30 @@ import { ContractFormComponent } from '../contract-form/contract-form.component'
 export class ContractDisplayComponent {
   contracts: Contract[] = [];
   private dialogRef: any;
+  user: User | undefined;
 
   constructor(private service: CompaniesService,
-              public dialog: MatDialog){}
+              public dialog: MatDialog,
+              private authService: AuthService){
+
+              }
 
   ngOnInit(){
-    this.service.getContracts().subscribe({
-      next: (result: Contract[]) => {
-        this.contracts = result;
-      }
+    this.authService.user$.subscribe(user => {
+      this.user = user;
+      this.service.getAdminById(this.user.id).subscribe({
+        next: (result: CompanyAdmin) => {
+          if(result){
+            this.service.getContracts(result.id!).subscribe({
+              next: (result: Contract[]) => {
+                this.contracts = result;
+              }
+            });          }
+        },
+        error: (err) => {
+          console.error('Error fetching companies:', err);
+        },
+      });
     });
   }
 

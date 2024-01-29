@@ -24,7 +24,7 @@
               <td>{{ c.hospitalAddress }}</td>
               <td>{{ c.equipmentName }}</td>
               <td>{{ c.equipmentQuantity }}</td>
-              <td>{{ c.deliveryDate | date : "dd:mm:yyyy"}}</td>
+              <td>{{ c.deliveryDate | date : "yyyy-MM-dd"}}</td>
               <td>{{ c.status }}</td>
               <td *ngIf="c.status.toString() == 'NEW'">
                 <button (click) = "onCancel(c)">Cancel</button>

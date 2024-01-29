@@ -217,9 +217,9 @@ export class CompaniesService {
     return this.http.put<Appointment[]>(environment.apiHost + 'appointments/updateAll',appointments);
   }
 
-  getContracts(): Observable<Contract[]> {
+  getContracts(id: number): Observable<Contract[]> {
     return this.http.get<Contract[]>(
-      environment.apiHost + 'contracts'
+      environment.apiHost + 'contracts/' + id
     );
   }
 
