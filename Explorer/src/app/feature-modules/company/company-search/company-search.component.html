@@ -20,12 +20,12 @@
     </div>
 </form>
 
-<button (click)="sortByName()">Sort by Name</button>
-<button (click)="sortByCity()">Sort by City</button>
-<button (click)="sortByGrade()">Sort by Grade</button>
+<button *ngIf="user && user.role === 'ROLE_REGISTERED_USER'" (click)="sortByName()">Sort by Name</button>
+<button  *ngIf="user && user.role === 'ROLE_REGISTERED_USER'" (click)="sortByCity()">Sort by City</button>
+<button *ngIf="user && user.role === 'ROLE_REGISTERED_USER'" (click)="sortByGrade()">Sort by Grade</button>
 
 <!-- Reset sorting button -->
-<button (click)="resetSorting()">Reset Sorting</button>
+<button *ngIf="user && user.role === 'ROLE_REGISTERED_USER'" (click)="resetSorting()">Reset Sorting</button>
 
     <div *ngIf="searchResults && searchResults.length > 0" class="results">
         <ul>

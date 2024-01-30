@@ -4,6 +4,8 @@ import { CompaniesService } from '../company.service';
 import { PagedResults } from 'src/app/shared/model/paged-results.model';
 import { Observable } from 'rxjs';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { User } from 'src/app/infrastructure/auth/model/user.model';
+import { AuthService } from 'src/app/infrastructure/auth/auth.service';
 
 @Component({
   selector: 'xp-company-search',
@@ -14,12 +16,16 @@ export class CompanySearchComponent {
      // Default search type
     searchResults: Company[];
     allCompanies: Company[];
+    user: User | undefined;
 
-    constructor(private service: CompaniesService) {}
+    constructor(private service: CompaniesService, private authService: AuthService) {}
 
     ngOnInit(): void {
       this.getCompanies();
       this.searchForm.reset();
+      this.authService.user$.subscribe(user => {
+        this.user = user;
+      });
     }
 
 
