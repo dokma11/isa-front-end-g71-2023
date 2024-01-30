@@ -311,6 +311,7 @@ export class CompanyUserViewComponent {
                       });
                   },
                   error: (error) => {
+                    alert("something went wrong. You can only schedule one appointment in one company on one pickup time!")
                     console.error('Error fetching free time slots:', error);
                   },
                 });
