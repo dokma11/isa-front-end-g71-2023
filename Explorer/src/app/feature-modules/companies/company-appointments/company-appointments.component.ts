@@ -113,15 +113,21 @@ export class CompanyAppointmentsComponent implements OnInit{
   
   onMarkAsPickedUpClicked(appointment: Appointment): void {
     if(this.companyAdmin.id == appointment.administrator?.id){
+      const now: Date = new Date();
       if(appointment.id && appointment.user?.id){  
         if(appointment.status.toString() === "ON_HOLD"){
-          appointment.status = AppointmentStatus.IN_PROGRESS;
-          this.service.pickUpAppointment(appointment).subscribe({
-            next: () => { location.reload(); }
-          })
+
+          if(appointment.pickupTime <= now){
+            appointment.status = AppointmentStatus.IN_PROGRESS;
+            this.service.pickUpAppointment(appointment).subscribe({
+              next: () => { location.reload(); }
+            })
+          }else{
+            alert("Can not mark as picked up because appointment did not start yet!");
+          }
         }
+        
       }
-      // mozda dodati malo vise jasnjih alertova
     else{
       alert("Can not mark that appointment as picked up!");
     }
