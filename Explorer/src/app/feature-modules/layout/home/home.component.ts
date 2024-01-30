@@ -61,21 +61,6 @@ export class HomeComponent implements OnInit{
         this.companiesService.getUserByid(this.user.id).subscribe({
           next: (result: RegisteredUser) =>{
             this.registeredUser = result;
-
-            const currentDate = new Date();
-            if (currentDate.getDate() === 1){
-              this.registeredUser.points = 0;
-              this.registeredUser.password = '';
-              this.userService.update(this.registeredUser).subscribe({
-                next: () => {
-                  console.log('Updatovan je');
-                },
-                error: (err) => {
-                  console.error('Error updating user:', err);
-                },
-              });
-            } 
-            
           }
         });
       }
