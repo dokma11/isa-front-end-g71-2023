@@ -40,11 +40,9 @@ export class VehicleLocationComponent implements OnInit{
    this.service.startSimulator().subscribe(
     (response: string) => {
       console.log('Notification sent successfully:', response);
-      // Handle the response if needed
     },
     (error) => {
       console.error('Error sending notification:', error);
-      // Handle the error if needed
     }
   );
 
@@ -101,7 +99,6 @@ export class VehicleLocationComponent implements OnInit{
     
         this.map.addLayer(markerLayer);
         i++;
-        console.log("i = " + i);
     }, 3000);
     
     }

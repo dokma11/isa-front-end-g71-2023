@@ -60,6 +60,13 @@ export class CompaniesService {
     );
   }
 
+  addAppointmentByAdmin(appointment: Appointment): Observable<Appointment> {
+    return this.http.post<Appointment>(
+      environment.apiHost + 'appointments/admin',
+      appointment
+    );
+  }
+
   deleteAppointment(id: number): Observable<Appointment> {
     return this.http.delete<Appointment>(environment.apiHost + 'appointments/' + id);
   }

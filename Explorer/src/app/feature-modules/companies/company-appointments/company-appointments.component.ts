@@ -117,7 +117,8 @@ export class CompanyAppointmentsComponent implements OnInit{
       if(appointment.id && appointment.user?.id){  
         if(appointment.status.toString() === "ON_HOLD"){
 
-          if(appointment.pickupTime <= now){
+          const newDate: Date = new Date(appointment.pickupTime);
+          if(newDate <= now){
             appointment.status = AppointmentStatus.IN_PROGRESS;
             this.service.pickUpAppointment(appointment).subscribe({
               next: () => { location.reload(); }

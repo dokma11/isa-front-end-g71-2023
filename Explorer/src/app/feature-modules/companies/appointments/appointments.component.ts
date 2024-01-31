@@ -127,10 +127,13 @@ export class AppointmentsComponent implements OnChanges{
                       }
 
                       if(!invalid){
-                        this.service.addAppointment(appointment).subscribe({
+                        this.service.addAppointmentByAdmin(appointment).subscribe({
                           next: () => { 
                             this.appointmentUpdated.emit();
                             location.reload(); 
+                          },
+                          error: () => {
+                            alert("The time slot is already taken!");      
                           }
                         });
                       }
