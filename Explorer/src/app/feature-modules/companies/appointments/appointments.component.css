@@ -1,5 +1,5 @@
 .dialogue {
-  width: 35rem;
+  width: 40rem;
   height: 35rem;
   display: flex;
   align-items: center;
@@ -7,7 +7,7 @@
 }
 
 form div{
-  width: 25rem;
+  width: 30rem;
   height: 25rem;
   display:flex;
   gap: 0.1rem;
@@ -34,6 +34,17 @@ form {
 
 form h2 {
   margin-top: -25px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.admin-choosing{
+  background-color:aliceblue;
+  margin-bottom: 15px;
+}
+
+#choose-admin{
   display: flex;
   justify-content: center;
   align-items: center;

@@ -2,13 +2,26 @@
     <form [formGroup]="appointmentForm">
       <div>
         <h2>Add appointment</h2>
-        <div>
-          <mat-form-field>
-            <mat-label >Administrator email</mat-label>
-            <input matInput 
-                   formControlName="administratorEmail" 
-                   type="text"/>
-          </mat-form-field>
+        <div class="admin-choosing">
+          <mat-label id="choose-admin">Choose Administrator</mat-label>
+          <table>
+            <tbody>
+              <tr *ngFor="let admin of administrators">
+                <td>{{ admin.name }}</td>
+                <td>{{ admin.surname }}</td>
+                <td>{{ admin.username }}</td>
+                <td>&nbsp;&nbsp;</td>
+                <td>
+                  <button (click)="onAddAdminClicked(admin)" 
+                          color="primary"
+                          type="submit"
+                          mat-raised-button>
+                    Add
+                  </button>          
+                </td>
+              </tr>
+            </tbody>
+          </table>
         </div>
        <div>
         <mat-form-field>

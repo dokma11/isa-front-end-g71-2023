@@ -10,7 +10,9 @@ import {
   faSignIn,
   faStethoscope,
   faAmbulance,
-  faMedkit
+  faMedkit,
+  faHeartbeat,
+  faFileText,
  } from "@fortawesome/free-solid-svg-icons";
 
 @Component({
@@ -43,4 +45,6 @@ export class NavbarComponent implements OnInit {
   faStethoscope = faStethoscope;
   faAmbulance = faAmbulance;
   faMedKit = faMedkit;
+  faHeartbeat = faHeartbeat;
+  faFileText = faFileText;
 }

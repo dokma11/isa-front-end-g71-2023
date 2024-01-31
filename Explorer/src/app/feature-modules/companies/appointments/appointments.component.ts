@@ -4,6 +4,8 @@ import { Appointment, AppointmentStatus, AppointmentType } from '../model/appoin
 import { CompaniesService } from '../companies.service';
 import { CompanyAdmin } from '../../administration/model/company-admin.model';
 import { Company } from '../model/company.model';
+import { AuthService } from 'src/app/infrastructure/auth/auth.service';
+import { User } from 'src/app/infrastructure/auth/model/user.model';
 
 @Component({
   selector: 'xp-appointments',
@@ -16,15 +18,48 @@ export class AppointmentsComponent implements OnChanges{
   @Input() appointment: Appointment;
   @Input() shouldEdit: boolean = false;
 
+  user: User | null;
   minDate: Date;  
+  administrators: CompanyAdmin[];
+  adminAdded: boolean = false;
+  chosenAdmin: CompanyAdmin;
 
-  constructor(private service: CompaniesService) {
+  constructor(private service: CompaniesService,
+              private authService: AuthService) {
+                
     const today = new Date();
 
     const tomorrow = new Date(today);
     tomorrow.setDate(today.getDate() + 1);   
 
     this.minDate = tomorrow;
+
+    // zatim proveri koji je slobodan (ja bih to kasnije u onom sranju kako sam ranije odradio)
+    this.authService.user$.subscribe(user => {
+      this.user = user;
+      this.service.getAdminById(this.user.id).subscribe({
+        next: (result: CompanyAdmin) => {
+          if(result){
+            this.service.getCompaniesAdministrators(result.company!).subscribe({
+              next: (result: CompanyAdmin | CompanyAdmin[]) =>{
+                if (Array.isArray(result)) {
+                  this.administrators = result;
+                }
+                else{
+                  this.administrators = [result];
+                }
+              },
+              error: (err) => {
+                console.error('Error fetching administrators:', err);
+              },
+            });
+          }
+        },
+        error: (err) => {
+          console.error('Error fetching administrator:', err);
+        },
+      });
+    });
   }
 
   ngOnChanges(): void {
@@ -52,10 +87,8 @@ export class AppointmentsComponent implements OnChanges{
       type: AppointmentType.PREDEFINED,
     };
     
-    this.service.getAdminByEmail(this.appointmentForm.value.administratorEmail || "").subscribe({
-        next: (result: CompanyAdmin) => {
-          appointment.administratorId = result.id;
-          appointment.companyId = result.company?.id || 0;
+          appointment.administratorId = this.chosenAdmin.id;
+          appointment.companyId = this.chosenAdmin.company?.id || 0;
 
           this.service.getCompanyById(appointment.companyId).subscribe({
             next: (result: Company) => {
@@ -116,8 +149,6 @@ export class AppointmentsComponent implements OnChanges{
               }
 
             }
-          });
-        }
       });
   }
 
@@ -148,5 +179,10 @@ export class AppointmentsComponent implements OnChanges{
     const checkTime = dateToCheck.getTime();
 
     return checkTime >= startTime && checkTime <= endTime;
+  }
+
+  onAddAdminClicked(admin: CompanyAdmin): void{
+    this.chosenAdmin = admin;
+    alert("You have chosen admin " + this.chosenAdmin.name + " " + this.chosenAdmin.surname);
   }
 }
