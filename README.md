@@ -1,4 +1,4 @@
-# ISA Project 2023 - Group 71
+# ISA Project 2023 - Group 71 - Hospital Equipment Delivery system
 Frontend project for course Internet software architectures.
 
 # Team Members
